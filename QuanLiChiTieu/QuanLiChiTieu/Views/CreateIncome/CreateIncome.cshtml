@@ -1,0 +1,89 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CreateIncome</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="" href="~/style/QuanLiChiTieu.css">
+</head>
+<body onload="setNow()">
+    <header>
+        <div class="home">
+            <a href="https://phanhiep97nd.github.io/hiepphan/Hieplayout/Hiep-Profile.html" target="_blank">POWER BY Phan Văn Hiệp</a>
+        </div>
+        <div class="banner">
+            <h1>QUẢN LÍ CHI TIÊU</h1>
+            <h5>Giúp bạn tính toán các khoản thu nhập và chi tiêu để hoạch định số tiền cần đầu tư!</h5>
+        </div>
+    </header>
+    <h1 style="text-align:center; color:grey">KHAI THU NHẬP</h1>
+    @{
+        if (Model != null)
+        {
+                <h3 style="text-align:center; color:red">@Model</h3>    
+        }
+    }
+    <form style="padding:15px" action="/CreateIncome/ClickCreateIncome" method="post" id="form">
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Ngày Nhận Được Thu Nhập</label>
+            <input class="form-control" type="date" value="2011-08-19" id="dateIncome" name="dateIncome">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Số Tiền Thu Nhập (VND)</label>
+            <input type="number" class="form-control" id="valueIncome" placeholder="Đơn vị VND" onchange="setFormatMonney()" name="valueIncome">
+            <label style="color:darkseagreen; font-size:15px" id="Foratmonney"></label>
+            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                Hãy nhập số tiền.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Loại Thu Nhập</label>
+            <select class="form-control" id="typeIncome" name="typeIncome">
+                <option value="1" selected>Tiền Lương</option>
+                <option value="2">Khác</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Ghi Chú</label>
+            <textarea class="form-control" id="noteIncome" rows="3" name="noteIncome"></textarea>
+        </div>
+    </form>
+    <div style="padding:15px">
+        <button class="btn btn-default" style="background:#4ba9dd" onclick="submitIncome()">Submit</button>
+    </div>
+    <script>
+        function setNow() {
+            var today = new Date();
+            document.getElementById("dateIncome").value = today.getFullYear() + "-" + (today.getUTCMonth().toString().length == 1 ? "0" + (today.getUTCMonth() + 1) : today.getUTCMonth() + 1) + "-" + today.getDate();
+        }
+        function setFormatMonney() {
+            document.getElementById("valueIncome").classList.remove("is-invalid");
+            var valueIncome = document.getElementById("valueIncome");
+            if (valueIncome.value != "") {
+                var number = parseInt(valueIncome.value);
+                document.getElementById("Foratmonney").innerHTML = number.toLocaleString() + " VND";
+            } else {
+                document.getElementById("Foratmonney").innerHTML = "";
+            }
+        }
+        function submitIncome() {
+            var valueIncome = document.getElementById("valueIncome");
+            var form = document.forms.namedItem("form");
+            if (valueIncome.value == "") {
+                valueIncome.classList.add("is-invalid");
+            } else {
+                form.submit();
+            }
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

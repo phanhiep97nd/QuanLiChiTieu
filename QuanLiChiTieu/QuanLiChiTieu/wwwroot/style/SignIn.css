@@ -1,0 +1,72 @@
+@import "https://use.fontawesome.com/releases/v5.5.0/css/all.css";
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: url(../images/hiep-sapa.jpg) no-repeat;
+    background-size: cover;
+}
+
+.signIn-box {
+    width: 30%;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.signIn-box h1 {
+    align-items: center;
+    font-size: 40px;
+    border-bottom: 3px solid #4ba9dd;
+    margin-bottom: 50px;
+    padding: 13px 0;
+}
+
+.textbox {
+    width: 100%;
+    overflow: hidden;
+    font-size: 20px;
+    padding: 8px 0;
+    margin: 8px 0;
+    border-bottom: 1px solid #4c57af;
+}
+
+.textbox i {
+    width: 26px;
+    float: left;
+    text-align: center;
+}
+
+.textbox input {
+    border: none;
+    outline: none;
+    background: none;
+    color: white;
+    font-size: 18px;
+    width: 80%;
+    float: left;
+    margin: 0 10px;
+}
+
+.btn {
+    width: 100%;
+    background: none;
+    border: 2px solid #4ba9dd;
+    color: white;
+    padding: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 12px 0;
+}
+
+.signIn {
+    width: 150px;
+    float: right;
+}
+
+.signIn a {
+    font-size: 15px;
+    color: #c8cdcc;
+}

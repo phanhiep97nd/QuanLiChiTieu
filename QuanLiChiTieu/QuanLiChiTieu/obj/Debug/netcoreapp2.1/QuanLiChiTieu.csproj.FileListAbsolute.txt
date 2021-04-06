@@ -1,0 +1,52 @@
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.csproj.CoreCompileInputs.cache
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.RazorAssemblyInfo.cache
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.RazorAssemblyInfo.cs
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.AssemblyInfoInputs.cache
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.AssemblyInfo.cs
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.TagHelpers.input.cache
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.TagHelpers.output.cache
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.RazorCoreGenerate.cache
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\Razor\Views\Home\Index.g.cshtml.cs
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.RazorTargetAssemblyInfo.cache
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.RazorTargetAssemblyInfo.cs
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.dll
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.pdb
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\bin\Debug\netcoreapp2.1\QuanLiChiTieu.deps.json
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\bin\Debug\netcoreapp2.1\QuanLiChiTieu.runtimeconfig.json
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\bin\Debug\netcoreapp2.1\QuanLiChiTieu.runtimeconfig.dev.json
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\bin\Debug\netcoreapp2.1\QuanLiChiTieu.dll
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\bin\Debug\netcoreapp2.1\QuanLiChiTieu.pdb
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\bin\Debug\netcoreapp2.1\QuanLiChiTieu.Views.dll
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\bin\Debug\netcoreapp2.1\QuanLiChiTieu.Views.pdb
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.Views.pdb
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.csproj.CopyComplete
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\Razor\Views\Login\Login.g.cshtml.cs
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\bin\Debug\netcoreapp2.1\QuanLiChiTieu.deps.json
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\bin\Debug\netcoreapp2.1\QuanLiChiTieu.runtimeconfig.json
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\bin\Debug\netcoreapp2.1\QuanLiChiTieu.runtimeconfig.dev.json
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\bin\Debug\netcoreapp2.1\QuanLiChiTieu.dll
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\bin\Debug\netcoreapp2.1\QuanLiChiTieu.pdb
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\bin\Debug\netcoreapp2.1\QuanLiChiTieu.Views.dll
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\bin\Debug\netcoreapp2.1\QuanLiChiTieu.Views.pdb
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.csproj.CoreCompileInputs.cache
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.RazorAssemblyInfo.cache
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.RazorAssemblyInfo.cs
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.AssemblyInfoInputs.cache
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.AssemblyInfo.cs
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.TagHelpers.input.cache
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.TagHelpers.output.cache
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.RazorCoreGenerate.cache
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\Razor\Views\Home\Index.g.cshtml.cs
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\Razor\Views\Login\Login.g.cshtml.cs
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.RazorTargetAssemblyInfo.cache
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.RazorTargetAssemblyInfo.cs
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.Views.pdb
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.dll
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.pdb
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.csproj.CopyComplete
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\Razor\Views\SignIn\SignIn.g.cshtml.cs
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.Properties.Resources.resources
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.csproj.GenerateResource.cache
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\Razor\Views\CreateIncome\CreateIncome.g.cshtml.cs
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\QuanLiChiTieu.csprojAssemblyReference.cache
+D:\QuanLiChiTieuLayout\QuanLiChiTieu\QuanLiChiTieu\obj\Debug\netcoreapp2.1\Razor\Views\CreateSpending\CreateSpending.g.cshtml.cs

@@ -1,0 +1,96 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CreateSpending</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="" href="~/style/QuanLiChiTieu.css">
+</head>
+<body onload="setNow()">
+    <header>
+        <div class="home">
+            <a href="https://phanhiep97nd.github.io/hiepphan/Hieplayout/Hiep-Profile.html" target="_blank">POWER BY Phan Văn Hiệp</a>
+        </div>
+        <div class="banner">
+            <h1>QUẢN LÍ CHI TIÊU</h1>
+            <h5>Giúp bạn tính toán các khoản thu nhập và chi tiêu để hoạch định số tiền cần đầu tư!</h5>
+        </div>
+    </header>
+    <h1 style="text-align:center; color:grey">KHAI CHI TIÊU</h1>
+    @{
+        if (Model != null)
+        {
+            <h3 style="text-align:center; color:red">@Model</h3>
+        }
+    }
+    <form style="padding:15px" action="/CreateSpending/ClickCreateSpending" method="post" id="form">
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Ngày Thực Hiện Chi Tiêu</label>
+            <input class="form-control" type="date" value="2011-08-19" id="dateSpending" name="dateSpending">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Số Tiền Chi Tiêu (VND)</label>
+            <input type="number" class="form-control" id="valueSpending" placeholder="Đơn vị VND" onchange="setFormatMonney()" name="valueSpending">
+            <label style="color:darkseagreen; font-size:15px" id="Foratmonney"></label>
+            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                Hãy nhập số tiền.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Loại Chi Tiêu</label>
+            <select class="form-control" id="typeSpending" name="typeSpending">
+                <option value="1" selected>Nhà/Sinh hoạt phí</option>
+                <option value="2">Ăn uống</option>
+                <option value="3">Mua sắm</option>
+                <option value="4">Quỹ tài chính/Bảo hiểm</option>
+                <option value="5">Trả nợ vay</option>
+                <option value="6">Di chuyển</option>
+                <option value="7">Giải trí</option>
+                <option value="8">Giáo dục/Sức khỏe</option>
+                <option value="9">Khác</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Ghi Chú</label>
+            <textarea class="form-control" id="noteSpending" rows="3" name="noteSpending"></textarea>
+        </div>
+    </form>
+    <div style="padding:15px">
+        <button class="btn btn-default" style="background:#4ba9dd" onclick="submitSpending()">Submit</button>
+    </div>
+    <script>
+        function setNow() {
+            var today = new Date();
+            document.getElementById("dateSpending").value = today.getFullYear() + "-" + (today.getUTCMonth().toString().length == 1 ? "0" + (today.getUTCMonth() + 1) : today.getUTCMonth() + 1) + "-" + today.getDate();
+        }
+        function setFormatMonney() {
+            document.getElementById("valueSpending").classList.remove("is-invalid");
+            var valueSpending = document.getElementById("valueSpending");
+            if (valueSpending.value != "") {
+                var number = parseInt(valueSpending.value);
+                document.getElementById("Foratmonney").innerHTML = number.toLocaleString() + " VND";
+            } else {
+                document.getElementById("Foratmonney").innerHTML = "";
+            }
+        }
+        function submitSpending() {
+            var valueSpending = document.getElementById("valueSpending");
+            var form = document.forms.namedItem("form");
+            if (valueSpending.value == "") {
+                valueSpending.classList.add("is-invalid");
+            } else {
+                form.submit();
+            }
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

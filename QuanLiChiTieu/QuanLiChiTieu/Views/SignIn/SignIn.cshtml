@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" type="" href="~/style/SignIn.css">
+</head>
+
+<body> 
+    <div class="signIn-box">
+        <form action="/SignIn/ClickSign" method="post">
+            <h1>Sign In</h1>
+            @{
+                if (Model != null)
+                {
+                    foreach (var Data in Model)
+                    {
+                        <p style="color:red;">@Data</p>
+                    }
+                }
+            }
+            <p id="message" style="color:red"></p>
+            <div class="textbox">
+                <i class="fas fa-user"></i>
+                <input type="text" placeholder="Tài khoản" name="loginName" value=@ViewBag.LoginName>
+            </div>
+
+            <div class="textbox">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Mật Khẩu" name="pass">
+            </div>
+
+            <div class="textbox">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Xác Nhận Mật Khẩu" name="confirmPass">
+            </div>
+
+            <input type="submit" class="btn" value="Đăng ký">
+
+        </form>
+        <div class="signIn">
+            <a href="/Login/Login">Đăng nhập tài khoản</a>
+        </div>
+    </div>
+</body>
+
+</html>
