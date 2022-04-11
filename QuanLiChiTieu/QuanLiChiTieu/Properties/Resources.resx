@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ConnectionString" xml:space="preserve">
-    <value>Data Source=DESKTOP-BOS8M2P\SQLEXPRESS;Initial Catalog=phanhiep;Integrated Security=True</value>
+    <value>workstation id=quanlichitieuphanhiep.mssql.somee.com;packet size=4096;user id=phanhiep97nd_SQLLogin_1;pwd=e4gnbki7gl;data source=quanlichitieuphanhiep.mssql.somee.com;persist security info=False;initial catalog=quanlichitieuphanhiep</value>
     <comment>SQl Server</comment>
   </data>
 </root>

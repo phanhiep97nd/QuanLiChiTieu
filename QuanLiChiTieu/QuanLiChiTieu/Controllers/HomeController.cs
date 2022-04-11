@@ -39,10 +39,13 @@ namespace QuanLiChiTieu.Controllers
             lstSearchCondition.Add(sortType == null ? "DESC" : sortType);
             string tab = HttpContext.Request.Query["tab"];
             lstSearchCondition.Add(tab == null ? "overview" : tab);
+            string message = HttpContext.Request.Query["message"];
             List<IncomeEntity> lstIncomeOverview = new List<IncomeEntity>();
             List<SpendingEntity> lstSpendingOverview = new List<SpendingEntity>();
             List<IncomeEntity> lstIncomeDetail = new List<IncomeEntity>();
             List<SpendingEntity> lstSpendingDetail = new List<SpendingEntity>();
+            List<int> lstIncomePerMonth = new List<int>();
+            List<int> lstSpendingPerMonth = new List<int>();
             if (id != idFromSession)
             {
                 return Redirect("/Login/Login");
@@ -50,18 +53,34 @@ namespace QuanLiChiTieu.Controllers
             else
             {
                 con.ConnectionString = QuanLiChiTieu.Properties.Resources.ConnectionString;
-                lstIncomeOverview = HomeModel.GetListIncome(con, com, dr, Convert.ToInt16(idFromSession), monthOverview == null ? DateTime.Now.Month.ToString() : monthOverview, yearOverview == null ? DateTime.Now.Year.ToString() : yearOverview, sortBy == null ? "DATE_INCOME" : sortBy, sortType == null ? "DESC" : sortType);
-                lstSpendingOverview = HomeModel.GetListSpending(con, com, dr, Convert.ToInt16(idFromSession), monthOverview == null ? DateTime.Now.Month.ToString() : monthOverview, yearOverview == null ? DateTime.Now.Year.ToString() : yearOverview, sortBy == null ? "DATE_INCOME" : sortBy, sortType == null ? "DESC" : sortType);
-                //lstIncomeDetail = HomeModel.GetListIncome(con, com, dr, Convert.ToInt16(idFromSession), monthDetal == null ? DateTime.Now.Month.ToString() : monthDetal, yearDetail == null ? DateTime.Now.Year.ToString() : yearDetail, sortBy == null ? "DATE_INCOME" : sortBy, sortType == null ? "DESC" : sortType);
-                //lstSpendingDetail = HomeModel.GetListSpending(con, com, dr, Convert.ToInt16(idFromSession), monthDetal == null ? DateTime.Now.Month.ToString() : monthDetal, yearDetail == null ? DateTime.Now.Year.ToString() : yearDetail, sortBy == null ? "DATE_INCOME" : sortBy, sortType == null ? "DESC" : sortType);
+                HomeModel homeModel = new HomeModel();
+                lstIncomeOverview = homeModel.GetListIncome(con, com, dr, Convert.ToInt16(idFromSession), monthOverview == null ? DateTime.Now.Month.ToString() : monthOverview, yearOverview == null ? DateTime.Now.Year.ToString() : yearOverview, sortBy == null ? "DATE_INCOME" : sortBy, sortType == null ? "DESC" : sortType);
+                lstSpendingOverview = homeModel.GetListSpending(con, com, dr, Convert.ToInt16(idFromSession), monthOverview == null ? DateTime.Now.Month.ToString() : monthOverview, yearOverview == null ? DateTime.Now.Year.ToString() : yearOverview, sortBy == null ? "DATE_INCOME" : sortBy, sortType == null ? "DESC" : sortType);
+                lstIncomeDetail = homeModel.GetListIncome(con, com, dr, Convert.ToInt16(idFromSession), monthDetal == null ? DateTime.Now.Month.ToString() : monthDetal, yearDetail == null ? DateTime.Now.Year.ToString() : yearDetail, sortBy == null ? "DATE_INCOME" : sortBy, sortType == null ? "DESC" : sortType);
+                lstSpendingDetail = homeModel.GetListSpending(con, com, dr, Convert.ToInt16(idFromSession), monthDetal == null ? DateTime.Now.Month.ToString() : monthDetal, yearDetail == null ? DateTime.Now.Year.ToString() : yearDetail, sortBy == null ? "DATE_INCOME" : sortBy, sortType == null ? "DESC" : sortType);
+                for(int i = 1; i <= 12; i++)
+                {
+                    lstIncomePerMonth.Add(homeModel.GetListIncomePerMonth(con, com, Convert.ToInt16(idFromSession), i.ToString(), yearDetail == null ? DateTime.Now.Year.ToString() : yearDetail));
+                    lstSpendingPerMonth.Add(homeModel.GetListSpendingPerMonth(con, com, Convert.ToInt16(idFromSession), i.ToString(), yearDetail == null ? DateTime.Now.Year.ToString() : yearDetail));
+                }
             }
             ViewBag.userId = idFromSession;
             ViewBag.loginName = loginName;
             ViewBag.lstIncomeOverview = lstIncomeOverview;
             ViewBag.lstSpendingOverview = lstSpendingOverview;
             ViewBag.lstSearchCondition = lstSearchCondition;
-            //ViewBag.lstIncomeDetail = lstIncomeDetail;
-            //ViewBag.lstSpendingDetail = lstSpendingDetail;
+            ViewBag.lstIncomeDetail = lstIncomeDetail;
+            ViewBag.lstSpendingDetail = lstSpendingDetail;
+            ViewBag.lstIncomePerMonth = lstIncomePerMonth;
+            ViewBag.lstSpendingPerMonth = lstSpendingPerMonth;
+            if(message == "succesDel")
+            {
+                ViewBag.message = "Xoa thanh cong!!!!";
+            }
+            else if (message == "errorDel")
+            {
+                ViewBag.message = "Xay ra loi ! Khong xoa thanh cong!!!";
+            }
             return View();
         }
 

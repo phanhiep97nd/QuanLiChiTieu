@@ -12,11 +12,13 @@ namespace QuanLiChiTieu.Models
         private string typeIncome;
         private DateTime dateIncome;
         private string noteIncome;
+        private int incomeId;
 
         public int UserId { get => userId; set => userId = value; }
         public int ValueIncome { get => valueIncome; set => valueIncome = value; }
         public string TypeIncome { get => typeIncome; set => typeIncome = value; }
         public DateTime DateIncome { get => dateIncome; set => dateIncome = value; }
         public string NoteIncome { get => noteIncome; set => noteIncome = value; }
+        public int IncomeId { get => incomeId; set => incomeId = value; }
     }
 }

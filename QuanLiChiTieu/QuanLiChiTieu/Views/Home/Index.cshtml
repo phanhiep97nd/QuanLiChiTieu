@@ -1,5 +1,6 @@
 ﻿@*@model QuanLiChiTieu.Models.HomeModel;*@
 @*@model IEnumerable<QuanLiChiTieu.Models.IncomeEntity>*@
+@using Microsoft.AspNetCore.Http.Extensions;
 @{
     string FormattedAmount(int _amount)
     {
@@ -19,6 +20,41 @@
             return false;
         }
     }
+    string getTypeSpending(string type)
+    {
+        string result = "";
+        switch (type)
+        {
+            case "1":
+                result = "Nhà/Sinh hoạt phí";
+                break;
+            case "2":
+                result = "Ăn uống";
+                break;
+            case "3":
+                result = "Mua sắm";
+                break;
+            case "4":
+                result = "Quỹ tài chính/Bảo hiểm";
+                break;
+            case "5":
+                result = "Trả nợ vay";
+                break;
+            case "6":
+                result = "Di chuyển";
+                break;
+            case "7":
+                result = "Giải trí";
+                break;
+            case "8":
+                result = "Giáo dục/Sức khỏe";
+                break;
+            case "9":
+                result = "Khác";
+                break;
+        }
+        return result;
+    }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -34,6 +70,12 @@
 </head>
 
 <body onload="setMonthYear(@ViewBag.lstSearchCondition[0],@ViewBag.lstSearchCondition[1],@ViewBag.lstSearchCondition[2],@ViewBag.lstSearchCondition[3],@ViewBag.lstSearchCondition[4]), clickDetail(@isDetail().ToString().ToLower())">
+    @{
+        if (@ViewBag.message != null)
+        {
+        <script>alert("@ViewBag.message");</script>
+            }
+        }
     <header>
         <div class="home">
             <a href="https://phanhiep97nd.github.io/hiepphan/Hieplayout/Hiep-Profile.html" target="_blank">POWER BY Phan Văn Hiệp</a>
@@ -52,12 +94,14 @@
         </div>
         <div class="menu-content">
             <ul class="clearfix nav-detail">
-                <li id="overView" onclick="clickDetail(false)">
-                    <a href="#OverView">BẢNG TỔNG QUÁT</a>
-                </li>
-                <li id="detail" onclick="clickDetail(true)">
-                    <a href="#Detail">BẢNG CHI TIẾT</a>
-                </li>
+                @*<li id="overView" onclick="clickDetail(false)">
+            <a>BẢNG TỔNG QUÁT</a>
+        </li>
+        <li id="detail" onclick="clickDetail(true)">
+            <a>BẢNG CHI TIẾT</a>
+        </li>*@
+                <li id="overView" onclick="clickDetail(false)"><a href="#overView">KHAI THU NHẬP</a></li>
+                <li id="detail" onclick="clickDetail(true)"><a href="#detail">KHAI CHI TIÊU</a></li>
             </ul>
         </div>
         <div class="content-overView clearfix">
@@ -68,29 +112,30 @@
                 <hr style="color: white;">
                 <h2>
                     Tháng
-                    <select name="" id="monthOverView" class="month" onchange="changeSearchCondition(@ViewBag.userId, @ViewBag.lstSearchCondition[5],@ViewBag.lstSearchCondition[6], 'overview')"></select> Năm
-                    <select name="" id="yearOverView" class="year" onchange="changeSearchCondition(@ViewBag.userId, 'DATE_INCOME','DESC','overview')"></select>
+                    <select name="" id="monthOverView" class="month" onchange="changeSearchCondition(@ViewBag.userId, '@ViewBag.lstSearchCondition[5]','@ViewBag.lstSearchCondition[6]', 'overview')"></select> Năm
+
+                    <select name="" id="yearOverView" class="year" onchange="changeSearchCondition(@ViewBag.userId, '@ViewBag.lstSearchCondition[5]','@ViewBag.lstSearchCondition[6]','overview')"></select>
                 </h2>
                 @*@{
-                    if (Model != null)
-                    {
-                        int totalIncome = 0;
-                        int totalSpending = 0;
-                        foreach (var Data in Model)
+                        if (Model != null)
                         {
-                            totalIncome += Data.ValueIncome;
-                            //totalSpending += Data.ValueSpending;
+                            int totalIncome = 0;
+                            int totalSpending = 0;
+                            foreach (var Data in Model)
+                            {
+                                totalIncome += Data.ValueIncome;
+                                //totalSpending += Data.ValueSpending;
+                            }
+                            <h3>Tổng thu nhập</h3>
+                            <h2>@{@FormattedAmount(totalIncome);} VND</h2>
+                            <hr style="border: 1px solid rgb(66, 157, 196);">
+                            <h3>Tổng chi tiêu</h3>
+                            <h2>VND</h2>
+                            <hr style="border: 1px solid rgb(66, 157, 196);">
+                            <h3>Tích lũy tài chính</h3>
+                            <h2>VND</h2>
                         }
-                        <h3>Tổng thu nhập</h3>
-                        <h2>@{@FormattedAmount(totalIncome);} VND</h2>
-                        <hr style="border: 1px solid rgb(66, 157, 196);">
-                        <h3>Tổng chi tiêu</h3>
-                        <h2>VND</h2>
-                        <hr style="border: 1px solid rgb(66, 157, 196);">
-                        <h3>Tích lũy tài chính</h3>
-                        <h2>VND</h2>
-                    }
-                }*@
+                    }*@
                 @{
                     int totalIncome = 0;
                     int totalSpending = 0;
@@ -100,11 +145,11 @@
                     foreach (var Data in ViewBag.lstIncomeOverview)
                     {
                         totalIncome += Data.ValueIncome;
-                        if(Data.TypeIncome == "1")
+                        if (Data.TypeIncome == "1")
                         {
                             salaryIncome += Data.ValueIncome;
                         }
-                        else if(Data.TypeIncome == "2")
+                        else if (Data.TypeIncome == "2")
                         {
                             otherIncome += Data.ValueIncome;
                         }
@@ -151,7 +196,7 @@
                     <h2>@{@FormattedAmount(totalSpending);} VND</h2>
                     <hr style="border: 1px solid rgb(66, 157, 196);">
                     <h3>Tích lũy tài chính</h3>
-                    <h2>@{@FormattedAmount(totalIncome - totalSpending);}VND</h2>
+                    <h2>@{@FormattedAmount(totalIncome - totalSpending);} VND</h2>
                 }
             </div>
             <div class="right-content-overView">
@@ -227,49 +272,115 @@
                         <option value="1">Theo tháng</option>
                         <option value="2">Theo Năm</option>
                     </select>
-                    <select name="" id="monthDetail" class="month" onchange="changeSearchCondition(@ViewBag.userId, 'DATE_INCOME','DESC','detail')">
+                    <select name="" id="monthDetail" class="month" onchange="changeSearchCondition(@ViewBag.userId, '@ViewBag.lstSearchCondition[5]','@ViewBag.lstSearchCondition[6]','detail')">
                         <option value="0" selected>-Chọn tháng-</option>
                     </select>
-                    <select name="" id="yearDetail" class="year" onchange="changeSearchCondition(@ViewBag.userId, 'DATE_INCOME', 'DESC', 'detail')"></select>
+                    <select name="" id="yearDetail" class="year" onchange="changeSearchCondition(@ViewBag.userId, '@ViewBag.lstSearchCondition[5]','@ViewBag.lstSearchCondition[6]', 'detail')"></select>
                 </h2>
                 <hr style="color: white;">
                 <h2>Thu Nhập</h2>
-                <table border="1" cellpadding="0" cellspacing="0" style="width: 100%;text-align: center;">
+                <table border="1" cellpadding="0" cellspacing="0" style="width: 100%;text-align: center;border-color:white">
                     <tr>
-                        <td style="width: 20%;">
-                            <h3>Ngày</h3>
-                        </td>
-                        <td style="width: 20%;">
+                        <th style="width: 20%;">
+                            <h3>
+                                Ngày @(@ViewBag.lstSearchCondition[5] == "DATE_INCOME" ? "(*)" : "")
+                                @{
+                                    if (@ViewBag.lstSearchCondition[6] == "DESC")
+                                    {
+                                        <a onclick="changeSearchCondition(@ViewBag.userId, 'DATE_INCOME','ASC', 'detail')" href="#" style="color:white">▲▽</a>
+                                    }
+                                    else if (@ViewBag.lstSearchCondition[6] == "ASC")
+                                    {
+                                        <a onclick="changeSearchCondition(@ViewBag.userId, 'DATE_INCOME','DESC', 'detail')" href="#" style="color:white">△▼</a>
+                                    }
+                                }
+                            </h3>
+                        </th>
+                        <th style="width: 20%;">
                             <h3>Loại thu nhập</h3>
-                        </td>
-                        <td style="width: 20%;">
-                            <h3>Số tiền</h3>
-                        </td>
-                        <td>
+                        </th>
+                        <th style="width: 20%;">
+                            <h3>
+                                Số tiền(VND) @(@ViewBag.lstSearchCondition[5] == "VALUE_INCOME" ? "(*)" : "")
+                                @{
+                                    if (@ViewBag.lstSearchCondition[6] == "DESC")
+                                    {
+                                        <a onclick="changeSearchCondition(@ViewBag.userId, 'VALUE_INCOME','ASC', 'detail')" href="#" style="color:white">▲▽</a>
+                                    }
+                                    else if (@ViewBag.lstSearchCondition[6] == "ASC")
+                                    {
+                                        <a onclick="changeSearchCondition(@ViewBag.userId, 'VALUE_INCOME','DESC', 'detail')" href="#" style="color:white">△▼</a>
+                                    }
+                                }
+                            </h3>
+                        </th>
+                        <th>
                             <h3>Ghi chú</h3>
-                        </td>
+                        </th>
+                        <th style="width: 5%;">
+                        </th>
+                        <th style="width: 5%;">
+                        </th>
                     </tr>
+                    @{
+                        int totalIncomeDetail = 0;
+                        foreach (var dataIncomeDetail in ViewBag.lstIncomeDetail)
+                        {
+                            String path = "/Edit/Edit/" + @dataIncomeDetail.IncomeId + "?typeEdit=income";
+                            totalIncomeDetail += dataIncomeDetail.ValueIncome;
+                            <tr>
+                                <td>@dataIncomeDetail.DateIncome.ToString("dd/MM/yyyy")</td>
+                                <td>@(dataIncomeDetail.TypeIncome == "1" ? "Tiền lương" : "Khác")</td>
+                                <td>@{@FormattedAmount(dataIncomeDetail.ValueIncome);} </td>
+                                <td>@dataIncomeDetail.NoteIncome</td>
+                                <td><a href="@path"><img src="https://img.icons8.com/metro/16/ffffff/edit.png" /></a></td>
+                                <td><a onclick="checkDelete(@dataIncomeDetail.IncomeId, 'income')"><img src="https://img.icons8.com/small/26/ffffff/delete-forever.png" /></a></td>
+                            </tr>
+                        }
+                    }
                 </table>
-                <h3>Tổng: VND</h3>
+                <h3>Tổng:@{@FormattedAmount(totalIncomeDetail);} VND</h3>
                 <hr style="color: white;">
                 <h2>Chi Tiêu</h2>
-                <table border="1" cellpadding="0" cellspacing="0" style="width: 100%;text-align: center;">
+                <table border="1" cellpadding="0" cellspacing="0" style="width: 100%;text-align: center;border-color:white">
                     <tr>
-                        <td style="width: 20%;">
-                            <h3>Ngày<a>△▼▲▽</a></h3>
-                        </td>
-                        <td style="width: 20%;">
+                        <th style="width: 20%;">
+                            <h3>Ngày</h3>
+                        </th>
+                        <th style="width: 20%;">
                             <h3>Loại chi tiêu</h3>
-                        </td>
-                        <td style="width: 20%;">
-                            <h3>Số tiền</h3>
-                        </td>
-                        <td>
+                        </th>
+                        <th style="width: 20%;">
+                            <h3>Số tiền(VND)</h3>
+                        </th>
+                        <th>
                             <h3>Ghi chú</h3>
-                        </td>
+                        </th>
+                        <th style="width: 5%;">
+                        </th>
+                        <th style="width: 5%;">
+                        </th>
                     </tr>
+                    @{
+                        int totalSpendingDetail = 0;
+                        foreach (var dataSpendingDetail in ViewBag.lstSpendingDetail)
+                        {
+                            totalSpendingDetail += dataSpendingDetail.ValueSpending;
+                            String path = "/Edit/Edit/" + @dataSpendingDetail.SpendingId + "?typeEdit=spending";
+                            <tr>
+                                <td>@dataSpendingDetail.DateSpending.ToString("dd/MM/yyyy")</td>
+                                <td>@{@getTypeSpending(dataSpendingDetail.TypeSpending);} </td>
+                                <td>@{@FormattedAmount(dataSpendingDetail.ValueSpending);} </td>
+                                <td>@dataSpendingDetail.NoteSpending</td>
+                                <td><a href="@path"><img src="https://img.icons8.com/metro/16/ffffff/edit.png" /></a></td>
+                                <td><a onclick="checkDelete(@dataSpendingDetail.SpendingId, 'spending')"><img src="https://img.icons8.com/small/26/ffffff/delete-forever.png" /></a></td>
+                            </tr>
+                        }
+                    }
                 </table>
-                <h3>Tổng: VND</h3>
+                <h3>Tổng:@{@FormattedAmount(totalSpendingDetail);} VND</h3>
+                <hr style="color: white;">
+                <h3>Tích Lũy Tài Chính:@{@FormattedAmount(totalIncomeDetail - totalSpendingDetail);} VND</h3>
             </div>
             <div class="right-content-detail">
                 <canvas id="myChart"></canvas>
@@ -291,15 +402,21 @@
             labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
             datasets: [{
                 label: 'Thu',
-                data: [13, 20, 30, 40, 50, 70, 45, 65, 30, 40, 55, 65],
+                data: [@ViewBag.lstIncomePerMonth[0], @ViewBag.lstIncomePerMonth[1], @ViewBag.lstIncomePerMonth[2], @ViewBag.lstIncomePerMonth[3], @ViewBag.lstIncomePerMonth[4]
+                    , @ViewBag.lstIncomePerMonth[5], @ViewBag.lstIncomePerMonth[6], @ViewBag.lstIncomePerMonth[7], @ViewBag.lstIncomePerMonth[8], @ViewBag.lstIncomePerMonth[9],
+                    @ViewBag.lstIncomePerMonth[10], @ViewBag.lstIncomePerMonth[11]],
+                //data: [28, 68, 40, 19, 96, 13, 20, 30, 40, 50, 70, 55],
                 backgroundColor: "rgba(151,249,190,0.5)",
                 borderWidth: 1,
                 borderColor: '#777',
                 hoverBorderWidth: 3,
                 hoverBorderColor: '#000'
             }, {
-                label: 'Chi',
-                data: [28, 68, 40, 19, 96, 13, 20, 30, 40, 50, 70, 55],
+                    label: 'Chi',
+                data: [@ViewBag.lstSpendingPerMonth[0], @ViewBag.lstSpendingPerMonth[1], @ViewBag.lstSpendingPerMonth[2], @ViewBag.lstSpendingPerMonth[3], @ViewBag.lstSpendingPerMonth[4]
+                    , @ViewBag.lstSpendingPerMonth[5], @ViewBag.lstSpendingPerMonth[6], @ViewBag.lstSpendingPerMonth[7], @ViewBag.lstSpendingPerMonth[8], @ViewBag.lstSpendingPerMonth[9],
+                    @ViewBag.lstSpendingPerMonth[10], @ViewBag.lstSpendingPerMonth[11]],
+                //data: [28, 68, 40, 19, 96, 13, 20, 30, 40, 50, 70, 55],
                 backgroundColor: "rgba(252,147,65,0.5)",
                 borderWidth: 1,
                 borderColor: '#777',
@@ -345,7 +462,10 @@
                             labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
                             datasets: [{
                 label: 'Tích lũy',
-                                data: [13, 20, 30, 40, 50, 70, 45, 65, 30, 40, 55, 65],
+                                data: [@ViewBag.lstIncomePerMonth[0] - @ViewBag.lstSpendingPerMonth[0], @ViewBag.lstIncomePerMonth[1] - @ViewBag.lstSpendingPerMonth[1], @ViewBag.lstIncomePerMonth[2] - @ViewBag.lstSpendingPerMonth[2],
+                                    @ViewBag.lstIncomePerMonth[3] - @ViewBag.lstSpendingPerMonth[3], @ViewBag.lstIncomePerMonth[4] - @ViewBag.lstSpendingPerMonth[4], @ViewBag.lstIncomePerMonth[5] - @ViewBag.lstSpendingPerMonth[5],
+                                    @ViewBag.lstIncomePerMonth[6] - @ViewBag.lstSpendingPerMonth[6], @ViewBag.lstIncomePerMonth[7] - @ViewBag.lstSpendingPerMonth[7], @ViewBag.lstIncomePerMonth[8] - @ViewBag.lstSpendingPerMonth[8],
+                                    @ViewBag.lstIncomePerMonth[9] - @ViewBag.lstSpendingPerMonth[9], @ViewBag.lstIncomePerMonth[10] - @ViewBag.lstSpendingPerMonth[10], @ViewBag.lstIncomePerMonth[11] - @ViewBag.lstSpendingPerMonth[11]],
                                 borderColor: "rgba(252,147,65,0.5)",
                                 pointBackgroundColor: "red",
                                 backgroundColor: "rgb(211, 219, 189)",

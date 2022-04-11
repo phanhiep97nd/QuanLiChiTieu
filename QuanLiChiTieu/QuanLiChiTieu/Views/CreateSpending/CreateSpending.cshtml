@@ -31,8 +31,8 @@
     }
     <form style="padding:15px" action="/CreateSpending/ClickCreateSpending" method="post" id="form">
         <div class="form-group">
-            <label for="exampleFormControlTextarea1">Ngày Thực Hiện Chi Tiêu</label>
-            <input class="form-control" type="date" value="2011-08-19" id="dateSpending" name="dateSpending">
+            <label for="exampleFormControlTextarea1">Ngày Thực Hiện Chi Tiêu (tháng/ngày/năm)</label>
+            <input class="form-control" type="date"  id="dateSpending" name="dateSpending">
         </div>
         <div class="form-group">
             <label for="exampleFormControlInput1">Số Tiền Chi Tiêu (VND)</label>
@@ -67,7 +67,7 @@
     <script>
         function setNow() {
             var today = new Date();
-            document.getElementById("dateSpending").value = today.getFullYear() + "-" + (today.getUTCMonth().toString().length == 1 ? "0" + (today.getUTCMonth() + 1) : today.getUTCMonth() + 1) + "-" + today.getDate();
+            document.getElementById("dateSpending").value = today.getFullYear() + "-" + (today.getUTCMonth().toString().length == 1 ? "0" + (today.getUTCMonth() + 1) : today.getUTCMonth() + 1) + "-" + (today.getDate().toString().length == 1 ? "0" + today.getDate() : today.getDate());
         }
         function setFormatMonney() {
             document.getElementById("valueSpending").classList.remove("is-invalid");

@@ -31,8 +31,8 @@
     }
     <form style="padding:15px" action="/CreateIncome/ClickCreateIncome" method="post" id="form">
         <div class="form-group">
-            <label for="exampleFormControlTextarea1">Ngày Nhận Được Thu Nhập</label>
-            <input class="form-control" type="date" value="2011-08-19" id="dateIncome" name="dateIncome">
+            <label for="exampleFormControlTextarea1">Ngày Nhận Được Thu Nhập (tháng/ngày/năm)</label>
+            <input class="form-control" type="date" id="dateIncome" name="dateIncome">
         </div>
         <div class="form-group">
             <label for="exampleFormControlInput1">Số Tiền Thu Nhập (VND)</label>
@@ -60,7 +60,7 @@
     <script>
         function setNow() {
             var today = new Date();
-            document.getElementById("dateIncome").value = today.getFullYear() + "-" + (today.getUTCMonth().toString().length == 1 ? "0" + (today.getUTCMonth() + 1) : today.getUTCMonth() + 1) + "-" + today.getDate();
+            document.getElementById("dateIncome").value = today.getFullYear() + "-" + (today.getUTCMonth().toString().length == 1 ? "0" + (today.getUTCMonth() + 1) : today.getUTCMonth() + 1) + "-" + (today.getDate().toString().length == 1 ? "0" + today.getDate() : today.getDate());
         }
         function setFormatMonney() {
             document.getElementById("valueIncome").classList.remove("is-invalid");

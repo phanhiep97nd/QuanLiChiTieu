@@ -1,0 +1,131 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="" href="~/style/QuanLiChiTieu.css">
+</head>
+<body onload="setValue();setFormatMonney()">
+    <header>
+        <div class="home">
+            <a href="https://phanhiep97nd.github.io/hiepphan/Hieplayout/Hiep-Profile.html" target="_blank">POWER BY Phan Văn Hiệp</a>
+        </div>
+        <div class="banner">
+            <h1>QUẢN LÍ CHI TIÊU</h1>
+            <h5>Giúp bạn tính toán các khoản thu nhập và chi tiêu để hoạch định số tiền cần đầu tư!</h5>
+        </div>
+    </header>
+    <h1 style="text-align:center; color:grey">CHỈNH SỬA CHI TIẾT</h1>
+    <h2 style="text-align:center; color:grey"></h2>
+    @{ if (@ViewBag.typeEdit == "income")
+        {
+            <h2 style="text-align:center; color:grey">THU NHAP</h2>
+            <input type="hidden" value="@ViewBag.IncomeInfo.DateIncome.ToString("yyyy-MM-dd")" id="dateHidden" />
+            <input type="hidden" value="@ViewBag.IncomeInfo.ValueIncome" id="valueHidden" />
+            <input type="hidden" value="@(@ViewBag.IncomeInfo.NoteIncome == "NA" ? "" : @ViewBag.IncomeInfo.NoteIncome)" id="typeHidden" />
+            <input type="hidden" value="@ViewBag.IncomeInfo.TypeIncome" id="noteHidden" />
+            <input type="hidden" value="@ViewBag.IncomeInfo.IncomeId" id="idHidden" />
+        }
+        else if (@ViewBag.typeEdit == "spending")
+        {
+            <h2 style="text-align:center; color:grey">Chi tiêu</h2>
+            <input type="hidden" value="@ViewBag.SpendingInfo.DateSpending.ToString("yyyy-MM-dd")" id="dateHidden" />
+            <input type="hidden" value="@ViewBag.SpendingInfo.ValueSpending" id="valueHidden" />
+            <input type="hidden" value="@(@ViewBag.SpendingInfo.NoteSpending == "NA" ? "" : @ViewBag.SpendingInfo.NoteSpending)" id="typeHidden" />
+            <input type="hidden" value="@ViewBag.SpendingInfo.TypeSpending" id="noteHidden" />
+            <input type="hidden" value="@ViewBag.SpendingInfo.SpendingId" id="idHidden" />
+        } }
+    @{ if (Model != null)
+        {
+            <h3 style="text-align:center; color:red">@Model</h3> } }
+    <form style="padding:15px" action="/Edit/ClickEdit" method="post" id="form">
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Ngày (tháng/ngày/năm)</label>
+            <input class="form-control" type="date" id="date" name="date">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Số Tiền (VND)</label>
+            <input type="number" class="form-control" id="value" placeholder="Đơn vị VND" onchange="setFormatMonney()" name="value">
+            <label style="color:darkseagreen; font-size:15px" id="Foratmonney"></label>
+            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                Hãy nhập số tiền.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Loại</label>
+            <select class="form-control" id="type" name="type">
+                @{ if (@ViewBag.typeEdit == "income")
+                    {
+                        <option value="1">Tiền Lương</option>
+                        <option value="2">Khác</option>
+                    }
+                    else if (@ViewBag.typeEdit == "spending")
+                    {
+                        <option value="1" selected>Nhà/Sinh hoạt phí</option>
+                        <option value="2">Ăn uống</option>
+                        <option value="3">Mua sắm</option>
+                        <option value="4">Quỹ tài chính/Bảo hiểm</option>
+                        <option value="5">Trả nợ vay</option>
+                        <option value="6">Di chuyển</option>
+                        <option value="7">Giải trí</option>
+                        <option value="8">Giáo dục/Sức khỏe</option>
+                        <option value="9">Khác</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Ghi Chú</label>
+            <textarea class="form-control" id="note" rows="3" name="note"></textarea>
+        </div>
+        <input type="hidden" value="@ViewBag.typeEdit" name="typeEdit">
+        <input type="hidden" name="id" id="id">
+    </form>
+    <div style="padding:15px">
+        <button class="btn btn-default" style="background:#4ba9dd" onclick="submitEdit()">Submit</button>
+    </div>
+    <script>
+        function setValue() {
+            var dateIncome = document.getElementById('dateHidden').value;
+            var valueIncome = document.getElementById('valueHidden').value;
+            var noteIncome = document.getElementById('typeHidden').value;
+            var typeIncome = document.getElementById('noteHidden').value;
+            var id = document.getElementById('idHidden').value;
+            console.log(dateIncome + "-" + valueIncome + "-" + noteIncome + "-" + typeIncome);
+            document.getElementById("date").value = dateIncome;
+            document.getElementById("value").value = valueIncome;
+            document.getElementById("note").value = noteIncome;
+            document.getElementById("type").value = typeIncome;
+            document.getElementById("id").value = id;
+        }
+        function setFormatMonney() {
+            document.getElementById("value").classList.remove("is-invalid");
+            var value = document.getElementById("value");
+            if (value.value != "") {
+                var number = parseInt(value.value);
+                document.getElementById("Foratmonney").innerHTML = number.toLocaleString() + " VND";
+            } else {
+                document.getElementById("Foratmonney").innerHTML = "";
+            }
+        }
+        function submitEdit() {
+            var value = document.getElementById("value");
+            var form = document.forms.namedItem("form");
+            if (value.value == "") {
+                value.classList.add("is-invalid");
+            } else {
+                form.submit();
+            }
+        }</script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
