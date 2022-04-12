@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLiChiTieu.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -11,27 +12,26 @@ namespace QuanLiChiTieuWebForm.Model
 {
     public class LoginModel
     {
-        public static bool CheckLogin(UserInfo userInfo)
+        public static UserInfo GetInfoLogin(string loginName)
         {
-            bool result = false;
             SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
+            SqlCommand com = new SqlCommand();
+            UserInfo userInfo = new UserInfo();
             try
             {
                 conn.Open();
-                StringBuilder sb = new StringBuilder();
-                sb.Append("SELECT * FROM [USER_INFO]");
-                sb.Append(" WHERE");
-                sb.Append(" LOGIN_NAME = @loginName");
-                sb.Append(" AND PASS = @pass");
-                SqlCommand com = new SqlCommand(sb.ToString(), conn);
-                com.Parameters.Add("@loginName", SqlDbType.NVarChar).Value = userInfo.LoginName;
-                com.Parameters.Add("@pass", SqlDbType.NVarChar).Value = Common.Common.encode(userInfo.Pass);
+                com.Connection = conn;
+                com.CommandText = "SELECT * FROM [dbo].[USER_INFO] WHERE [LOGIN_NAME] = @loginNameCheck";
+                com.Parameters.AddWithValue("@loginNameCheck", loginName);
 
-                SqlDataReader reader = com.ExecuteReader();
+                SqlDataReader dr = com.ExecuteReader();
 
-                if (reader.HasRows)
+                while (dr.Read())
                 {
-                    result = true;
+                    userInfo.Id = int.Parse(dr["USER_ID"].ToString());
+                    userInfo.Pass = dr["PASS"].ToString();
+                    userInfo.EndCodePass = dr["ENCODE_PASS"].ToString();
+                    break;
                 }
             }
             catch (Exception ex)
@@ -43,7 +43,7 @@ namespace QuanLiChiTieuWebForm.Model
                 conn.Close();
             }
 
-            return result;
+            return userInfo;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLiChiTieu.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -43,13 +44,14 @@ namespace QuanLiChiTieuWebForm
             {
                 try
                 {
-                    Model.UserInfo userInfo = new Model.UserInfo();
-                    userInfo.LoginName = loginName;
-                    userInfo.Pass = pass;
+                    UserInfo userInfo = new UserInfo();
 
-                    bool isLoginSucces = Model.LoginModel.CheckLogin(userInfo);
-                    if (isLoginSucces)
+                    userInfo = Model.LoginModel.GetInfoLogin(loginName);
+                    string passEncode = Common.Common.encode(pass, userInfo.EndCodePass);
+                    if (passEncode.Equals(userInfo.Pass))
                     {
+                        //Session.Add("UserName", userInfo.LoginName);
+                        Session["UserName"] = loginName;
                         Response.Redirect("Home.aspx", false);
                     }
                     else

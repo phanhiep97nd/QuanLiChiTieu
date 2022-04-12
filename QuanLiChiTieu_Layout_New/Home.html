@@ -313,16 +313,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form style="padding:15px" action="" method="post" id="form">
+                    <form style="padding:15px" action="/CreateSpending/ClickCreateSpending" method="post" id="form">
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Ngày Nhận Được Thu Nhập (tháng/ngày/năm)</label>
+                            <label for="exampleFormControlTextarea1">Ngày Thực Hiện Chi Tiêu (tháng/ngày/năm)</label>
                             <input class="form-control" type="date" id="dateSpending" name="dateSpending">
-                            <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                                Hãy nhập ngày tháng.
-                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlInput1">Số Tiền Thu Nhập (VND)</label>
+                            <label for="exampleFormControlInput1">Số Tiền Chi Tiêu (VND)</label>
                             <input type="number" class="form-control" id="valueSpending" placeholder="Đơn vị VND" onchange="setFormatMonney()" name="valueSpending">
                             <label style="color:darkseagreen; font-size:15px" id="Foratmonney"></label>
                             <div id="validationServerUsernameFeedback" class="invalid-feedback">
@@ -330,19 +327,22 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlSelect1">Loại Thu Nhập</label>
+                            <label for="exampleFormControlSelect1">Loại Chi Tiêu</label>
                             <select class="form-control" id="typeSpending" name="typeSpending">
-                                <option value="1" selected>Tiền Lương</option>
-                                <option value="2">Khác</option>
+                                <option value="1" selected>Nhà/Sinh hoạt phí</option>
+                                <option value="2">Ăn uống</option>
+                                <option value="3">Mua sắm</option>
+                                <option value="4">Quỹ tài chính/Bảo hiểm</option>
+                                <option value="5">Trả nợ vay</option>
+                                <option value="6">Di chuyển</option>
+                                <option value="7">Giải trí</option>
+                                <option value="8">Giáo dục/Sức khỏe</option>
+                                <option value="9">Khác</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Ghi Chú</label>
                             <textarea class="form-control" id="noteSpending" rows="3" name="noteSpending"></textarea>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" onclick="submitSpending()">Submit</button>
                         </div>
                     </form>
                 </div>

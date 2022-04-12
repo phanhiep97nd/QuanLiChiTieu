@@ -9,10 +9,10 @@ namespace QuanLiChiTieuWebForm.Common
 {
     public class Common
     {
-        public static string encode(string pass)
+        public static string encode(string pass, string encode)
         {
             string str_md5 = "";
-            byte[] mang = System.Text.Encoding.UTF8.GetBytes(pass);
+            byte[] mang = System.Text.Encoding.UTF8.GetBytes(pass + encode);
 
             MD5CryptoServiceProvider my_md5 = new MD5CryptoServiceProvider();
             mang = my_md5.ComputeHash(mang);

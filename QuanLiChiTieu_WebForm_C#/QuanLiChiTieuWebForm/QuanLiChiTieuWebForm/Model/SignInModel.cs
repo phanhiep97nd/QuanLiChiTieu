@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLiChiTieu.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -20,11 +21,14 @@ namespace QuanLiChiTieuWebForm.Model
                 conn.Open();
                 SqlCommand com = new SqlCommand();
                 com.Connection = conn;
-                com.CommandText = "INSERT INTO [dbo].[USER_INFO] ([LOGIN_NAME],[PASS],[LOGIN_TIME],[LOGIN_STATUS]) VALUES (@loginName, @pass, @loginTime, @statusTime)";
+                com.CommandText = "INSERT INTO [dbo].[USER_INFO] ([LOGIN_NAME],[PASS],[ENCODE_PASS],[LOGIN_TIME],[LOGIN_STATUS]) VALUES (@loginName, @pass, @encodePass, @loginTime, @statusTime)";
+                //com.Parameters.AddWithValue("@userId", userInfo.Id);
                 com.Parameters.AddWithValue("@loginName", userInfo.LoginName);
-                string encodePass = Common.Common.encode(userInfo.Pass);
+                string encodeKey = DateTime.Now.ToString();
+                string encodePass = Common.Common.encode(userInfo.Pass, encodeKey);
                 com.Parameters.AddWithValue("@pass", encodePass);
-                com.Parameters.AddWithValue("@loginTime", DateTime.Now.ToString());
+                com.Parameters.AddWithValue("@encodePass", encodeKey);
+                com.Parameters.AddWithValue("@loginTime", encodeKey);
                 com.Parameters.AddWithValue("@statusTime", 0);
 
                 com.ExecuteNonQuery();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLiChiTieu.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -40,7 +41,7 @@ namespace QuanLiChiTieuWebForm
             {
                 try
                 {
-                    Model.UserInfo userInfo = new Model.UserInfo();
+                    UserInfo userInfo = new UserInfo();
                     userInfo.LoginName = loginName;
                     userInfo.Pass = pass;
 
