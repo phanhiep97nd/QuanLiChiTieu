@@ -50,8 +50,8 @@ namespace QuanLiChiTieuWebForm
                     string passEncode = Common.Common.encode(pass, userInfo.EndCodePass);
                     if (passEncode.Equals(userInfo.Pass))
                     {
-                        //Session.Add("UserName", userInfo.LoginName);
                         Session["UserName"] = loginName;
+                        Session["UserId"] = userInfo.Id;
                         Response.Redirect("Home.aspx", false);
                     }
                     else

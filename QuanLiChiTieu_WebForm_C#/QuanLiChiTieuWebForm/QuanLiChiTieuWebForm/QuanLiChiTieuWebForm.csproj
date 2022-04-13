@@ -194,6 +194,7 @@
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Model\IncomeEntity.cs" />
+    <Compile Include="Model\IncomeModels.cs" />
     <Compile Include="Model\LoginModel.cs" />
     <Compile Include="Model\SignInModel.cs" />
     <Compile Include="Model\SpendingEntity.cs" />

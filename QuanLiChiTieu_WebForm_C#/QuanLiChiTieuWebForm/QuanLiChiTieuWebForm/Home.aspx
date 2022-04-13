@@ -63,6 +63,8 @@
         function submitSpending() {
             var valueSpending = document.getElementById("valueSpending");
             var dateSpending = document.getElementById("dateSpending");
+            valueSpending.classList.remove("is-invalid");
+			dateSpending.classList.remove("is-invalid");
             var form = document.forms.namedItem("form");
             var errorFlg = false;
             if (valueSpending.value == "") {
@@ -74,13 +76,15 @@
                 errorFlg = true;
             }
             if (!errorFlg) {
-                form.submit();
+				document.getElementById("SubmitIncome").click();
             }
         }
 
         function submitIncome() {
             var valueIncome = document.getElementById("ValueIncome");
             var dateIncome = document.getElementById("DateIncome");
+            valueIncome.classList.remove("is-invalid");
+			dateIncome.classList.remove("is-invalid");
             var form = document.forms.namedItem("form");
             var errorFlg = false;
             if (valueIncome.value == "") {
@@ -91,11 +95,14 @@
                 dateIncome.classList.add("is-invalid");
                 errorFlg = true;
             }
-            if (!errorFlg) {
-                form.submit();
-            }
+			if (!errorFlg) {
+                return true;
+			}
+			else {
+				return false;
+			}
         }
-    </script>
+	</script>
 </head>
 
 <body onload="setMonthYear()">
@@ -281,7 +288,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Số Tiền Thu Nhập (VND)</label>
-                                <asp:TextBox ID="ValueIncome" runat="server" CssClass="form-control" TextMode="Number" placeholder="Search Employee By Email" onchange="setFormatMonney();"></asp:TextBox>
+                                <asp:TextBox ID="ValueIncome" runat="server" CssClass="form-control" TextMode="Number" placeholder="Nhập số tiền ..." onchange="setFormatMonney();"></asp:TextBox>
                                 <label style="color:darkseagreen; font-size:15px" id="Foratmonney"></label>
                                 <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                     Hãy nhập số tiền.
@@ -289,18 +296,26 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Loại Thu Nhập</label>
-                                <select class="form-control" id="typeIncome">
+                                <%--<select class="form-control" id="typeIncome">
                                     <option value="1" selected>Tiền Lương</option>
                                     <option value="2">Khác</option>
-                                </select>
+                                </select>--%>
+                                <asp:DropDownList id="TypeIncome"
+                                    runat="server"
+                                    CssClass="form-control">
+                                  <asp:ListItem Selected="True" Value="1"> Tiền Lương </asp:ListItem>
+                                  <asp:ListItem Value="2"> Khác </asp:ListItem>
+                               </asp:DropDownList>
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Ghi Chú</label>
-                                <textarea class="form-control" id="noteIncome" rows="3"></textarea>
+                                <%--<textarea class="form-control" id="noteIncome" rows="3"></textarea>--%>
+                                <asp:TextBox ID="NoteIncome" runat="server" CssClass="form-control" TextMode="multiline" placeholder="Note ..."></asp:TextBox>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" onclick="submitIncome()">Submit</button>
+                                <%--<button type="button" class="btn btn-primary" onclick="submitIncome()">Submit</button>--%>
+                                <asp:Button ID="SubmitIncome" runat="server" Text="Submit" OnClientClick="return submitIncome()" CssClass="btn btn-primary"/>
                             </div>
                         </form>
                     </div>
