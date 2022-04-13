@@ -61,11 +61,10 @@
         }
 
         function submitSpending() {
-            var valueSpending = document.getElementById("valueSpending");
-            var dateSpending = document.getElementById("dateSpending");
+            var valueSpending = document.getElementById("ValueSpending");
+            var dateSpending = document.getElementById("DateSpending");
             valueSpending.classList.remove("is-invalid");
 			dateSpending.classList.remove("is-invalid");
-            var form = document.forms.namedItem("form");
             var errorFlg = false;
             if (valueSpending.value == "") {
                 valueSpending.classList.add("is-invalid");
@@ -76,7 +75,10 @@
                 errorFlg = true;
             }
             if (!errorFlg) {
-				document.getElementById("SubmitIncome").click();
+                return true;
+            }
+            else {
+                return false;
             }
         }
 
@@ -102,7 +104,7 @@
 				return false;
 			}
         }
-	</script>
+    </script>
 </head>
 
 <body onload="setMonthYear()">
@@ -278,7 +280,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form style="padding:15px" action="" method="post" id="form">
+                        <%--<form style="padding:15px" action="" method="" id="form">--%>
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Ngày Nhận Được Thu Nhập (tháng/ngày/năm)</label>
                                 <asp:TextBox ID="DateIncome" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
@@ -317,7 +319,7 @@
                                 <%--<button type="button" class="btn btn-primary" onclick="submitIncome()">Submit</button>--%>
                                 <asp:Button ID="SubmitIncome" runat="server" Text="Submit" OnClientClick="return submitIncome()" CssClass="btn btn-primary"/>
                             </div>
-                        </form>
+                        <%--</form>--%>
                     </div>
                 </div>
             </div>
@@ -330,14 +332,17 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form style="padding:15px" action="/CreateSpending/ClickCreateSpending" method="post" id="form">
+                        <%--<form style="padding:15px" action="" method="" id="form">--%>
                             <div class="form-group">
-                                <label for="exampleFormControlTextarea1">Ngày Thực Hiện Chi Tiêu (tháng/ngày/năm)</label>
-                                <input class="form-control" type="date" id="dateSpending" name="dateSpending">
+                                <label for="exampleFormControlTextarea1">Ngày Thực hiện chi tiêu (tháng/ngày/năm)</label>
+                                <asp:TextBox ID="DateSpending" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
+                                <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                    Hãy nhập ngày tháng.
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Số Tiền Chi Tiêu (VND)</label>
-                                <input type="number" class="form-control" id="valueSpending" placeholder="Đơn vị VND" onchange="setFormatMonney()" name="valueSpending">
+                                <asp:TextBox ID="ValueSpending" runat="server" CssClass="form-control" TextMode="Number" placeholder="Nhập số tiền ..." onchange="setFormatMonney();"></asp:TextBox>
                                 <label style="color:darkseagreen; font-size:15px" id="Foratmonney"></label>
                                 <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                     Hãy nhập số tiền.
@@ -345,23 +350,31 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Loại Chi Tiêu</label>
-                                <select class="form-control" id="typeSpending" name="typeSpending">
-                                    <option value="1" selected>Nhà/Sinh hoạt phí</option>
-                                    <option value="2">Ăn uống</option>
-                                    <option value="3">Mua sắm</option>
-                                    <option value="4">Quỹ tài chính/Bảo hiểm</option>
-                                    <option value="5">Trả nợ vay</option>
-                                    <option value="6">Di chuyển</option>
-                                    <option value="7">Giải trí</option>
-                                    <option value="8">Giáo dục/Sức khỏe</option>
-                                    <option value="9">Khác</option>
-                                </select>
+                                <asp:DropDownList id="TypeSpending"
+                                    runat="server"
+                                    CssClass="form-control">
+                                  <asp:ListItem Selected="True" Value="1"> Nhà/Sinh hoạt phí </asp:ListItem>
+                                  <asp:ListItem Value="2"> Ăn uống </asp:ListItem>
+                                  <asp:ListItem Value="3"> Mua sắm </asp:ListItem>
+                                  <asp:ListItem Value="4"> Quỹ tài chính/Bảo hiểm </asp:ListItem>
+                                  <asp:ListItem Value="5"> Trả nợ vay </asp:ListItem>
+                                  <asp:ListItem Value="6"> Di chuyển </asp:ListItem>
+                                  <asp:ListItem Value="7"> Giải trí </asp:ListItem>
+                                  <asp:ListItem Value="8"> Giáo dục/Sức khỏe </asp:ListItem>
+                                  <asp:ListItem Value="9"> Khác </asp:ListItem>
+                               </asp:DropDownList>
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Ghi Chú</label>
-                                <textarea class="form-control" id="noteSpending" rows="3" name="noteSpending"></textarea>
+                                <%--<textarea class="form-control" id="noteSpending" rows="3"></textarea>--%>
+                                <asp:TextBox ID="NoteSpending" runat="server" CssClass="form-control" TextMode="multiline" placeholder="Note ..."></asp:TextBox>
                             </div>
-                        </form>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <%--<button type="button" class="btn btn-primary" onclick="submitSpending()">Submit</button>--%>
+                                <asp:Button ID="SubmitSpending" runat="server" Text="Submit" OnClientClick="return submitSpending()" CssClass="btn btn-primary"/>
+                            </div>
+                        <%--</form>--%>
                     </div>
                 </div>
             </div>
