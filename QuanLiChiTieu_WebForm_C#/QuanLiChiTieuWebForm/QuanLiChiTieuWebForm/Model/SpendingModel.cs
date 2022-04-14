@@ -48,8 +48,8 @@ namespace QuanLiChiTieu.Models
                 con.Open();
                 sb.Append(" SELECT * FROM [dbo].[SPENDING] ");
                 sb.Append(" WHERE ");
-                sb.Append("[USER_ID] = @UserId");
-                sb.Append("AND YEAR(DATE_SPENDING) = @year");
+                sb.Append(" [USER_ID] = @UserId");
+                sb.Append(" AND YEAR(DATE_SPENDING) = @year");
                 SqlDataAdapter da = new SqlDataAdapter(sb.ToString(), con);
                 da.SelectCommand.Parameters.Add("@UserId", userId);
                 da.SelectCommand.Parameters.Add("@year", year);

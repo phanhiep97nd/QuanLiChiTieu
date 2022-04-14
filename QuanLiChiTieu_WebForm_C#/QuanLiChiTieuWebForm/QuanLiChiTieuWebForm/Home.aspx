@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head runat="server">
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -109,7 +109,7 @@
 
 <body onload="setMonthYear()">
     <div id="codeAlert" runat="server" style="color: red;"></div>
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" method="post">
         <header>
             <div class="home">
                 <a href="https://phanhiep97nd.github.io/hiepphan/Hieplayout/Hiep-Profile.html" target="_blank">POWER BY Phan Văn Hiệp</a>
@@ -169,23 +169,32 @@
                                 <hr style="color: white;">
                                 <div class="form-group">
                                     <h4>Tháng:</h4>
-                                    <select class="form-select month" id="monthOverView" aria-label="Default select example">
-                                    </select>
+                                    <%--<select class="form-select month" id="monthOverView" aria-label="Default select example">
+                                    </select>--%>
+                                    <asp:DropDownList id="MonthOverView" AutoPostBack="true"
+                                        OnSelectedIndexChanged ="MonthOverView_SelectedIndexChanged"
+                                        runat="server"
+                                        CssClass="form-select month">
+                                    </asp:DropDownList>
                                 </div>
                                 <div class="form-group">
                                     <h4>Năm:</h4>
-                                    <select class="form-select year" id="yearOverView" aria-label="Default select example">
-                                    </select>
+                                    <%--<select class="form-select year" id="yearOverView" aria-label="Default select example">
+                                    </select>--%>
+                                    <asp:DropDownList id="YearOverView"
+                                        runat="server"
+                                        CssClass="form-select year">
+                                    </asp:DropDownList>
                                 </div>
                                 <hr style="border: 1px solid rgb(66, 157, 196);">
                                 <h3>Tổng thu nhập</h3>
-                                <h2>VND</h2>
+                                <h2><asp:Label ID="TotalIncome" runat="server"></asp:Label> VND</h2>
                                 <hr style="border: 1px solid rgb(66, 157, 196);">
                                 <h3>Tổng chi tiêu</h3>
-                                <h2>VND</h2>
+                                <h2><asp:Label ID="TotalSpending" runat="server"></asp:Label> VND</h2>
                                 <hr style="border: 1px solid rgb(66, 157, 196);">
                                 <h3>Tích lũy tài chính</h3>
-                                <h2>VND</h2>
+                                <h2><asp:Label ID="TotalSaveMoney" runat="server"></asp:Label> VND</h2>
                             </div>
                         </div>
                     </div>
@@ -200,11 +209,11 @@
                                 </tr>
                                 <tr>
                                     <td style="color: #3ebeda;">Tiền lương</td>
-                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b>VND</b></td>
+                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b><asp:Label ID="ValueIncomeType1" runat="server"></asp:Label> VND</b></td>
                                 </tr>
                                 <tr>
                                     <td style="color: #3ebeda;">Thu nhập khác</td>
-                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b>VND</b></td>
+                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b><asp:Label ID="ValueIncomeType2" runat="server"></asp:Label> VND</b></td>
                                 </tr>
                             </table>
                             <hr style="color: rgb(54, 109, 138);">
@@ -217,39 +226,39 @@
                                 </tr>
                                 <tr>
                                     <td style="color: #3ebeda;">Nhà/Sinh hoạt phí</td>
-                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b>VND</b></td>
+                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b><asp:Label ID="ValueSpendingType1" runat="server"></asp:Label> VND</b></td>
                                 </tr>
                                 <tr>
                                     <td style="color: #3ebeda;">Ăn uống</td>
-                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b>VND</b></td>
+                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b><asp:Label ID="ValueSpendingType2" runat="server"></asp:Label> VND</b></td>
                                 </tr>
                                 <tr>
                                     <td style="color: #3ebeda;">Mua sắm</td>
-                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b>VND</b></td>
+                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b><asp:Label ID="ValueSpendingType3" runat="server"></asp:Label> VND</b></td>
                                 </tr>
                                 <tr>
                                     <td style="color: #3ebeda;">Quỹ tài chính/Bảo hiểm</td>
-                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b>VND</b></td>
+                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b><asp:Label ID="ValueSpendingType4" runat="server"></asp:Label> VND</b></td>
                                 </tr>
                                 <tr>
                                     <td style="color: #3ebeda;">Trả nợ vay</td>
-                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b>VND</b></td>
+                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b><asp:Label ID="ValueSpendingType5" runat="server"></asp:Label> VND</b></td>
                                 </tr>
                                 <tr>
                                     <td style="color: #3ebeda;">Di chuyển</td>
-                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b>VND</b></td>
+                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b><asp:Label ID="ValueSpendingType6" runat="server"></asp:Label> VND</b></td>
                                 </tr>
                                 <tr>
                                     <td style="color: #3ebeda;">Giải trí</td>
-                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b>VND</b></td>
+                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b><asp:Label ID="ValueSpendingType7" runat="server"></asp:Label> VND</b></td>
                                 </tr>
                                 <tr>
                                     <td style="color: #3ebeda;">Giáo dục/Sức khỏe</td>
-                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b>VND</b></td>
+                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b><asp:Label ID="ValueSpendingType8" runat="server"></asp:Label> VND</b></td>
                                 </tr>
                                 <tr>
                                     <td style="color: #3ebeda;">Khác</td>
-                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b>VND</b></td>
+                                    <td style="color: rgba(0, 0, 0, 0.8);text-align: right;"><b><asp:Label ID="ValueSpendingType9" runat="server"></asp:Label> VND</b></td>
                                 </tr>
                             </table>
                         </div>

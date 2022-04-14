@@ -214,7 +214,6 @@ E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuW
 E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\bin\Antlr3.Runtime.pdb
 E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\bin\Microsoft.AspNet.FriendlyUrls.xml
 E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\obj\Debug\QuanLiChiTieuWebForm.csproj.AssemblyReference.cache
 E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\obj\Debug\QuanLiChiTieuWebForm.csproj.CoreCompileInputs.cache
 E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\obj\Debug\QuanLiChiTieuWebForm.csproj.CopyComplete
 E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\obj\Debug\QuanLiChiTieuWebForm.dll

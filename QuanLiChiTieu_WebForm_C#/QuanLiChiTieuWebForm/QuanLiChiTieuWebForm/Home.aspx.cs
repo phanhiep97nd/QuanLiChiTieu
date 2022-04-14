@@ -15,15 +15,14 @@ namespace QuanLiChiTieuWebForm
     {
         #region Private struct Fields
         private string userId = string.Empty;
-        private DataTable dtIncome = new DataTable();
-        private DataTable dtSpending = new DataTable();
-		#endregion
+        #endregion
 
-		#region Protected Fields
-		protected System.Web.UI.WebControls.Button BtnLogOut;
+        #region Protected Fields
+        protected System.Web.UI.WebControls.Button BtnLogOut;
         protected System.Web.UI.WebControls.TextBox DateIncome;
         protected System.Web.UI.WebControls.Button SubmitIncome;
         protected System.Web.UI.WebControls.Button SubmitSpending;
+        //protected System.Web.UI.WebControls.DropDownList MonthOverView;
         #endregion
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -38,43 +37,50 @@ namespace QuanLiChiTieuWebForm
                 {
                     Response.Redirect("Login.aspx", false);
                 }
-                dtIncome = IncomeModels.GetIncomeInfo(int.Parse(userId), DateTime.Now.Year.ToString());
-                dtSpending = SpendingModel.GetSpendingInfo(int.Parse(userId), DateTime.Now.Year.ToString());
+                setOverviewData(DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString("00"), false);
             }
             else
             {
                 codeAlert.InnerHtml = String.Empty;
-                userId	= (string) ViewState["userId"];
+                userId = (string)ViewState["userId"];
             }
 
         }
 
         private void Page_PreRender(object sender, System.EventArgs e)
         {
-            ViewState["userId"]      = userId;
+            ViewState["userId"] = userId;
         }
 
         #region Control's Event Handlers
-		override protected void OnInit(EventArgs e)
-		{
-			InitializeComponent();
-			base.OnInit(e);
-		}
+        override protected void OnInit(EventArgs e)
+        {
+            InitializeComponent();
+            base.OnInit(e);
+        }
 
-		private void InitializeComponent()
-		{
+        private void InitializeComponent()
+        {
             this.BtnLogOut.Click += BtnLogOut_Click1;
-			this.SubmitIncome.Click += SubmitIncome_Click;
+            this.SubmitIncome.Click += SubmitIncome_Click;
             this.SubmitSpending.Click += SubmitSpending_Click;
+			//this.MonthOverView.SelectedIndexChanged += MonthOverView_SelectedIndexChanged;
 
             this.Load += new System.EventHandler(this.Page_Load);
-			this.PreRender += new System.EventHandler(this.Page_PreRender);
+            this.PreRender += new System.EventHandler(this.Page_PreRender);
+        }
+
+		protected void MonthOverView_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			string month = int.Parse(MonthOverView.SelectedValue).ToString("00");
+            string year = YearOverView.SelectedValue;
+            setOverviewData(year, month, false);
 		}
 
-        private void SubmitSpending_Click(object sender, EventArgs e)
+		private void SubmitSpending_Click(object sender, EventArgs e)
         {
             try
-			{
+            {
                 SpendingEntity spendingInfo = new SpendingEntity();
                 spendingInfo.UserId = int.Parse(userId);
                 spendingInfo.DateSpending = DateTime.Parse(DateSpending.Text);
@@ -82,24 +88,24 @@ namespace QuanLiChiTieuWebForm
                 spendingInfo.TypeSpending = TypeSpending.SelectedValue;
                 spendingInfo.NoteSpending = NoteSpending.Text;
                 bool check = SpendingModel.ClickCreateSpending(spendingInfo);
-			    if (check)
-			    {
+                if (check)
+                {
                     DateSpending.Text = string.Empty;
                     ValueSpending.Text = string.Empty;
                     TypeSpending.SelectedValue = "1";
                     NoteSpending.Text = string.Empty;
                     codeAlert.InnerHtml = Constants.HTML_SUCCESS_IMPORT_SPENDING;
                     Response.Write(Constants.SCRIPT_ALERT_CLOSE);
-			    }
-				else
-				{
+                }
+                else
+                {
                     codeAlert.InnerHtml = Constants.HTML_ERROR_IMPORT_SPENDING;
-				}
-			}
-            catch(Exception ex)
-			{
+                }
+            }
+            catch (Exception ex)
+            {
                 Response.Redirect("ErrorPage.aspx?message=" + ex.GetType().Name);
-			}
+            }
         }
 
         private void BtnLogOut_Click1(object sender, EventArgs e)
@@ -110,9 +116,9 @@ namespace QuanLiChiTieuWebForm
         }
 
         private void SubmitIncome_Click(object sender, EventArgs e)
-		{
-			try
-			{
+        {
+            try
+            {
                 IncomeEntity incomeInfo = new IncomeEntity();
                 incomeInfo.UserId = int.Parse(userId);
                 incomeInfo.DateIncome = DateTime.Parse(DateIncome.Text);
@@ -120,32 +126,104 @@ namespace QuanLiChiTieuWebForm
                 incomeInfo.TypeIncome = TypeIncome.SelectedValue;
                 incomeInfo.NoteIncome = NoteIncome.Text;
                 bool check = IncomeModels.ClickCreateIncome(incomeInfo);
-			    if (check)
-			    {
+                if (check)
+                {
                     DateIncome.Text = string.Empty;
                     ValueIncome.Text = string.Empty;
                     TypeIncome.SelectedValue = "1";
                     NoteIncome.Text = string.Empty;
                     codeAlert.InnerHtml = Constants.HTML_SUCCESS_IMPORT_INCOME;
                     Response.Write(Constants.SCRIPT_ALERT_CLOSE);
-			    }
-				else
-				{
+                }
+                else
+                {
                     codeAlert.InnerHtml = Constants.HTML_ERROR_IMPORT_INCOME;
-				}
-			}
-            catch(Exception ex)
-			{
+                }
+            }
+            catch (Exception ex)
+            {
                 Response.Redirect("ErrorPage.aspx?message=" + ex.GetType().Name);
-			}
-		}
-		#endregion
-
-        private void setOverviewData(DataTable dtIncome, DataTable dtSpending, string month)
-        {
-            DataRow[] drIncome = dtIncome.Select(" MONTH(DATE_INCOME) = '" + month + "'");
-            DataRow[] drSpending = dtSpending.Select(" MONTH(DATE_SPENDING) = '" + month + "'");
+            }
         }
+        #endregion
 
+        private void setOverviewData(string year, string month, bool isAllofYear)
+        {
+            //string month = int.Parse(MonthOverView.SelectedValue).ToString("00");
+            //string year = YearOverView.SelectedValue;
+            DataTable dtIncome = IncomeModels.GetIncomeInfo(int.Parse(userId), year);
+            DataTable dtSpending = SpendingModel.GetSpendingInfo(int.Parse(userId), year);
+            int totalIncome = 0;
+            int totalSpending = 0;
+            int[] valueIncome = new int[2];
+            int[] valueSpending = new int[9];
+            foreach (DataRow dr in dtIncome.Rows)
+            {
+                if (dr["DATE_INCOME"].ToString().Split('/')[1].Equals(month))
+                {
+                    totalIncome += int.Parse(dr["VALUE_INCOME"].ToString());
+                    switch (dr["TYPE_INCOME"].ToString())
+                    {
+                        case "1":
+                            valueIncome[0] = valueIncome[0] + int.Parse(dr["VALUE_INCOME"].ToString());
+                            break;
+                        case "2":
+                            valueIncome[1] = valueIncome[1] + int.Parse(dr["VALUE_INCOME"].ToString());
+                            break;
+                    }
+                }
+            }
+            foreach (DataRow dr in dtSpending.Rows)
+            {
+                if (dr["DATE_SPENDING"].ToString().Split('/')[1].Equals(month))
+                {
+                    totalSpending += int.Parse(dr["VALUE_SPENDING"].ToString());
+                }
+                switch (dr["TYPE_SPENDING"].ToString())
+                {
+                    case "1":
+                        valueSpending[0] = valueSpending[0] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                        break;
+                    case "2":
+                        valueSpending[1] = valueSpending[1] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                        break;
+                    case "3":
+                        valueSpending[2] = valueSpending[2] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                        break;
+                    case "4":
+                        valueSpending[3] = valueSpending[3] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                        break;
+                    case "5":
+                        valueSpending[4] = valueSpending[4] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                        break;
+                    case "6":
+                        valueSpending[5] = valueSpending[5] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                        break;
+                    case "7":
+                        valueSpending[6] = valueSpending[6] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                        break;
+                    case "8":
+                        valueSpending[7] = valueSpending[7] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                        break;
+                    case "9":
+                        valueSpending[8] = valueSpending[8] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                        break;
+                }
+            }
+            TotalIncome.Text = totalIncome.ToString("###,###");
+            TotalSpending.Text = totalSpending.ToString("###,###");
+            TotalSaveMoney.Text = (totalIncome - totalSpending).ToString("###,###");
+            ValueIncomeType1.Text = valueIncome[0].ToString("###,###");
+            ValueIncomeType2.Text = valueIncome[1].ToString("###,###");
+            ValueSpendingType1.Text = valueSpending[0].ToString("###,###");
+            ValueSpendingType2.Text = valueSpending[1].ToString("###,###");
+            ValueSpendingType3.Text = valueSpending[2].ToString("###,###");
+            ValueSpendingType4.Text = valueSpending[3].ToString("###,###");
+            ValueSpendingType5.Text = valueSpending[4].ToString("###,###");
+            ValueSpendingType6.Text = valueSpending[5].ToString("###,###");
+            ValueSpendingType7.Text = valueSpending[6].ToString("###,###");
+            ValueSpendingType8.Text = valueSpending[7].ToString("###,###");
+            ValueSpendingType9.Text = valueSpending[8].ToString("###,###");
+        }
     }
 }
