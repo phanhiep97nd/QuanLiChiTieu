@@ -39,5 +39,10 @@ namespace QuanLiChiTieuWebForm.Common
             }
             return message.ToString();
         }
+
+        public static string GetFormatMonney(int input)
+        {
+            return input == 0 ? "0" : input.ToString("###,###");
+        }
     }
 }

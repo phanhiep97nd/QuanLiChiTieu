@@ -46,7 +46,13 @@ namespace QuanLiChiTieu.Models
             {
                 StringBuilder sb = new StringBuilder();
                 con.Open();
-                sb.Append(" SELECT * FROM [dbo].[SPENDING] ");
+                sb.Append(" SELECT [USER_ID] ");
+                sb.Append(" ,[SPENDING_ID] ");
+                sb.Append(" ,[VALUE_SPENDING] ");
+                sb.Append(" ,CONVERT(varchar, [SPENDING].[DATE_SPENDING], 103) AS [DATE_SPENDING] ");
+                sb.Append(" ,[TYPE_SPENDING] ");
+                sb.Append(" ,[NOTE_SPENDING] ");
+                sb.Append(" FROM [dbo].[SPENDING] ");
                 sb.Append(" WHERE ");
                 sb.Append(" [USER_ID] = @UserId");
                 sb.Append(" AND YEAR(DATE_SPENDING) = @year");
@@ -68,6 +74,43 @@ namespace QuanLiChiTieu.Models
 				}
             }
             return dtSpending;
+        }
+
+        public static int GetListSpendingPerMonth(string userId, string month, string year)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
+            SqlCommand com = new SqlCommand();
+            int result = 0;
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                con.Open();
+                com.Connection = con;
+                sb.Append(" SELECT SUM(VALUE_SPENDING) FROM [dbo].[SPENDING] ");
+                sb.Append(" WHERE ");
+                sb.Append("[USER_ID] = @userId");
+                sb.Append(" AND ");
+                sb.Append(" MONTH(DATE_SPENDING) = @month AND ");
+                sb.Append(" YEAR(DATE_SPENDING) = @year ");
+                com.CommandText = sb.ToString();
+                com.Parameters.Add("@userId", SqlDbType.Int).Value = userId;
+                com.Parameters.Add("@month", SqlDbType.VarChar).Value = month;
+                com.Parameters.Add("@year", SqlDbType.VarChar).Value = year;
+                //dr = com.ExecuteReader();
+                object total = com.ExecuteScalar();
+                com.Parameters.Clear();
+                //while (dr.Read())
+                //{
+                //    result = Convert.ToInt16(dr.GetValue(0));
+                //}
+                result = int.Parse(Convert.ToString(total) == "" ? "0" : Convert.ToString(total));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            con.Close();
+            return result;
         }
 
         internal static int UpdateSpending(SqlConnection con, SqlCommand com, SpendingEntity SpendingInfo)

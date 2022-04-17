@@ -46,7 +46,13 @@ namespace QuanLiChiTieuWebForm.Model
             {
                 StringBuilder sb = new StringBuilder();
                 con.Open();
-                sb.Append(" SELECT * FROM [dbo].[INCOME] ");
+                sb.Append(" SELECT [USER_ID] ");
+                sb.Append(" ,[INCOME_ID] ");
+                sb.Append(" ,[VALUE_INCOME] ");
+                sb.Append(" ,CONVERT(varchar, [INCOME].[DATE_INCOME], 103) AS [DATE_INCOME] ");
+                sb.Append(" ,[TYPE_INCOME] ");
+                sb.Append(" ,[NOTE_INCOME] ");
+                sb.Append(" FROM [dbo].[INCOME] ");
                 sb.Append(" WHERE ");
                 sb.Append(" [USER_ID] = @UserId");
                 sb.Append(" AND YEAR(DATE_INCOME) = @year");
@@ -68,6 +74,43 @@ namespace QuanLiChiTieuWebForm.Model
 				}
             }
             return dtIncome;
+        }
+
+        public static int GetListIncomePerMonth(string userId, string month, string year)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
+            SqlCommand com = new SqlCommand();
+            int result = 0;
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                con.Open();
+                com.Connection = con;
+                sb.Append(" SELECT SUM(VALUE_INCOME) FROM [dbo].[INCOME] ");
+                sb.Append(" WHERE ");
+                sb.Append("[USER_ID] = @userId");
+                sb.Append(" AND ");
+                sb.Append(" MONTH(DATE_INCOME) = @month AND ");
+                sb.Append(" YEAR(DATE_INCOME) = @year ");
+                com.CommandText = sb.ToString();
+                com.Parameters.Add("@userId", SqlDbType.Int).Value = userId;
+                com.Parameters.Add("@month", SqlDbType.VarChar).Value = month;
+                com.Parameters.Add("@year", SqlDbType.VarChar).Value = year;
+                //dr = com.ExecuteReader();
+                object total = com.ExecuteScalar();
+                com.Parameters.Clear();
+                //while (dr.Read())
+                //{
+                //    result = Convert.ToInt16(dr.GetValue(0));
+                //}
+                result = int.Parse(Convert.ToString(total) == "" ? "0" : Convert.ToString(total));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            con.Close();
+            return result;
         }
 	}
 }

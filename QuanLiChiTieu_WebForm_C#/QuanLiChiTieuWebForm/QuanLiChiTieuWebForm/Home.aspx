@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="QuanLiChiTieuWebForm.Home" %>
+﻿ <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="QuanLiChiTieuWebForm.Home" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,35 +14,36 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
     <link rel="stylesheet" type="" href="../Style/QuanLiChiTieu.css">
     <script>
-        function setMonthYear() {
-            var today = new Date();
-            var strMonth = "";
-            var strYear = "";
-            for (var i = 1; i <= 12; i++) {
-                if (i == (today.getMonth() + 1)) {
-                    strMonth += ("<option value=" + i + " selected >" + i + "</option>\n");
-                } else {
-                    strMonth += ("<option value=" + i + ">" + i + "</option>\n");
-                }
-            }
-            for (var i = today.getFullYear() - 11; i <= today.getFullYear(); i++) {
-                if (i == today.getFullYear()) {
-                    strYear += ("<option value=" + i + " selected >" + i + "</option>\n");
-                } else {
-                    strYear += ("<option value=" + i + ">" + i + "</option>\n");
-                }
-            }
-            var month = document.querySelectorAll('.month');
-            var year = document.querySelectorAll('.year');
-            month.forEach(element => {
-                element.innerHTML = strMonth;
-            });
-            year.forEach(element => {
-                element.innerHTML = strYear;
-            });
-        }
+        //function setMonthYear() {
+        //    var today = new Date();
+        //    var strMonth = "";
+        //    var strYear = "";
+        //    for (var i = 1; i <= 12; i++) {
+        //        if (i == (today.getMonth() + 1)) {
+        //            strMonth += ("<option value=" + i + " selected >" + i + "</option>\n");
+        //        } else {
+        //            strMonth += ("<option value=" + i + ">" + i + "</option>\n");
+        //        }
+        //    }
+        //    for (var i = today.getFullYear() - 11; i <= today.getFullYear(); i++) {
+        //        if (i == today.getFullYear()) {
+        //            strYear += ("<option value=" + i + " selected >" + i + "</option>\n");
+        //        } else {
+        //            strYear += ("<option value=" + i + ">" + i + "</option>\n");
+        //        }
+        //    }
+        //    var month = document.querySelectorAll('.month');
+        //    var year = document.querySelectorAll('.year');
+        //    month.forEach(element => {
+        //        element.innerHTML = strMonth;
+        //    });
+        //    year.forEach(element => {
+        //        element.innerHTML = strYear;
+        //    });
+        //}
 
         function setNow() {
             var today = new Date();
@@ -107,7 +108,7 @@
     </script>
 </head>
 
-<body onload="setMonthYear()">
+<body onload="createChart()">
     <div id="codeAlert" runat="server" style="color: red;"></div>
     <form id="form1" runat="server" method="post">
         <header>
@@ -172,16 +173,27 @@
                                     <%--<select class="form-select month" id="monthOverView" aria-label="Default select example">
                                     </select>--%>
                                     <asp:DropDownList id="MonthOverView" AutoPostBack="true"
-                                        OnSelectedIndexChanged ="MonthOverView_SelectedIndexChanged"
                                         runat="server"
                                         CssClass="form-select month">
+                                        <asp:ListItem Value="01"> 01 </asp:ListItem>
+                                        <asp:ListItem Value="02"> 02 </asp:ListItem>
+                                        <asp:ListItem Value="03"> 03 </asp:ListItem>
+                                        <asp:ListItem Value="04"> 04 </asp:ListItem>
+                                        <asp:ListItem Value="05"> 05 </asp:ListItem>
+                                        <asp:ListItem Value="06"> 06 </asp:ListItem>
+                                        <asp:ListItem Value="07"> 07 </asp:ListItem>
+                                        <asp:ListItem Value="08"> 08 </asp:ListItem>
+                                        <asp:ListItem Value="09"> 09 </asp:ListItem>
+                                        <asp:ListItem Value="10"> 10 </asp:ListItem>
+                                        <asp:ListItem Value="11"> 11 </asp:ListItem>
+                                        <asp:ListItem Value="12"> 12 </asp:ListItem>
                                     </asp:DropDownList>
                                 </div>
                                 <div class="form-group">
                                     <h4>Năm:</h4>
                                     <%--<select class="form-select year" id="yearOverView" aria-label="Default select example">
                                     </select>--%>
-                                    <asp:DropDownList id="YearOverView"
+                                    <asp:DropDownList id="YearOverView" AutoPostBack="true"
                                         runat="server"
                                         CssClass="form-select year">
                                     </asp:DropDownList>
@@ -268,13 +280,209 @@
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="row">
                     <div class="col-md">
-                        One of three columns
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" style="width:25px">
+                          <label class="form-check-label" for="flexSwitchCheckDefault">View All Of Year</label>
+                        </div>
+                        <h3>Danh Sách Thu Nhập</h3>
+                        <asp:GridView ID="GridView1" runat="server" RowStyle-CssClass="GvRowStyle" Width="100%" ForeColor="#566787" GridLines="None" AutoGenerateColumns="False" AllowPaging="True" Style="margin-bottom: 0px" CellSpacing="5"
+                             DataKeyNames="INCOME_ID" CssClass="myGrv" AllowSorting="True" CellPadding="5" HorizontalAlign="Center" ShowFooter="True">
+                            <AlternatingRowStyle BackColor="#e6e6e6" />
+                            <Columns>
+                                <asp:TemplateField HeaderText="Ngày Tháng Năm" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="fullName" runat="server"
+                                            Text='<%# DataBinder.Eval(Container, "DataItem.[DATE_INCOME]") %>'>
+                                        </asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="EditDateIncome" TextMode="Date" runat="server" CssClass="form-control" Text='<%# DataBinder.Eval(Container, "DataItem.[DATE_INCOME]") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <FooterStyle Width="200px" />
+                                    <HeaderStyle HorizontalAlign="Center" Width="250px"></HeaderStyle>
+                                    <ItemStyle HorizontalAlign="Center" Width="250px"></ItemStyle>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Số Tiền" HeaderStyle-CssClass="text-center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="valueIncome" runat="server"
+                                            Text='<%# DataBinder.Eval(Container, "DataItem.[VALUE_INCOME]") %>'>
+                                        </asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="EditValueIncome" runat="server" CssClass="form-control form-control-sm"
+                                            Text='<%# DataBinder.Eval(Container, "DataItem.[VALUE_INCOME]") %>' TextMode="Number"></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <HeaderStyle HorizontalAlign="Center" Width="200px" />
+                                    <ItemStyle HorizontalAlign="Center" Width="200px" />
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Loại Thu Nhập" HeaderStyle-CssClass="text-center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="phone" runat="server"
+                                            Text='<%# DataBinder.Eval(Container, "DataItem.[TYPE_INCOME]") %>'>
+                                        </asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="EditPhone" runat="server" CssClass="form-control"
+                                            Text='<%# DataBinder.Eval(Container, "DataItem.[TYPE_INCOME]") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <HeaderStyle HorizontalAlign="Center" Width="250px" />
+                                    <ItemStyle HorizontalAlign="Center" Width="250px" />
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Ghi Chú" HeaderStyle-CssClass="text-center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="address" runat="server"
+                                            Text='<%# DataBinder.Eval(Container, "DataItem.[NOTE_INCOME]") %>'>
+                                        </asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="EditAddress" runat="server" CssClass="form-control" Text='<%# DataBinder.Eval(Container, "DataItem.[NOTE_INCOME]") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <HeaderStyle HorizontalAlign="Center" Width="500px" />
+                                    <ItemStyle HorizontalAlign="Center" Width="500px" />
+                                </asp:TemplateField>
+                                <asp:TemplateField ShowHeader="False">
+                                    <ItemTemplate>
+                                        <asp:Button ID="EditButton"
+                                            runat="server"
+                                            CommandName="Edit"
+                                            Text="Edit" CssClass="btn btn-link btn-sm" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:LinkButton ID="UpdateButton" ForeColor="#299be4"
+                                            runat="server"
+                                            CommandName="Update"
+                                            Text="Update" />&nbsp;
+                                        <asp:LinkButton ID="Cancel" ForeColor="#299be4"
+                                            runat="server"
+                                            CommandName="Cancel"
+                                            Text="Cancel" />
+                                    </EditItemTemplate>
+                                    <HeaderStyle Width="50px" />
+                                    <ItemStyle HorizontalAlign="Center" Width="50px" />
+                                </asp:TemplateField>
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <asp:Button ID="deletebtn" runat="server" CommandName="Delete" CssClass="btn btn-link btn-sm"
+                                            Text="Delete" OnClientClick="return confirm('Are you sure?');" />
+                                    </ItemTemplate>
+                                    <HeaderStyle Width="50px" />
+                                    <ItemStyle HorizontalAlign="Center" Width="50px" />
+                                </asp:TemplateField>
+                            </Columns>
+                            <EditRowStyle HorizontalAlign="Left" BackColor="#ddddbb" />
+                            <FooterStyle BackColor="142, 218, 242" ForeColor="White" Font-Bold="True" />
+                            <HeaderStyle BackColor="142, 218, 242" Font-Size="Large" Height="50px" Font-Bold="True" ForeColor="White" HorizontalAlign="Left" />
+                            <PagerStyle BackColor="142, 218, 242" ForeColor="White" HorizontalAlign="Center" CssClass="PagingCss" />
+                            <RowStyle BackColor="#EFF3FB" />
+                            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                            <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                            <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                            <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                            <SortedDescendingHeaderStyle BackColor="#4870BE" />
+                        </asp:GridView>
+                        <hr style="color: rgb(54, 109, 138);">
+                        <h3>Danh Sách Chi Tiêu</h3>
+                        <asp:GridView ID="GridView2" runat="server" RowStyle-CssClass="GvRowStyle" Width="100%" ForeColor="#566787" GridLines="None" AutoGenerateColumns="False" AllowPaging="True" Style="margin-bottom: 0px" CellSpacing="5"
+                             DataKeyNames="SPENDING_ID" CssClass="myGrv" AllowSorting="True" CellPadding="5" HorizontalAlign="Center" ShowFooter="True">
+                            <AlternatingRowStyle BackColor="#e6e6e6" />
+                            <Columns>
+                                <asp:TemplateField HeaderText="Ngày Tháng Năm" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="fullName" runat="server"
+                                            Text='<%# DataBinder.Eval(Container, "DataItem.[DATE_SPENDING]") %>'>
+                                        </asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="EditDateSPENDING" TextMode="Date" runat="server" CssClass="form-control" Text='<%# DataBinder.Eval(Container, "DataItem.[DATE_SPENDING]") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <FooterStyle Width="200px" />
+                                    <HeaderStyle HorizontalAlign="Center" Width="250px"></HeaderStyle>
+                                    <ItemStyle HorizontalAlign="Center" Width="250px"></ItemStyle>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Số Tiền" HeaderStyle-CssClass="text-center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="valueSPENDING" runat="server"
+                                            Text='<%# DataBinder.Eval(Container, "DataItem.[VALUE_SPENDING]") %>'>
+                                        </asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="EditValueSPENDING" runat="server" CssClass="form-control form-control-sm"
+                                            Text='<%# DataBinder.Eval(Container, "DataItem.[VALUE_SPENDING]") %>' TextMode="Number"></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <HeaderStyle HorizontalAlign="Center" Width="200px" />
+                                    <ItemStyle HorizontalAlign="Center" Width="200px" />
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Loại Thu Nhập" HeaderStyle-CssClass="text-center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="phone" runat="server"
+                                            Text='<%# DataBinder.Eval(Container, "DataItem.[TYPE_SPENDING]") %>'>
+                                        </asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="EditPhone" runat="server" CssClass="form-control"
+                                            Text='<%# DataBinder.Eval(Container, "DataItem.[TYPE_SPENDING]") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <HeaderStyle HorizontalAlign="Center" Width="250px" />
+                                    <ItemStyle HorizontalAlign="Center" Width="250px" />
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Ghi Chú" HeaderStyle-CssClass="text-center">
+                                    <ItemTemplate>
+                                        <asp:Label ID="address" runat="server"
+                                            Text='<%# DataBinder.Eval(Container, "DataItem.[NOTE_SPENDING]") %>'>
+                                        </asp:Label>
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:TextBox ID="EditAddress" runat="server" CssClass="form-control" Text='<%# DataBinder.Eval(Container, "DataItem.[NOTE_SPENDING]") %>'></asp:TextBox>
+                                    </EditItemTemplate>
+                                    <HeaderStyle HorizontalAlign="Center" Width="500px" />
+                                    <ItemStyle HorizontalAlign="Center" Width="500px" />
+                                </asp:TemplateField>
+                                <asp:TemplateField ShowHeader="False">
+                                    <ItemTemplate>
+                                        <asp:Button ID="EditButton"
+                                            runat="server"
+                                            CommandName="Edit"
+                                            Text="Edit" CssClass="btn btn-link btn-sm" />
+                                    </ItemTemplate>
+                                    <EditItemTemplate>
+                                        <asp:LinkButton ID="UpdateButton" ForeColor="#299be4"
+                                            runat="server"
+                                            CommandName="Update"
+                                            Text="Update" />&nbsp;
+                                        <asp:LinkButton ID="Cancel" ForeColor="#299be4"
+                                            runat="server"
+                                            CommandName="Cancel"
+                                            Text="Cancel" />
+                                    </EditItemTemplate>
+                                    <HeaderStyle Width="50px" />
+                                    <ItemStyle HorizontalAlign="Center" Width="50px" />
+                                </asp:TemplateField>
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <asp:Button ID="deletebtn" runat="server" CommandName="Delete" CssClass="btn btn-link btn-sm"
+                                            Text="Delete" OnClientClick="return confirm('Are you sure?');" />
+                                    </ItemTemplate>
+                                    <HeaderStyle Width="50px" />
+                                    <ItemStyle HorizontalAlign="Center" Width="50px" />
+                                </asp:TemplateField>
+                            </Columns>
+                            <EditRowStyle HorizontalAlign="Left" BackColor="#ddddbb" />
+                            <FooterStyle BackColor="142, 218, 242" ForeColor="White" Font-Bold="True" />
+                            <HeaderStyle BackColor="142, 218, 242" Font-Size="Large" Height="50px" Font-Bold="True" ForeColor="White" HorizontalAlign="Left" />
+                            <PagerStyle BackColor="142, 218, 242" ForeColor="White" HorizontalAlign="Center" CssClass="PagingCss" />
+                            <RowStyle BackColor="#EFF3FB" />
+                            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                            <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                            <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                            <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                            <SortedDescendingHeaderStyle BackColor="#4870BE" />
+                        </asp:GridView>
                     </div>
                     <div class="col-md">
-                        One of three columns
-                    </div>
-                    <div class="col-md">
-                        One of three columns
+                        <div class="right-content-detail">
+                            <canvas id="myChart"></canvas>
+                            <canvas id="myLineChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -390,5 +598,110 @@
         </div>
     </form>
 </body>
+<script type="text/javascript">
+    function createChart(incomeValue, spendingValue) {
+        let lstIncome = [];
+        let lstSpending = [];
+        for (let i = 0; i < 12; i++) {
+            lstIncome[i] = incomeValue.split("|")[i] != "" ? parseInt(incomeValue.split("|")[i]) : 0;
+        }
+        for (let i = 0; i < 12; i++) {
+            lstSpending[i] = spendingValue.split("|")[i] != "" ? parseInt(spendingValue.split("|")[i]) : 0;
+        }
+        let myChart = document.getElementById('myChart').getContext('2d');
+        // Global Options
+        Chart.defaults.global.defaultFontFamily = 'Lato';
+        Chart.defaults.global.defaultFontSize = 18;
+        Chart.defaults.global.defaultFontColor = '#777';
 
+        let massPopChart = new Chart(myChart, {
+            type: 'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            data: {
+                labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
+                datasets: [{
+                    label: 'Thu',
+                    data: [lstIncome[0], lstIncome[1], lstIncome[2], lstIncome[3], lstIncome[4], lstIncome[5], lstIncome[6], lstIncome[7], lstIncome[8], lstIncome[9], lstIncome[10], lstIncome[11]],
+                    backgroundColor: "rgba(151,249,190,0.5)",
+                    borderWidth: 1,
+                    borderColor: '#777',
+                    hoverBorderWidth: 3,
+                    hoverBorderColor: '#000'
+                }, {
+                    label: 'Chi',
+                    data: [lstSpending[0], lstSpending[1], lstSpending[2], lstSpending[3], lstSpending[4], lstSpending[5], lstSpending[6], lstSpending[7], lstSpending[8], lstSpending[9], lstSpending[10], lstSpending[11]],
+                    backgroundColor: "rgba(252,147,65,0.5)",
+                    borderWidth: 1,
+                    borderColor: '#777',
+                    hoverBorderWidth: 3,
+                    hoverBorderColor: '#000'
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Biểu đồ chi và tiêu',
+                    fontSize: 25
+                },
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 0,
+                        bottom: 0,
+                        top: 0
+                    }
+                },
+                tooltips: {
+                    enabled: true
+                }
+            }
+        });
+        let myLineChart = document.getElementById('myLineChart').getContext('2d');
+
+        let massPopLineChart = new Chart(myLineChart, {
+            type: 'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+            data: {
+                labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
+                datasets: [{
+                    label: 'Tích lũy',
+                    data: [lstIncome[0] - lstSpending[0], lstIncome[1] - lstSpending[1], lstIncome[2] - lstSpending[2], lstIncome[3] - lstSpending[3], lstIncome[4] - lstSpending[4], lstIncome[5] - lstSpending[5], lstIncome[6] - lstSpending[6], lstIncome[7] - lstSpending[7], lstIncome[8] - lstSpending[8], lstIncome[9] - lstSpending[9], lstIncome[10] - lstSpending[10], lstIncome[11] - lstSpending[11]],
+                    borderColor: "rgba(252,147,65,0.5)",
+                    pointBackgroundColor: "red",
+                    backgroundColor: "rgb(211, 219, 189)",
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Biểu đồ tích lũy tài chính',
+                    fontSize: 25
+                },
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 0,
+                        bottom: 0,
+                        top: 0
+                    }
+                },
+                tooltips: {
+                    enabled: true
+                }
+            }
+        });
+    }
+</script>
 </html>

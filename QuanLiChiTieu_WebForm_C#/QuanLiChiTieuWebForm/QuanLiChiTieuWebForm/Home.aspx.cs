@@ -24,7 +24,7 @@ namespace QuanLiChiTieuWebForm
         protected System.Web.UI.WebControls.Button SubmitSpending;
         //protected System.Web.UI.WebControls.DropDownList MonthOverView;
         #endregion
-        protected void Page_Load(object sender, EventArgs e)
+        private void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
@@ -37,7 +37,15 @@ namespace QuanLiChiTieuWebForm
                 {
                     Response.Redirect("Login.aspx", false);
                 }
+                MonthOverView.SelectedValue = DateTime.Now.Month.ToString("00");
+                int yearNow = int.Parse(DateTime.Now.Year.ToString());
+                for(int i = (yearNow - 10); i <= yearNow; i++)
+                {
+                    YearOverView.Items.Add(i.ToString());
+                }
+                YearOverView.SelectedValue = yearNow.ToString();
                 setOverviewData(DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString("00"), false);
+                setDispChart(DateTime.Now.Year.ToString());
             }
             else
             {
@@ -64,15 +72,24 @@ namespace QuanLiChiTieuWebForm
             this.BtnLogOut.Click += BtnLogOut_Click1;
             this.SubmitIncome.Click += SubmitIncome_Click;
             this.SubmitSpending.Click += SubmitSpending_Click;
-			//this.MonthOverView.SelectedIndexChanged += MonthOverView_SelectedIndexChanged;
+			this.MonthOverView.SelectedIndexChanged += MonthOverView_SelectedIndexChanged;
+            this.YearOverView.SelectedIndexChanged += YearOverView_SelectedIndexChanged;
 
-            this.Load += new System.EventHandler(this.Page_Load);
-            this.PreRender += new System.EventHandler(this.Page_PreRender);
+            //this.Load += new System.EventHandler(this.Page_Load);
+            //this.PreRender += new System.EventHandler(this.Page_PreRender);
         }
 
-		protected void MonthOverView_SelectedIndexChanged(object sender, EventArgs e)
+        private void YearOverView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string month = MonthOverView.SelectedValue;
+            string year = YearOverView.SelectedValue;
+            setOverviewData(year, month, false);
+            setDispChart(year);
+        }
+
+        private void MonthOverView_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			string month = int.Parse(MonthOverView.SelectedValue).ToString("00");
+			string month = MonthOverView.SelectedValue;
             string year = YearOverView.SelectedValue;
             setOverviewData(year, month, false);
 		}
@@ -90,6 +107,8 @@ namespace QuanLiChiTieuWebForm
                 bool check = SpendingModel.ClickCreateSpending(spendingInfo);
                 if (check)
                 {
+                    setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, false);
+                    setDispChart(YearOverView.SelectedValue);
                     DateSpending.Text = string.Empty;
                     ValueSpending.Text = string.Empty;
                     TypeSpending.SelectedValue = "1";
@@ -128,6 +147,8 @@ namespace QuanLiChiTieuWebForm
                 bool check = IncomeModels.ClickCreateIncome(incomeInfo);
                 if (check)
                 {
+                    setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, false);
+                    setDispChart(YearOverView.SelectedValue);
                     DateIncome.Text = string.Empty;
                     ValueIncome.Text = string.Empty;
                     TypeIncome.SelectedValue = "1";
@@ -149,81 +170,110 @@ namespace QuanLiChiTieuWebForm
 
         private void setOverviewData(string year, string month, bool isAllofYear)
         {
-            //string month = int.Parse(MonthOverView.SelectedValue).ToString("00");
-            //string year = YearOverView.SelectedValue;
-            DataTable dtIncome = IncomeModels.GetIncomeInfo(int.Parse(userId), year);
-            DataTable dtSpending = SpendingModel.GetSpendingInfo(int.Parse(userId), year);
-            int totalIncome = 0;
-            int totalSpending = 0;
-            int[] valueIncome = new int[2];
-            int[] valueSpending = new int[9];
-            foreach (DataRow dr in dtIncome.Rows)
+            try
             {
-                if (dr["DATE_INCOME"].ToString().Split('/')[1].Equals(month))
+                //string month = int.Parse(MonthOverView.SelectedValue).ToString("00");
+                //string year = YearOverView.SelectedValue;
+                DataTable dtIncome = IncomeModels.GetIncomeInfo(int.Parse(userId), year);
+                DataTable dtSpending = SpendingModel.GetSpendingInfo(int.Parse(userId), year);
+                int totalIncome = 0;
+                int totalSpending = 0;
+                int[] valueIncome = new int[2];
+                int[] valueSpending = new int[9];
+                foreach (DataRow dr in dtIncome.Rows)
                 {
-                    totalIncome += int.Parse(dr["VALUE_INCOME"].ToString());
-                    switch (dr["TYPE_INCOME"].ToString())
+                    if (dr["DATE_INCOME"].ToString().Split('/')[1].Equals(month))
                     {
-                        case "1":
-                            valueIncome[0] = valueIncome[0] + int.Parse(dr["VALUE_INCOME"].ToString());
-                            break;
-                        case "2":
-                            valueIncome[1] = valueIncome[1] + int.Parse(dr["VALUE_INCOME"].ToString());
-                            break;
+                        totalIncome += int.Parse(dr["VALUE_INCOME"].ToString());
+                        switch (dr["TYPE_INCOME"].ToString())
+                        {
+                            case "1":
+                                valueIncome[0] = valueIncome[0] + int.Parse(dr["VALUE_INCOME"].ToString());
+                                break;
+                            case "2":
+                                valueIncome[1] = valueIncome[1] + int.Parse(dr["VALUE_INCOME"].ToString());
+                                break;
+                        }
                     }
                 }
+                foreach (DataRow dr in dtSpending.Rows)
+                {
+                    if (dr["DATE_SPENDING"].ToString().Split('/')[1].Equals(month))
+                    {
+                        totalSpending += int.Parse(dr["VALUE_SPENDING"].ToString());
+                        switch (dr["TYPE_SPENDING"].ToString())
+                        {
+                            case "1":
+                                valueSpending[0] = valueSpending[0] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                                break;
+                            case "2":
+                                valueSpending[1] = valueSpending[1] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                                break;
+                            case "3":
+                                valueSpending[2] = valueSpending[2] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                                break;
+                            case "4":
+                                valueSpending[3] = valueSpending[3] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                                break;
+                            case "5":
+                                valueSpending[4] = valueSpending[4] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                                break;
+                            case "6":
+                                valueSpending[5] = valueSpending[5] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                                break;
+                            case "7":
+                                valueSpending[6] = valueSpending[6] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                                break;
+                            case "8":
+                                valueSpending[7] = valueSpending[7] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                                break;
+                            case "9":
+                                valueSpending[8] = valueSpending[8] + int.Parse(dr["VALUE_SPENDING"].ToString());
+                                break;
+                        }
+                    }
+                }
+                TotalIncome.Text = Common.Common.GetFormatMonney(totalIncome);
+                TotalSpending.Text = Common.Common.GetFormatMonney(totalSpending);
+                TotalSaveMoney.Text = Common.Common.GetFormatMonney((totalIncome - totalSpending));
+                ValueIncomeType1.Text = Common.Common.GetFormatMonney(valueIncome[0]);
+                ValueIncomeType2.Text = Common.Common.GetFormatMonney(valueIncome[1]);
+                ValueSpendingType1.Text = Common.Common.GetFormatMonney(valueSpending[0]);
+                ValueSpendingType2.Text = Common.Common.GetFormatMonney(valueSpending[1]);
+                ValueSpendingType3.Text = Common.Common.GetFormatMonney(valueSpending[2]);
+                ValueSpendingType4.Text = Common.Common.GetFormatMonney(valueSpending[3]);
+                ValueSpendingType5.Text = Common.Common.GetFormatMonney(valueSpending[4]);
+                ValueSpendingType6.Text = Common.Common.GetFormatMonney(valueSpending[5]);
+                ValueSpendingType7.Text = Common.Common.GetFormatMonney(valueSpending[6]);
+                ValueSpendingType8.Text = Common.Common.GetFormatMonney(valueSpending[7]);
+                ValueSpendingType9.Text = Common.Common.GetFormatMonney(valueSpending[8]);
+
+                DataSet dsIncome = new DataSet();
+                dsIncome.Tables.Add(dtIncome);
+                GridView1.DataSource = dsIncome;
+                GridView1.DataBind();
+                DataSet dsSpending = new DataSet();
+                dsSpending.Tables.Add(dtSpending);
+                GridView2.DataSource = dsSpending;
+                GridView2.DataBind();
             }
-            foreach (DataRow dr in dtSpending.Rows)
+            catch (Exception ex)
             {
-                if (dr["DATE_SPENDING"].ToString().Split('/')[1].Equals(month))
-                {
-                    totalSpending += int.Parse(dr["VALUE_SPENDING"].ToString());
-                }
-                switch (dr["TYPE_SPENDING"].ToString())
-                {
-                    case "1":
-                        valueSpending[0] = valueSpending[0] + int.Parse(dr["VALUE_SPENDING"].ToString());
-                        break;
-                    case "2":
-                        valueSpending[1] = valueSpending[1] + int.Parse(dr["VALUE_SPENDING"].ToString());
-                        break;
-                    case "3":
-                        valueSpending[2] = valueSpending[2] + int.Parse(dr["VALUE_SPENDING"].ToString());
-                        break;
-                    case "4":
-                        valueSpending[3] = valueSpending[3] + int.Parse(dr["VALUE_SPENDING"].ToString());
-                        break;
-                    case "5":
-                        valueSpending[4] = valueSpending[4] + int.Parse(dr["VALUE_SPENDING"].ToString());
-                        break;
-                    case "6":
-                        valueSpending[5] = valueSpending[5] + int.Parse(dr["VALUE_SPENDING"].ToString());
-                        break;
-                    case "7":
-                        valueSpending[6] = valueSpending[6] + int.Parse(dr["VALUE_SPENDING"].ToString());
-                        break;
-                    case "8":
-                        valueSpending[7] = valueSpending[7] + int.Parse(dr["VALUE_SPENDING"].ToString());
-                        break;
-                    case "9":
-                        valueSpending[8] = valueSpending[8] + int.Parse(dr["VALUE_SPENDING"].ToString());
-                        break;
-                }
+                Response.Redirect("ErrorPage.aspx?message=" + ex.GetType().Name + ex.Message);
             }
-            TotalIncome.Text = totalIncome.ToString("###,###");
-            TotalSpending.Text = totalSpending.ToString("###,###");
-            TotalSaveMoney.Text = (totalIncome - totalSpending).ToString("###,###");
-            ValueIncomeType1.Text = valueIncome[0].ToString("###,###");
-            ValueIncomeType2.Text = valueIncome[1].ToString("###,###");
-            ValueSpendingType1.Text = valueSpending[0].ToString("###,###");
-            ValueSpendingType2.Text = valueSpending[1].ToString("###,###");
-            ValueSpendingType3.Text = valueSpending[2].ToString("###,###");
-            ValueSpendingType4.Text = valueSpending[3].ToString("###,###");
-            ValueSpendingType5.Text = valueSpending[4].ToString("###,###");
-            ValueSpendingType6.Text = valueSpending[5].ToString("###,###");
-            ValueSpendingType7.Text = valueSpending[6].ToString("###,###");
-            ValueSpendingType8.Text = valueSpending[7].ToString("###,###");
-            ValueSpendingType9.Text = valueSpending[8].ToString("###,###");
+        }
+
+        private void setDispChart(string year)
+        {
+            string lstIncomePerMonth = string.Empty;
+            string lstSpendingPerMonth = string.Empty;
+            for(int i = 1; i <= 12; i++)
+            {
+                lstIncomePerMonth += IncomeModels.GetListIncomePerMonth(userId, i.ToString(), year) + "|";
+                lstSpendingPerMonth += SpendingModel.GetListSpendingPerMonth(userId, i.ToString(), year) + "|";
+            }
+            string script = "window.onload = function() { createChart('" + lstIncomePerMonth + "', '" + lstSpendingPerMonth + "'); };";
+            ClientScript.RegisterStartupScript(this.GetType(), "createChart", script, true);
         }
     }
 }
