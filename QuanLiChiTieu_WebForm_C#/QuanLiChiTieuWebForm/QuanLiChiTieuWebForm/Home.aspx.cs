@@ -22,6 +22,7 @@ namespace QuanLiChiTieuWebForm
         protected System.Web.UI.WebControls.TextBox DateIncome;
         protected System.Web.UI.WebControls.Button SubmitIncome;
         protected System.Web.UI.WebControls.Button SubmitSpending;
+        //protected System.Web.UI.WebControls.Button ViewAllOnYear;
         //protected System.Web.UI.WebControls.DropDownList MonthOverView;
         #endregion
         private void Page_Load(object sender, EventArgs e)
@@ -74,12 +75,18 @@ namespace QuanLiChiTieuWebForm
             this.SubmitSpending.Click += SubmitSpending_Click;
 			this.MonthOverView.SelectedIndexChanged += MonthOverView_SelectedIndexChanged;
             this.YearOverView.SelectedIndexChanged += YearOverView_SelectedIndexChanged;
+			this.ViewAllOnYear.CheckedChanged += ViewAllOnYear_CheckedChanged;
 
             //this.Load += new System.EventHandler(this.Page_Load);
             //this.PreRender += new System.EventHandler(this.Page_PreRender);
         }
 
-        private void YearOverView_SelectedIndexChanged(object sender, EventArgs e)
+		private void ViewAllOnYear_CheckedChanged(object sender, EventArgs e)
+		{
+			
+		}
+
+		private void YearOverView_SelectedIndexChanged(object sender, EventArgs e)
         {
             string month = MonthOverView.SelectedValue;
             string year = YearOverView.SelectedValue;

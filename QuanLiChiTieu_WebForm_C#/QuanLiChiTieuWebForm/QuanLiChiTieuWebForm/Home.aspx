@@ -105,7 +105,15 @@
 				return false;
 			}
         }
-    </script>
+
+        function changeViewAllOnYearBtn(ischecked) {
+            console.log("hiep");
+			console.log(ischecked);
+			//document.getElementById("flexSwitchCheckDefault").click();
+            document.getElementById("ViewAllOnYear").checked = ischecked;
+            document.getElementById("ViewAllOnYear").checked;
+		}
+	</script>
 </head>
 
 <body onload="createChart()">
@@ -281,8 +289,9 @@
                 <div class="row">
                     <div class="col-md">
                         <div class="form-check form-switch">
-                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" style="width:25px">
-                          <label class="form-check-label" for="flexSwitchCheckDefault">View All Of Year</label>
+                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onchange="changeViewAllOnYearBtn(this.checked);" style="width:25px">
+                          <label class="form-check-label" for="CheckBox">Hiển Thị Toàn Bộ Trong Năm</label>
+                          <asp:CheckBox ID="ViewAllOnYear" runat="server" CssClass="" AutoPostBack="true" Checked="false"/>
                         </div>
                         <h3>Danh Sách Thu Nhập</h3>
                         <asp:GridView ID="GridView1" runat="server" RowStyle-CssClass="GvRowStyle" Width="100%" ForeColor="#566787" GridLines="None" AutoGenerateColumns="False" AllowPaging="True" Style="margin-bottom: 0px" CellSpacing="5"
