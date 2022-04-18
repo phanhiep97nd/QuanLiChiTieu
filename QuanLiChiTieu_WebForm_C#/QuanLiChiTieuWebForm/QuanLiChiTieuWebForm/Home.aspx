@@ -106,14 +106,15 @@
 			}
         }
 
-        function changeViewAllOnYearBtn(ischecked) {
-            console.log("hiep");
-			console.log(ischecked);
-			//document.getElementById("flexSwitchCheckDefault").click();
-            document.getElementById("ViewAllOnYear").checked = ischecked;
-            document.getElementById("ViewAllOnYear").checked;
-		}
-	</script>
+        function setDispDetailTab() {
+            document.getElementById("home-tab").setAttribute("class", "nav-link");
+            document.getElementById("home-tab").setAttribute("aria-selected", "false");
+            document.getElementById("home").setAttribute("class", "tab-pane fade");
+            document.getElementById("profile-tab").setAttribute("class", "nav-link active");
+            document.getElementById("profile-tab").setAttribute("aria-selected", "true");
+            document.getElementById("profile").setAttribute("class", "tab-pane fade show active");
+        }
+    </script>
 </head>
 
 <body onload="createChart()">
@@ -288,10 +289,8 @@
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="row">
                     <div class="col-md">
-                        <div class="form-check form-switch">
-                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onchange="changeViewAllOnYearBtn(this.checked);" style="width:25px">
-                          <label class="form-check-label" for="CheckBox">Hiển Thị Toàn Bộ Trong Năm</label>
-                          <asp:CheckBox ID="ViewAllOnYear" runat="server" CssClass="" AutoPostBack="true" Checked="false"/>
+                        <div style="margin:10px">
+                          <asp:CheckBox ID="ViewAllOnYear" runat="server" Text="Hiển Thị Tất Cả Theo Năm" CssClass="" AutoPostBack="true" Checked="false"/>
                         </div>
                         <h3>Danh Sách Thu Nhập</h3>
                         <asp:GridView ID="GridView1" runat="server" RowStyle-CssClass="GvRowStyle" Width="100%" ForeColor="#566787" GridLines="None" AutoGenerateColumns="False" AllowPaging="True" Style="margin-bottom: 0px" CellSpacing="5"
@@ -486,6 +485,20 @@
                             <SortedDescendingCellStyle BackColor="#E9EBEF" />
                             <SortedDescendingHeaderStyle BackColor="#4870BE" />
                         </asp:GridView>
+                        <hr style="color: rgb(54, 109, 138);">
+                        <div class="container">
+                          <div class="row" style="color: crimson;">
+                            <div class="col">
+                              <h7><asp:Label ID="TotalIncomeOfYear" runat="server"></asp:Label></h7>
+                            </div>
+                            <div class="col">
+                              <h7><asp:Label ID="TotalSpendingOfYear" runat="server"></asp:Label></h7>
+                            </div>
+                            <div class="col">
+                              <h7><asp:Label ID="TotalSaveMoneyOfYear" runat="server"></asp:Label></h7>
+                            </div>
+                          </div>
+                        </div>
                     </div>
                     <div class="col-md">
                         <div class="right-content-detail">

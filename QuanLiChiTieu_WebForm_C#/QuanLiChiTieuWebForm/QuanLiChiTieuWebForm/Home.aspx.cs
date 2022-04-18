@@ -46,7 +46,7 @@ namespace QuanLiChiTieuWebForm
                 }
                 YearOverView.SelectedValue = yearNow.ToString();
                 setOverviewData(DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString("00"), false);
-                setDispChart(DateTime.Now.Year.ToString());
+                //setDispChart(DateTime.Now.Year.ToString());
             }
             else
             {
@@ -58,6 +58,7 @@ namespace QuanLiChiTieuWebForm
 
         private void Page_PreRender(object sender, System.EventArgs e)
         {
+            setDispChart(YearOverView.SelectedValue);
             ViewState["userId"] = userId;
         }
 
@@ -83,22 +84,23 @@ namespace QuanLiChiTieuWebForm
 
 		private void ViewAllOnYear_CheckedChanged(object sender, EventArgs e)
 		{
-			
+            setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, this.ViewAllOnYear.Checked);
+			ClientScript.RegisterStartupScript(this.GetType(), "setDispDetailTab", "setDispDetailTab();", true);
 		}
 
 		private void YearOverView_SelectedIndexChanged(object sender, EventArgs e)
         {
             string month = MonthOverView.SelectedValue;
             string year = YearOverView.SelectedValue;
-            setOverviewData(year, month, false);
-            setDispChart(year);
+            setOverviewData(year, month, this.ViewAllOnYear.Checked);
+            //setDispChart(year);
         }
 
         private void MonthOverView_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			string month = MonthOverView.SelectedValue;
             string year = YearOverView.SelectedValue;
-            setOverviewData(year, month, false);
+            setOverviewData(year, month, this.ViewAllOnYear.Checked);
 		}
 
 		private void SubmitSpending_Click(object sender, EventArgs e)
@@ -114,8 +116,8 @@ namespace QuanLiChiTieuWebForm
                 bool check = SpendingModel.ClickCreateSpending(spendingInfo);
                 if (check)
                 {
-                    setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, false);
-                    setDispChart(YearOverView.SelectedValue);
+                    setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, this.ViewAllOnYear.Checked);
+                    //setDispChart(YearOverView.SelectedValue);
                     DateSpending.Text = string.Empty;
                     ValueSpending.Text = string.Empty;
                     TypeSpending.SelectedValue = "1";
@@ -154,8 +156,8 @@ namespace QuanLiChiTieuWebForm
                 bool check = IncomeModels.ClickCreateIncome(incomeInfo);
                 if (check)
                 {
-                    setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, false);
-                    setDispChart(YearOverView.SelectedValue);
+                    setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, this.ViewAllOnYear.Checked);
+                    //setDispChart(YearOverView.SelectedValue);
                     DateIncome.Text = string.Empty;
                     ValueIncome.Text = string.Empty;
                     TypeIncome.SelectedValue = "1";
@@ -183,6 +185,10 @@ namespace QuanLiChiTieuWebForm
                 //string year = YearOverView.SelectedValue;
                 DataTable dtIncome = IncomeModels.GetIncomeInfo(int.Parse(userId), year);
                 DataTable dtSpending = SpendingModel.GetSpendingInfo(int.Parse(userId), year);
+                DataTable dtIncomeInMonth = dtIncome.Clone();
+                //DataTable dtIncomeInMonth = new DataTable();
+                DataTable dtSpendingInMonth = dtSpending.Clone();
+                //DataTable dtSpendingInMonth = new DataTable();
                 int totalIncome = 0;
                 int totalSpending = 0;
                 int[] valueIncome = new int[2];
@@ -191,6 +197,7 @@ namespace QuanLiChiTieuWebForm
                 {
                     if (dr["DATE_INCOME"].ToString().Split('/')[1].Equals(month))
                     {
+                        dtIncomeInMonth.ImportRow(dr);
                         totalIncome += int.Parse(dr["VALUE_INCOME"].ToString());
                         switch (dr["TYPE_INCOME"].ToString())
                         {
@@ -207,6 +214,7 @@ namespace QuanLiChiTieuWebForm
                 {
                     if (dr["DATE_SPENDING"].ToString().Split('/')[1].Equals(month))
                     {
+                        dtSpendingInMonth.ImportRow(dr);
                         totalSpending += int.Parse(dr["VALUE_SPENDING"].ToString());
                         switch (dr["TYPE_SPENDING"].ToString())
                         {
@@ -256,11 +264,11 @@ namespace QuanLiChiTieuWebForm
                 ValueSpendingType9.Text = Common.Common.GetFormatMonney(valueSpending[8]);
 
                 DataSet dsIncome = new DataSet();
-                dsIncome.Tables.Add(dtIncome);
+                dsIncome.Tables.Add(isAllofYear ? dtIncome : dtIncomeInMonth);
                 GridView1.DataSource = dsIncome;
                 GridView1.DataBind();
                 DataSet dsSpending = new DataSet();
-                dsSpending.Tables.Add(dtSpending);
+                dsSpending.Tables.Add(isAllofYear ? dtSpending : dtSpendingInMonth);
                 GridView2.DataSource = dsSpending;
                 GridView2.DataBind();
             }
@@ -274,11 +282,20 @@ namespace QuanLiChiTieuWebForm
         {
             string lstIncomePerMonth = string.Empty;
             string lstSpendingPerMonth = string.Empty;
+            int totalIncome = 0;
+            int totalSpending = 0;
             for(int i = 1; i <= 12; i++)
             {
-                lstIncomePerMonth += IncomeModels.GetListIncomePerMonth(userId, i.ToString(), year) + "|";
-                lstSpendingPerMonth += SpendingModel.GetListSpendingPerMonth(userId, i.ToString(), year) + "|";
+                int income = IncomeModels.GetListIncomePerMonth(userId, i.ToString(), year);
+                int spending = SpendingModel.GetListSpendingPerMonth(userId, i.ToString(), year);
+                totalIncome += income;
+                totalSpending += spending;
+                lstIncomePerMonth += income + "|";
+                lstSpendingPerMonth += spending + "|";
             }
+            TotalIncomeOfYear.Text = "Tổng thu nhập năm " + YearOverView.SelectedValue + ": " + (totalIncome == 0 ? "0" : totalIncome.ToString("###,###")) + "VND";
+            TotalSpendingOfYear.Text = "Tổng chi tiêu năm " + YearOverView.SelectedValue + ": " + (totalSpending == 0 ? "0" : totalSpending.ToString("###,###")) + "VND";
+            TotalSaveMoneyOfYear.Text = "Tổng tích lũy năm " + YearOverView.SelectedValue + ": " + ((totalIncome + totalSpending) == 0 ? "0" : (totalIncome + totalSpending).ToString("###,###")) + "VND";
             string script = "window.onload = function() { createChart('" + lstIncomePerMonth + "', '" + lstSpendingPerMonth + "'); };";
             ClientScript.RegisterStartupScript(this.GetType(), "createChart", script, true);
         }
