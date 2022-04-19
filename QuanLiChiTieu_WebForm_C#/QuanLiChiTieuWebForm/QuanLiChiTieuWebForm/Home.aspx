@@ -59,6 +59,14 @@
             } else {
                 document.getElementById("Foratmonney").innerHTML = "";
             }
+            document.getElementById("ValueSpending").classList.remove("is-invalid");
+            var valueSpending = document.getElementById("ValueSpending");
+            if (valueSpending.value != "") {
+                var number = parseInt(valueSpending.value);
+                document.getElementById("ForatmonneySpending").innerHTML = number.toLocaleString() + " VND";
+            } else {
+                document.getElementById("ForatmonneySpending").innerHTML = "";
+            }
         }
 
         function submitSpending() {
@@ -304,7 +312,7 @@
                                         </asp:Label>
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="EditDateIncome" TextMode="Date" runat="server" CssClass="form-control" Text='<%# DataBinder.Eval(Container, "DataItem.[DATE_INCOME]") %>'></asp:TextBox>
+                                        <asp:TextBox ID="EditDateIncome" TextMode="Date" runat="server" CssClass="form-control" Text='<%# DataBinder.Eval(Container, "DataItem.[DATE_INCOME]", "{0:yyyy-MM-dd}") %>'></asp:TextBox>
                                     </EditItemTemplate>
                                     <FooterStyle Width="200px" />
                                     <HeaderStyle HorizontalAlign="Center" Width="250px"></HeaderStyle>
@@ -313,7 +321,7 @@
                                 <asp:TemplateField HeaderText="Số Tiền" HeaderStyle-CssClass="text-center">
                                     <ItemTemplate>
                                         <asp:Label ID="valueIncome" runat="server"
-                                            Text='<%# DataBinder.Eval(Container, "DataItem.[VALUE_INCOME]") %>'>
+                                            Text='<%# DataBinder.Eval(Container, "DataItem.[VALUE_INCOME]", "{0:###,###}") + " VND" %> '>
                                         </asp:Label>
                                     </ItemTemplate>
                                     <EditItemTemplate>
@@ -326,12 +334,16 @@
                                 <asp:TemplateField HeaderText="Loại Thu Nhập" HeaderStyle-CssClass="text-center">
                                     <ItemTemplate>
                                         <asp:Label ID="phone" runat="server"
-                                            Text='<%# DataBinder.Eval(Container, "DataItem.[TYPE_INCOME]") %>'>
+                                            Text='<%# DataBinder.Eval(Container, "DataItem.[TYPE_INCOME]") == "1" ? "Tiền lương" : "Thu nhập khác" %>'>
                                         </asp:Label>
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="EditPhone" runat="server" CssClass="form-control"
-                                            Text='<%# DataBinder.Eval(Container, "DataItem.[TYPE_INCOME]") %>'></asp:TextBox>
+                                        <asp:DropDownList id="EditTypeIncome"
+                                            runat="server"
+                                            CssClass="form-control" SelectedIndex='<%# int.Parse(DataBinder.Eval(Container, "DataItem.[TYPE_INCOME]").ToString()) %>'>
+                                          <asp:ListItem Value="1"> Tiền Lương </asp:ListItem>
+                                          <asp:ListItem Value="2"> Khác </asp:ListItem>
+                                       </asp:DropDownList>
                                     </EditItemTemplate>
                                     <HeaderStyle HorizontalAlign="Center" Width="250px" />
                                     <ItemStyle HorizontalAlign="Center" Width="250px" />
@@ -410,7 +422,7 @@
                                 <asp:TemplateField HeaderText="Số Tiền" HeaderStyle-CssClass="text-center">
                                     <ItemTemplate>
                                         <asp:Label ID="valueSPENDING" runat="server"
-                                            Text='<%# DataBinder.Eval(Container, "DataItem.[VALUE_SPENDING]") %>'>
+                                            Text='<%# DataBinder.Eval(Container, "DataItem.[VALUE_SPENDING]", "{0:###,###}") + " VND" %>'>
                                         </asp:Label>
                                     </ItemTemplate>
                                     <EditItemTemplate>
@@ -423,7 +435,7 @@
                                 <asp:TemplateField HeaderText="Loại Thu Nhập" HeaderStyle-CssClass="text-center">
                                     <ItemTemplate>
                                         <asp:Label ID="phone" runat="server"
-                                            Text='<%# DataBinder.Eval(Container, "DataItem.[TYPE_SPENDING]") %>'>
+                                            Text='<%# ShowTypeSpending(DataBinder.Eval(Container, "DataItem.[TYPE_SPENDING]")) %>'>
                                         </asp:Label>
                                     </ItemTemplate>
                                     <EditItemTemplate>
@@ -582,7 +594,7 @@
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Số Tiền Chi Tiêu (VND)</label>
                                 <asp:TextBox ID="ValueSpending" runat="server" CssClass="form-control" TextMode="Number" placeholder="Nhập số tiền ..." onchange="setFormatMonney();"></asp:TextBox>
-                                <label style="color:darkseagreen; font-size:15px" id="Foratmonney"></label>
+                                <label style="color:darkseagreen; font-size:15px" id="ForatmonneySpending"></label>
                                 <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                     Hãy nhập số tiền.
                                 </div>

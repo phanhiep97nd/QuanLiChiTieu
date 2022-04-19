@@ -76,11 +76,11 @@ namespace QuanLiChiTieuWebForm.Model
             return dtIncome;
         }
 
-        public static int GetListIncomePerMonth(string userId, string month, string year)
+        public static long GetListIncomePerMonth(string userId, string month, string year)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
             SqlCommand com = new SqlCommand();
-            int result = 0;
+            long result = 0;
             try
             {
                 StringBuilder sb = new StringBuilder();
@@ -103,13 +103,47 @@ namespace QuanLiChiTieuWebForm.Model
                 //{
                 //    result = Convert.ToInt16(dr.GetValue(0));
                 //}
-                result = int.Parse(Convert.ToString(total) == "" ? "0" : Convert.ToString(total));
+                result = long.Parse(Convert.ToString(total) == "" ? "0" : Convert.ToString(total));
             }
             catch (Exception ex)
             {
                 throw ex;
             }
             con.Close();
+            return result;
+        }
+
+        public static int UpdateIncome(IncomeEntity incomeInfo)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
+            SqlCommand com = new SqlCommand();
+            int result = 0;
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                con.Open();
+                com.Connection = con;
+                sb.Append("UPDATE [dbo].[INCOME]");
+                sb.Append(" SET ");
+                sb.Append(" [VALUE_INCOME] = @valueIncome");
+                sb.Append(", [TYPE_INCOME] = @typeIncome");
+                sb.Append(", [DATE_INCOME] = @dateIncome");
+                sb.Append(", [NOTE_INCOME] = @noteIncome");
+                sb.Append(" WHERE ");
+                sb.Append("[INCOME_ID] = @id");
+                com.CommandText = sb.ToString();
+                com.Parameters.AddWithValue("@valueIncome", incomeInfo.ValueIncome);
+                com.Parameters.AddWithValue("@typeIncome", incomeInfo.TypeIncome);
+                com.Parameters.AddWithValue("@dateIncome", incomeInfo.DateIncome);
+                com.Parameters.AddWithValue("@noteIncome", "".Equals(incomeInfo.NoteIncome) ? "NA" : incomeInfo.NoteIncome);
+                com.Parameters.AddWithValue("@id", incomeInfo.IncomeId);
+                result = com.ExecuteNonQuery();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             return result;
         }
 	}

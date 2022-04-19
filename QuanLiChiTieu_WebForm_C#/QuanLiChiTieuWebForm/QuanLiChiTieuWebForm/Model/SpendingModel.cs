@@ -76,11 +76,11 @@ namespace QuanLiChiTieu.Models
             return dtSpending;
         }
 
-        public static int GetListSpendingPerMonth(string userId, string month, string year)
+        public static long GetListSpendingPerMonth(string userId, string month, string year)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
             SqlCommand com = new SqlCommand();
-            int result = 0;
+            long result = 0;
             try
             {
                 StringBuilder sb = new StringBuilder();
@@ -103,7 +103,7 @@ namespace QuanLiChiTieu.Models
                 //{
                 //    result = Convert.ToInt16(dr.GetValue(0));
                 //}
-                result = int.Parse(Convert.ToString(total) == "" ? "0" : Convert.ToString(total));
+                result = long.Parse(Convert.ToString(total) == "" ? "0" : Convert.ToString(total));
             }
             catch (Exception ex)
             {

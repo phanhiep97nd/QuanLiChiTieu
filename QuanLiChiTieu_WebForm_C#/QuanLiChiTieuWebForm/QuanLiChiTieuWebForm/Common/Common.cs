@@ -40,7 +40,7 @@ namespace QuanLiChiTieuWebForm.Common
             return message.ToString();
         }
 
-        public static string GetFormatMonney(int input)
+        public static string GetFormatMonney(long input)
         {
             return input == 0 ? "0" : input.ToString("###,###");
         }
