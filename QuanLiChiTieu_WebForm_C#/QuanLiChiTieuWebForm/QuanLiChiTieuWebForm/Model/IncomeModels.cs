@@ -113,7 +113,7 @@ namespace QuanLiChiTieuWebForm.Model
             return result;
         }
 
-        public static int UpdateIncome(IncomeEntity incomeInfo)
+        public static bool UpdateIncome(IncomeEntity incomeInfo)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
             SqlCommand com = new SqlCommand();
@@ -144,7 +144,32 @@ namespace QuanLiChiTieuWebForm.Model
             {
                 throw ex;
             }
-            return result;
+            return result != 0 ? true : false;
+        }
+
+        public static bool DeleteIncome(int idIncome)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
+            SqlCommand com = new SqlCommand();
+            int result = 0;
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                con.Open();
+                com.Connection = con;
+                sb.Append("DELETE FROM [dbo].[INCOME]");
+                sb.Append(" WHERE ");
+                sb.Append("[INCOME_ID] = @id");
+                com.CommandText = sb.ToString();
+                com.Parameters.AddWithValue("@id", idIncome);
+                result = com.ExecuteNonQuery();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result != 0 ? true : false;
         }
 	}
 }

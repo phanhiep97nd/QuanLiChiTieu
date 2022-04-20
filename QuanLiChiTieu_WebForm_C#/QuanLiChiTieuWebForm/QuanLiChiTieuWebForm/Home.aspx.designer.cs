@@ -195,6 +195,15 @@ namespace QuanLiChiTieuWebForm
         protected global::System.Web.UI.WebControls.CheckBox ViewAllOnYear;
 
         /// <summary>
+        /// codeAlertIncome control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl codeAlertIncome;
+
+        /// <summary>
         /// GridView1 control.
         /// </summary>
         /// <remarks>

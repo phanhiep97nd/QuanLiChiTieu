@@ -301,6 +301,7 @@
                           <asp:CheckBox ID="ViewAllOnYear" runat="server" Text="Hiển Thị Tất Cả Theo Năm" CssClass="" AutoPostBack="true" Checked="false"/>
                         </div>
                         <h3>Danh Sách Thu Nhập</h3>
+                        <div id="codeAlertIncome" runat="server" style="color: red;"></div>
                         <asp:GridView ID="GridView1" runat="server" RowStyle-CssClass="GvRowStyle" Width="100%" ForeColor="#566787" GridLines="None" AutoGenerateColumns="False" AllowPaging="True" Style="margin-bottom: 0px" CellSpacing="5"
                              DataKeyNames="INCOME_ID" CssClass="myGrv" AllowSorting="True" CellPadding="5" HorizontalAlign="Center" ShowFooter="True">
                             <AlternatingRowStyle BackColor="#e6e6e6" />
@@ -312,7 +313,7 @@
                                         </asp:Label>
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="EditDateIncome" TextMode="Date" runat="server" CssClass="form-control" Text='<%# DataBinder.Eval(Container, "DataItem.[DATE_INCOME]", "{0:yyyy-MM-dd}") %>'></asp:TextBox>
+                                        <asp:TextBox ID="EditDateIncome" TextMode="Date" runat="server" CssClass="form-control" Text='<%# (object)DateTime.ParseExact(DataBinder.Eval(Container, "DataItem.[DATE_INCOME]").ToString(),"dd/MM/yyyy",null).ToString("yyyy-MM-dd") %>'></asp:TextBox>
                                     </EditItemTemplate>
                                     <FooterStyle Width="200px" />
                                     <HeaderStyle HorizontalAlign="Center" Width="250px"></HeaderStyle>
@@ -334,13 +335,13 @@
                                 <asp:TemplateField HeaderText="Loại Thu Nhập" HeaderStyle-CssClass="text-center">
                                     <ItemTemplate>
                                         <asp:Label ID="phone" runat="server"
-                                            Text='<%# DataBinder.Eval(Container, "DataItem.[TYPE_INCOME]") == "1" ? "Tiền lương" : "Thu nhập khác" %>'>
+                                            Text='<%# DataBinder.Eval(Container, "DataItem.[TYPE_INCOME]").ToString() == "1" ? "Tiền lương" : "Thu nhập khác" %>'>
                                         </asp:Label>
                                     </ItemTemplate>
                                     <EditItemTemplate>
                                         <asp:DropDownList id="EditTypeIncome"
                                             runat="server"
-                                            CssClass="form-control" SelectedIndex='<%# int.Parse(DataBinder.Eval(Container, "DataItem.[TYPE_INCOME]").ToString()) %>'>
+                                            CssClass="form-control" SelectedIndex='<%# int.Parse(DataBinder.Eval(Container, "DataItem.[TYPE_INCOME]").ToString()) - 1 %>'>
                                           <asp:ListItem Value="1"> Tiền Lương </asp:ListItem>
                                           <asp:ListItem Value="2"> Khác </asp:ListItem>
                                        </asp:DropDownList>
@@ -355,7 +356,7 @@
                                         </asp:Label>
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="EditAddress" runat="server" CssClass="form-control" Text='<%# DataBinder.Eval(Container, "DataItem.[NOTE_INCOME]") %>'></asp:TextBox>
+                                        <asp:TextBox ID="EditNoteIncome" runat="server" CssClass="form-control" Text='<%# DataBinder.Eval(Container, "DataItem.[NOTE_INCOME]") %>'></asp:TextBox>
                                     </EditItemTemplate>
                                     <HeaderStyle HorizontalAlign="Center" Width="500px" />
                                     <ItemStyle HorizontalAlign="Center" Width="500px" />
@@ -413,7 +414,7 @@
                                         </asp:Label>
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="EditDateSPENDING" TextMode="Date" runat="server" CssClass="form-control" Text='<%# DataBinder.Eval(Container, "DataItem.[DATE_SPENDING]") %>'></asp:TextBox>
+                                        <asp:TextBox ID="EditDateSPENDING" TextMode="Date" runat="server" CssClass="form-control" Text='<%# (object)DateTime.ParseExact(DataBinder.Eval(Container, "DataItem.[DATE_SPENDING]").ToString(),"dd/MM/yyyy",null).ToString("yyyy-MM-dd") %>'></asp:TextBox>
                                     </EditItemTemplate>
                                     <FooterStyle Width="200px" />
                                     <HeaderStyle HorizontalAlign="Center" Width="250px"></HeaderStyle>

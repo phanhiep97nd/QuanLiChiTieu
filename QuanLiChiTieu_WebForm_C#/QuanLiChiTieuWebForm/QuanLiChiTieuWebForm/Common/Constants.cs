@@ -13,8 +13,14 @@ namespace QuanLiChiTieuWebForm.Common
         public const string LOGIN_FALSE = "<div class='alert alert-danger' role='alert'><strong>NOT Success!</strong> Tên đăng nhập hoặc mật khẩu không chính xác!</div>";
         public const string HTML_ERROR_IMPORT_INCOME = "<div class='alert alert-danger' role='alert'><strong>ERROR!</strong> Create Income was an ERROR!</div>";
         public const string HTML_ERROR_IMPORT_SPENDING = "<div class='alert alert-danger' role='alert'><strong>ERROR!</strong> Create Spending was an ERROR!</div>";
+        public const string HTML_ERROR_EDIT_DATE_INCOME = "<div class='alert alert-danger' role='alert'><strong>ERROR!</strong> Nhập Ngày Tháng Nhận Thu Nhập!</div>";
+        public const string HTML_ERROR_EDIT_VALUE_INCOME = "<div class='alert alert-danger' role='alert'><strong>ERROR!</strong> Nhập Số Tiền Thu Nhập!</div>";
+        public const string HTML_ERROR_EDIT_INCOME = "<div class='alert alert-danger' role='alert'><strong>ERROR!</strong> Edit Income was an ERROR!</div>";
+        public const string HTML_ERROR_DELETE_INCOME = "<div class='alert alert-danger' role='alert'><strong>ERROR!</strong> Delete Income was an ERROR!</div>";
 
         public const string HTML_SUCCESS_IMPORT_INCOME = "<div class='alert alert-success' role='alert'><strong>Success!</strong> Create Income successfully!</div>";
         public const string HTML_SUCCESS_IMPORT_SPENDING = "<div class='alert alert-success' role='alert'><strong>Success!</strong> Create Spending successfully!</div>";
+        public const string HTML_SUCCESS_EDIT_INCOME = "<div class='alert alert-success' role='alert'><strong>Success!</strong> Edit Income successfully!</div>";
+        public const string HTML_SUCCESS_DELETE_INCOME = "<div class='alert alert-warning' role='alert'><strong>Success!</strong> Delete Income successfully!</div>";
     }
 }

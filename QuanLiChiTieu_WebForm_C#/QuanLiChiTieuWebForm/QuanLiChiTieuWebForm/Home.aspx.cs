@@ -51,6 +51,7 @@ namespace QuanLiChiTieuWebForm
             else
             {
                 codeAlert.InnerHtml = String.Empty;
+                codeAlertIncome.InnerHtml = string.Empty;
                 userId = (string)ViewState["userId"];
             }
 
@@ -79,20 +80,75 @@ namespace QuanLiChiTieuWebForm
 			this.ViewAllOnYear.CheckedChanged += ViewAllOnYear_CheckedChanged;
             this.GridView1.RowEditing += GridView1_RowEditing;
             this.GridView1.RowCancelingEdit += GridView1_RowCancelingEdit;
-            //this.GridView1.RowUpdating += GridView1_RowUpdating;
+            this.GridView1.RowUpdating += GridView1_RowUpdating;
+            this.GridView1.RowDeleting += GridView1_RowDeleting;
 
             //this.Load += new System.EventHandler(this.Page_Load);
             //this.PreRender += new System.EventHandler(this.Page_PreRender);
         }
 
-        private void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        private void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             int id = int.Parse(GridView1.DataKeys[e.RowIndex].Value.ToString());
+            bool check = IncomeModels.DeleteIncome(id);
+            if (check)
+            {
+                GridView1.EditIndex = -1;
+                setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, this.ViewAllOnYear.Checked);
+                codeAlertIncome.InnerHtml = Constants.HTML_SUCCESS_DELETE_INCOME;
+                Response.Write(Constants.SCRIPT_ALERT_CLOSE);
+            }
+            else
+            {
+                codeAlertIncome.InnerHtml = Constants.HTML_ERROR_DELETE_INCOME;
+            }
+            ClientScript.RegisterStartupScript(this.GetType(), "setDispDetailTab", "setDispDetailTab();", true);
+        }
+
+        private void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            string messageErr = string.Empty;
             GridViewRow row = GridView1.Rows[e.RowIndex];
-            IncomeEntity incomeEditInfo = new IncomeEntity();
-            incomeEditInfo.IncomeId = id;
             TextBox textDateIncome = (TextBox)row.FindControl("EditDateIncome");
-            incomeEditInfo.DateIncome = DateTime.Parse(textDateIncome.Text);
+            TextBox textValueIncome = (TextBox)row.FindControl("EditValueIncome");
+            DropDownList textTypeIncome = (DropDownList)row.FindControl("EditTypeIncome");
+            TextBox textNoteIncome = (TextBox)row.FindControl("EditNoteIncome");
+            if(textDateIncome.Text == string.Empty)
+            {
+                messageErr += Constants.HTML_ERROR_EDIT_DATE_INCOME + "\n";
+            }
+            if(textValueIncome.Text == string.Empty)
+            {
+                messageErr += Constants.HTML_ERROR_EDIT_VALUE_INCOME;
+            }
+            if(messageErr != string.Empty)
+            {
+                codeAlertIncome.InnerHtml = messageErr;
+            }
+            else
+            {
+                int id = int.Parse(GridView1.DataKeys[e.RowIndex].Value.ToString());
+                IncomeEntity incomeEditInfo = new IncomeEntity();
+                incomeEditInfo.IncomeId = id;
+                incomeEditInfo.DateIncome = DateTime.Parse(textDateIncome.Text);
+                incomeEditInfo.ValueIncome = long.Parse(textValueIncome.Text);
+                incomeEditInfo.TypeIncome = textTypeIncome.SelectedValue;
+                incomeEditInfo.NoteIncome = textNoteIncome.Text;
+                bool check = IncomeModels.UpdateIncome(incomeEditInfo);
+                if (check)
+                {
+                    GridView1.EditIndex = -1;
+                    setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, this.ViewAllOnYear.Checked);
+                    GridView1.Columns[5].Visible = true;
+                    codeAlertIncome.InnerHtml = Constants.HTML_SUCCESS_EDIT_INCOME;
+                    Response.Write(Constants.SCRIPT_ALERT_CLOSE);
+                }
+                else
+                {
+                    codeAlertIncome.InnerHtml = Constants.HTML_ERROR_EDIT_INCOME;
+                }
+            }
+            ClientScript.RegisterStartupScript(this.GetType(), "setDispDetailTab", "setDispDetailTab();", true);
         }
 
         private void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
