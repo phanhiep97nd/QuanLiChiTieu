@@ -113,8 +113,10 @@ namespace QuanLiChiTieu.Models
             return result;
         }
 
-        internal static int UpdateSpending(SqlConnection con, SqlCommand com, SpendingEntity SpendingInfo)
+        public static bool UpdateSpending(SpendingEntity SpendingInfo)
         {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
+            SqlCommand com = new SqlCommand();
             int result = 0;
             try
             {
@@ -142,7 +144,32 @@ namespace QuanLiChiTieu.Models
             {
                 throw ex;
             }
-            return result;
+            return result != 0 ? true : false;
+        }
+
+        public static bool DeleteSpending(int idSpending)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
+            SqlCommand com = new SqlCommand();
+            int result = 0;
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                con.Open();
+                com.Connection = con;
+                sb.Append("DELETE FROM [dbo].[SPENDING]");
+                sb.Append(" WHERE ");
+                sb.Append("[SPENDING_ID] = @id");
+                com.CommandText = sb.ToString();
+                com.Parameters.AddWithValue("@id", idSpending);
+                result = com.ExecuteNonQuery();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result != 0 ? true : false;
         }
     }
 }

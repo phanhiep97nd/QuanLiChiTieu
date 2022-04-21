@@ -52,6 +52,7 @@ namespace QuanLiChiTieuWebForm
             {
                 codeAlert.InnerHtml = String.Empty;
                 codeAlertIncome.InnerHtml = string.Empty;
+                codeAlertSpending.InnerHtml = string.Empty;
                 userId = (string)ViewState["userId"];
             }
 
@@ -82,12 +83,117 @@ namespace QuanLiChiTieuWebForm
             this.GridView1.RowCancelingEdit += GridView1_RowCancelingEdit;
             this.GridView1.RowUpdating += GridView1_RowUpdating;
             this.GridView1.RowDeleting += GridView1_RowDeleting;
+			this.GridView2.RowEditing += GridView2_RowEditing;
+			this.GridView2.RowCancelingEdit += GridView2_RowCancelingEdit;
+			this.GridView2.RowUpdating += GridView2_RowUpdating;
+			this.GridView2.RowDeleting += GridView2_RowDeleting;
+			this.GridView1.PageIndexChanging += GridView1_PageIndexChanging;
+			this.GridView2.PageIndexChanging += GridView2_PageIndexChanging;
 
             //this.Load += new System.EventHandler(this.Page_Load);
             //this.PreRender += new System.EventHandler(this.Page_PreRender);
         }
 
-        private void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+		private void GridView2_PageIndexChanging(object sender, GridViewPageEventArgs e)
+		{
+			GridView2.PageIndex = e.NewPageIndex;
+            setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, this.ViewAllOnYear.Checked);
+            ClientScript.RegisterStartupScript(this.GetType(), "setDispDetailTab", "setDispDetailTab();", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "href", "location.href = '#GridView2';", true);
+		}
+
+		private void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+		{
+            GridView1.PageIndex = e.NewPageIndex;
+            setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, this.ViewAllOnYear.Checked);
+            ClientScript.RegisterStartupScript(this.GetType(), "setDispDetailTab", "setDispDetailTab();", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "href", "location.href = '#GridView1';", true);
+		}
+
+		private void GridView2_RowDeleting(object sender, GridViewDeleteEventArgs e)
+		{
+			int id = int.Parse(GridView2.DataKeys[e.RowIndex].Value.ToString());
+            bool check = SpendingModel.DeleteSpending(id);
+            if (check)
+            {
+                GridView2.EditIndex = -1;
+                setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, this.ViewAllOnYear.Checked);
+                codeAlertSpending.InnerHtml = Constants.HTML_SUCCESS_DELETE_SPENDING;
+                Response.Write(Constants.SCRIPT_ALERT_CLOSE);
+            }
+            else
+            {
+                codeAlertSpending.InnerHtml = Constants.HTML_ERROR_DELETE_SPENDING;
+            }
+            ClientScript.RegisterStartupScript(this.GetType(), "setDispDetailTab", "setDispDetailTab();", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "href", "location.href = '#GridView2';", true);
+		}
+
+		private void GridView2_RowUpdating(object sender, GridViewUpdateEventArgs e)
+		{
+			string messageErr = string.Empty;
+            GridViewRow row = GridView2.Rows[e.RowIndex];
+            TextBox textDateSpending = (TextBox)row.FindControl("EditDateSpending");
+            TextBox textValueSpending = (TextBox)row.FindControl("EditValueSpending");
+            DropDownList textTypeSpending = (DropDownList)row.FindControl("EditTypeSpending");
+            TextBox textNoteSpending = (TextBox)row.FindControl("EditNoteSpending");
+            if(textDateSpending.Text == string.Empty)
+            {
+                messageErr += Constants.HTML_ERROR_EDIT_DATE_SPENDING + "\n";
+            }
+            if(textValueSpending.Text == string.Empty)
+            {
+                messageErr += Constants.HTML_ERROR_EDIT_VALUE_SPENDING;
+            }
+            if(messageErr != string.Empty)
+            {
+                codeAlertSpending.InnerHtml = messageErr;
+            }
+            else
+            {
+                int id = int.Parse(GridView2.DataKeys[e.RowIndex].Value.ToString());
+                SpendingEntity incomeEditInfo = new SpendingEntity();
+                incomeEditInfo.SpendingId = id;
+                incomeEditInfo.DateSpending = DateTime.Parse(textDateSpending.Text);
+                incomeEditInfo.ValueSpending = long.Parse(textValueSpending.Text);
+                incomeEditInfo.TypeSpending = textTypeSpending.SelectedValue;
+                incomeEditInfo.NoteSpending = textNoteSpending.Text;
+                bool check = SpendingModel.UpdateSpending(incomeEditInfo);
+                if (check)
+                {
+                    GridView2.EditIndex = -1;
+                    setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, this.ViewAllOnYear.Checked);
+                    GridView2.Columns[5].Visible = true;
+                    codeAlertSpending.InnerHtml = Constants.HTML_SUCCESS_EDIT_SPENDING;
+                    Response.Write(Constants.SCRIPT_ALERT_CLOSE);
+                }
+                else
+                {
+                    codeAlertSpending.InnerHtml = Constants.HTML_ERROR_EDIT_SPENDING;
+                }
+            }
+            ClientScript.RegisterStartupScript(this.GetType(), "setDispDetailTab", "setDispDetailTab();", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "href", "location.href = '#GridView2';", true);
+		}
+
+		private void GridView2_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+		{
+			GridView2.EditIndex = -1;
+            setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, this.ViewAllOnYear.Checked);
+            GridView2.Columns[5].Visible = true;
+            ClientScript.RegisterStartupScript(this.GetType(), "setDispDetailTab", "setDispDetailTab();", true);
+		}
+
+		private void GridView2_RowEditing(object sender, GridViewEditEventArgs e)
+		{
+			GridView2.EditIndex = e.NewEditIndex;
+            setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, this.ViewAllOnYear.Checked);
+            GridView2.Columns[5].Visible = false;
+            ClientScript.RegisterStartupScript(this.GetType(), "setDispDetailTab", "setDispDetailTab();", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "href", "location.href = '#GridView2';", true);
+		}
+
+		private void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             int id = int.Parse(GridView1.DataKeys[e.RowIndex].Value.ToString());
             bool check = IncomeModels.DeleteIncome(id);
@@ -103,6 +209,7 @@ namespace QuanLiChiTieuWebForm
                 codeAlertIncome.InnerHtml = Constants.HTML_ERROR_DELETE_INCOME;
             }
             ClientScript.RegisterStartupScript(this.GetType(), "setDispDetailTab", "setDispDetailTab();", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "href", "location.href = '#GridView1';", true);
         }
 
         private void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
@@ -149,6 +256,7 @@ namespace QuanLiChiTieuWebForm
                 }
             }
             ClientScript.RegisterStartupScript(this.GetType(), "setDispDetailTab", "setDispDetailTab();", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "href", "location.href = '#GridView1';", true);
         }
 
         private void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -165,6 +273,7 @@ namespace QuanLiChiTieuWebForm
             setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, this.ViewAllOnYear.Checked);
             GridView1.Columns[5].Visible = false;
             ClientScript.RegisterStartupScript(this.GetType(), "setDispDetailTab", "setDispDetailTab();", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "href", "location.href = '#GridView1';", true);
         }
 
         private void ViewAllOnYear_CheckedChanged(object sender, EventArgs e)
@@ -223,9 +332,10 @@ namespace QuanLiChiTieuWebForm
 
         private void BtnLogOut_Click1(object sender, EventArgs e)
         {
-            Response.Redirect("Login.aspx?loginName=" + Session["UserName"].ToString(), false);
+            string userName = Session["UserName"].ToString();
             Session.Remove("UserName");
             Session.Remove("UserId");
+            Response.Redirect("Login.aspx?loginName=" + userName, false);
         }
 
         private void SubmitIncome_Click(object sender, EventArgs e)

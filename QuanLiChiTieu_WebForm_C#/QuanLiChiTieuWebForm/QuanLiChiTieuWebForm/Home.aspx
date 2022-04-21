@@ -298,12 +298,17 @@
                 <div class="row">
                     <div class="col-md">
                         <div style="margin:10px">
-                          <asp:CheckBox ID="ViewAllOnYear" runat="server" Text="Hiển Thị Tất Cả Theo Năm" CssClass="" AutoPostBack="true" Checked="false"/>
+                          <asp:CheckBox ID="ViewAllOnYear" runat="server" Text="  Hiển Thị Tất Cả Theo Năm" CssClass="" AutoPostBack="true" Checked="false"/>
                         </div>
+                        <hr style="color: rgb(54, 109, 138);">
                         <h3>Danh Sách Thu Nhập</h3>
                         <div id="codeAlertIncome" runat="server" style="color: red;"></div>
+                        <asp:RadioButtonList ID="RadioSortIncome" runat="server" CssClass="radioButtonList" RepeatDirection="Horizontal">
+                            <asp:ListItem Text="Male" Value="M" Selected="True"></asp:ListItem>
+                                <asp:ListItem Text="Female" Value="F"></asp:ListItem>
+                        </asp:RadioButtonList>
                         <asp:GridView ID="GridView1" runat="server" RowStyle-CssClass="GvRowStyle" Width="100%" ForeColor="#566787" GridLines="None" AutoGenerateColumns="False" AllowPaging="True" Style="margin-bottom: 0px" CellSpacing="5"
-                             DataKeyNames="INCOME_ID" CssClass="myGrv" AllowSorting="True" CellPadding="5" HorizontalAlign="Center" ShowFooter="True">
+                             DataKeyNames="INCOME_ID" CssClass="myGrv" AllowSorting="True" CellPadding="5" HorizontalAlign="Center" ShowFooter="False">
                             <AlternatingRowStyle BackColor="#e6e6e6" />
                             <Columns>
                                 <asp:TemplateField HeaderText="Ngày Tháng Năm" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center">
@@ -403,8 +408,9 @@
                         </asp:GridView>
                         <hr style="color: rgb(54, 109, 138);">
                         <h3>Danh Sách Chi Tiêu</h3>
+                        <div id="codeAlertSpending" runat="server" style="color: red;"></div>
                         <asp:GridView ID="GridView2" runat="server" RowStyle-CssClass="GvRowStyle" Width="100%" ForeColor="#566787" GridLines="None" AutoGenerateColumns="False" AllowPaging="True" Style="margin-bottom: 0px" CellSpacing="5"
-                             DataKeyNames="SPENDING_ID" CssClass="myGrv" AllowSorting="True" CellPadding="5" HorizontalAlign="Center" ShowFooter="True">
+                             DataKeyNames="SPENDING_ID" CssClass="myGrv" AllowSorting="True" CellPadding="5" HorizontalAlign="Center" ShowFooter="False">
                             <AlternatingRowStyle BackColor="#e6e6e6" />
                             <Columns>
                                 <asp:TemplateField HeaderText="Ngày Tháng Năm" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center">
@@ -414,7 +420,7 @@
                                         </asp:Label>
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="EditDateSPENDING" TextMode="Date" runat="server" CssClass="form-control" Text='<%# (object)DateTime.ParseExact(DataBinder.Eval(Container, "DataItem.[DATE_SPENDING]").ToString(),"dd/MM/yyyy",null).ToString("yyyy-MM-dd") %>'></asp:TextBox>
+                                        <asp:TextBox ID="EditDateSpending" TextMode="Date" runat="server" CssClass="form-control" Text='<%# (object)DateTime.ParseExact(DataBinder.Eval(Container, "DataItem.[DATE_SPENDING]").ToString(),"dd/MM/yyyy",null).ToString("yyyy-MM-dd") %>'></asp:TextBox>
                                     </EditItemTemplate>
                                     <FooterStyle Width="200px" />
                                     <HeaderStyle HorizontalAlign="Center" Width="250px"></HeaderStyle>
@@ -422,12 +428,12 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Số Tiền" HeaderStyle-CssClass="text-center">
                                     <ItemTemplate>
-                                        <asp:Label ID="valueSPENDING" runat="server"
+                                        <asp:Label ID="valueSpending" runat="server"
                                             Text='<%# DataBinder.Eval(Container, "DataItem.[VALUE_SPENDING]", "{0:###,###}") + " VND" %>'>
                                         </asp:Label>
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="EditValueSPENDING" runat="server" CssClass="form-control form-control-sm"
+                                        <asp:TextBox ID="EditValueSpending" runat="server" CssClass="form-control form-control-sm"
                                             Text='<%# DataBinder.Eval(Container, "DataItem.[VALUE_SPENDING]") %>' TextMode="Number"></asp:TextBox>
                                     </EditItemTemplate>
                                     <HeaderStyle HorizontalAlign="Center" Width="200px" />
@@ -440,8 +446,19 @@
                                         </asp:Label>
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="EditPhone" runat="server" CssClass="form-control"
-                                            Text='<%# DataBinder.Eval(Container, "DataItem.[TYPE_SPENDING]") %>'></asp:TextBox>
+                                        <asp:DropDownList id="EditTypeSpending"
+                                            runat="server"
+                                            CssClass="form-control" SelectedIndex='<%# int.Parse(DataBinder.Eval(Container, "DataItem.[TYPE_SPENDING]").ToString()) - 1 %>'>
+                                          <asp:ListItem Selected="True" Value="1"> Nhà/Sinh hoạt phí </asp:ListItem>
+                                          <asp:ListItem Value="2"> Ăn uống </asp:ListItem>
+                                          <asp:ListItem Value="3"> Mua sắm </asp:ListItem>
+                                          <asp:ListItem Value="4"> Quỹ tài chính/Bảo hiểm </asp:ListItem>
+                                          <asp:ListItem Value="5"> Trả nợ vay </asp:ListItem>
+                                          <asp:ListItem Value="6"> Di chuyển </asp:ListItem>
+                                          <asp:ListItem Value="7"> Giải trí </asp:ListItem>
+                                          <asp:ListItem Value="8"> Giáo dục/Sức khỏe </asp:ListItem>
+                                          <asp:ListItem Value="9"> Khác </asp:ListItem>
+                                       </asp:DropDownList>
                                     </EditItemTemplate>
                                     <HeaderStyle HorizontalAlign="Center" Width="250px" />
                                     <ItemStyle HorizontalAlign="Center" Width="250px" />
@@ -453,7 +470,7 @@
                                         </asp:Label>
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:TextBox ID="EditAddress" runat="server" CssClass="form-control" Text='<%# DataBinder.Eval(Container, "DataItem.[NOTE_SPENDING]") %>'></asp:TextBox>
+                                        <asp:TextBox ID="EditNoteSpending" runat="server" CssClass="form-control" Text='<%# DataBinder.Eval(Container, "DataItem.[NOTE_SPENDING]") %>'></asp:TextBox>
                                     </EditItemTemplate>
                                     <HeaderStyle HorizontalAlign="Center" Width="500px" />
                                     <ItemStyle HorizontalAlign="Center" Width="500px" />
