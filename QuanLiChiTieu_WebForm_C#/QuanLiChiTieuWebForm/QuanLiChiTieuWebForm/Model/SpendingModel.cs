@@ -52,6 +52,7 @@ namespace QuanLiChiTieu.Models
                 sb.Append(" ,CONVERT(varchar, [SPENDING].[DATE_SPENDING], 103) AS [DATE_SPENDING] ");
                 sb.Append(" ,[TYPE_SPENDING] ");
                 sb.Append(" ,[NOTE_SPENDING] ");
+                sb.Append(" ,[DATE_SPENDING] AS [DATE_SPENDING_SORT] ");
                 sb.Append(" FROM [dbo].[SPENDING] ");
                 sb.Append(" WHERE ");
                 sb.Append(" [USER_ID] = @UserId");
@@ -170,6 +171,56 @@ namespace QuanLiChiTieu.Models
                 throw ex;
             }
             return result != 0 ? true : false;
+        }
+
+        public static DataTable GetAllSpending(string userId)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
+            DataTable dtIncome = new DataTable();
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                con.Open();
+                sb.Append(" SELECT ");
+                sb.Append(" ROW_NUMBER() OVER(ORDER BY [SPENDING].[DATE_SPENDING]) [ROW_NUM] ");
+                sb.Append(" , [USER_INFO].[LOGIN_NAME] ");
+                sb.Append(" , [SPENDING].[DATE_SPENDING] ");
+                sb.Append(" , CASE [SPENDING].[TYPE_SPENDING] ");
+                sb.Append(" WHEN '1' THEN N'Nhà/Sinh hoạt phí' ");
+                sb.Append(" WHEN '2' THEN N'Ăn uống' ");
+                sb.Append(" WHEN '3' THEN N'Mua sắm' ");
+                sb.Append(" WHEN '4' THEN N'Quỹ tài chính/Bảo hiểm' ");
+                sb.Append(" WHEN '5' THEN N'Trả nợ vay' ");
+                sb.Append(" WHEN '6' THEN N'Di chuyển' ");
+                sb.Append(" WHEN '7' THEN N'Giải trí' ");
+                sb.Append(" WHEN '8' THEN N'Giáo dục/Sức khỏe' ");
+                sb.Append(" WHEN '9' THEN N'Khác' ");
+                sb.Append(" END AS [TYPE_SPENDING] ");
+                sb.Append(" , [SPENDING].[VALUE_SPENDING] ");
+                sb.Append(" , [SPENDING].[NOTE_SPENDING] ");
+                sb.Append(" FROM [dbo].[SPENDING] ");
+                sb.Append(" LEFT JOIN [dbo].[USER_INFO] ");
+                sb.Append(" ON [SPENDING].[USER_ID] = [USER_INFO].[USER_ID] ");
+                sb.Append(" WHERE ");
+                sb.Append(" [SPENDING].[USER_ID] = @UserId");
+                sb.Append(" ORDER BY [SPENDING].[DATE_SPENDING] ");
+                SqlDataAdapter da = new SqlDataAdapter(sb.ToString(), con);
+                da.SelectCommand.Parameters.Add("@UserId", userId);
+			    da.SelectCommand.CommandTimeout = 600;
+                da.Fill(dtIncome);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+				{
+					con.Close();
+				}
+            }
+            return dtIncome;
         }
     }
 }

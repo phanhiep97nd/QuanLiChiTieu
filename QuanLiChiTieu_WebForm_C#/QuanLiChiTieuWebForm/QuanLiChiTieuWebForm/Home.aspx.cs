@@ -1,10 +1,13 @@
-﻿using QuanLiChiTieu.Models;
+﻿using ClosedXML.Excel;
+using QuanLiChiTieu.Models;
 using QuanLiChiTieuWebForm.Common;
 using QuanLiChiTieuWebForm.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -45,6 +48,10 @@ namespace QuanLiChiTieuWebForm
                     YearOverView.Items.Add(i.ToString());
                 }
                 YearOverView.SelectedValue = yearNow.ToString();
+                ViewState["SortExpressionIncome"] = "DATE_INCOME_SORT";
+                ViewState["sortdrIncome"] = " Asc";
+                ViewState["SortExpressionSpending"] = "DATE_SPENDING_SORT";
+                ViewState["sortdrSpending"] = " Asc";
                 setOverviewData(DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString("00"), false);
                 //setDispChart(DateTime.Now.Year.ToString());
             }
@@ -89,12 +96,83 @@ namespace QuanLiChiTieuWebForm
 			this.GridView2.RowDeleting += GridView2_RowDeleting;
 			this.GridView1.PageIndexChanging += GridView1_PageIndexChanging;
 			this.GridView2.PageIndexChanging += GridView2_PageIndexChanging;
+            this.GridView1.Sorting += GridView1_Sorting;
+            this.GridView2.Sorting += GridView2_Sorting;
+            this.ExportCsv.Click += ExportCsv_Click;
 
             //this.Load += new System.EventHandler(this.Page_Load);
             //this.PreRender += new System.EventHandler(this.Page_PreRender);
         }
 
-		private void GridView2_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        private void ExportCsv_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable dtIncome = IncomeModels.GetAllIncome(userId);
+                DataTable dtSpending = SpendingModel.GetAllSpending(userId);
+                dtIncome.TableName = "Income";
+                dtSpending.TableName = "Spending";
+                XLWorkbook wb = new XLWorkbook();
+                wb.Worksheets.Add(dtIncome);
+                wb.Worksheets.Add(dtSpending);
+                string fileName = "DATA_FINANCE_MNG" + "_" + Session["UserName"].ToString() + "_" + DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss");
+
+                Response.Clear();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", "attachment;filename=" + fileName + ".xlsx");
+                Response.Charset = "";
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+                MemoryStream MyMemoryStream = new MemoryStream();
+                wb.SaveAs(MyMemoryStream);
+                MyMemoryStream.WriteTo(Response.OutputStream);
+                Response.Flush();
+                codeAlert.InnerHtml = Constants.HTML_SUCCESS_EXPORT;
+                //Response.Write(Constants.SCRIPT_ALERT_CLOSE);
+            }
+            catch(Exception ex)
+            {
+                Response.Redirect("ErrorPage.aspx?message=" + ex.GetType().Name + ex.Message);
+            }
+            finally
+            {
+                Response.End();
+            }
+        }
+
+        private void GridView2_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            ViewState["SortExpressionSpending"] = e.SortExpression;
+            if (Convert.ToString(ViewState["sortdrSpending"]) == " Asc")  
+            {  
+                ViewState["sortdrSpending"] = " Desc";  
+            }  
+            else  
+            {  
+                ViewState["sortdrSpending"] = " Asc";  
+            }
+            setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, this.ViewAllOnYear.Checked);
+            ClientScript.RegisterStartupScript(this.GetType(), "setDispDetailTab", "setDispDetailTab();", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "href", "location.href = '#GridView2';", true);
+        }
+
+        private void GridView1_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            ViewState["SortExpressionIncome"] = e.SortExpression;
+            if (Convert.ToString(ViewState["sortdrIncome"]) == " Asc")  
+            {  
+                ViewState["sortdrIncome"] = " Desc";  
+            }  
+            else  
+            {  
+                ViewState["sortdrIncome"] = " Asc";  
+            }
+            setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, this.ViewAllOnYear.Checked);
+            ClientScript.RegisterStartupScript(this.GetType(), "setDispDetailTab", "setDispDetailTab();", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "href", "location.href = '#GridView1';", true);
+        }
+
+        private void GridView2_PageIndexChanging(object sender, GridViewPageEventArgs e)
 		{
 			GridView2.PageIndex = e.NewPageIndex;
             setOverviewData(YearOverView.SelectedValue, MonthOverView.SelectedValue, this.ViewAllOnYear.Checked);
@@ -379,7 +457,9 @@ namespace QuanLiChiTieuWebForm
                 //string month = int.Parse(MonthOverView.SelectedValue).ToString("00");
                 //string year = YearOverView.SelectedValue;
                 DataTable dtIncome = IncomeModels.GetIncomeInfo(int.Parse(userId), year);
+                //dtIncome.Columns[2].DataType = typeof(DateTime);
                 DataTable dtSpending = SpendingModel.GetSpendingInfo(int.Parse(userId), year);
+                //dtSpending.Columns[2].DataType = typeof(DateTime);
                 DataTable dtIncomeInMonth = dtIncome.Clone();
                 //DataTable dtIncomeInMonth = new DataTable();
                 DataTable dtSpendingInMonth = dtSpending.Clone();
@@ -458,13 +538,18 @@ namespace QuanLiChiTieuWebForm
                 ValueSpendingType8.Text = Common.Common.GetFormatMonney(valueSpending[7]);
                 ValueSpendingType9.Text = Common.Common.GetFormatMonney(valueSpending[8]);
 
-                DataSet dsIncome = new DataSet();
-                dsIncome.Tables.Add(isAllofYear ? dtIncome : dtIncomeInMonth);
-                GridView1.DataSource = dsIncome;
+                dtIncome.DefaultView.Sort = ViewState["SortExpressionIncome"].ToString() + ViewState["sortdrIncome"].ToString();
+                dtIncomeInMonth.DefaultView.Sort = ViewState["SortExpressionIncome"].ToString() + ViewState["sortdrIncome"].ToString();
+                dtSpending.DefaultView.Sort = ViewState["SortExpressionSpending"].ToString() + ViewState["sortdrSpending"].ToString();
+                dtSpendingInMonth.DefaultView.Sort = ViewState["SortExpressionSpending"].ToString() + ViewState["sortdrSpending"].ToString();
+
+                //DataSet dsIncome = new DataSet();
+                //dsIncome.Tables.Add(isAllofYear ? dtIncome : dtIncomeInMonth);
+                GridView1.DataSource = isAllofYear ? dtIncome : dtIncomeInMonth;
                 GridView1.DataBind();
-                DataSet dsSpending = new DataSet();
-                dsSpending.Tables.Add(isAllofYear ? dtSpending : dtSpendingInMonth);
-                GridView2.DataSource = dsSpending;
+                //DataSet dsSpending = new DataSet();
+                //dsSpending.Tables.Add(isAllofYear ? dtSpending : dtSpendingInMonth);
+                GridView2.DataSource = isAllofYear ? dtSpending : dtSpendingInMonth;
                 GridView2.DataBind();
             }
             catch (Exception ex)

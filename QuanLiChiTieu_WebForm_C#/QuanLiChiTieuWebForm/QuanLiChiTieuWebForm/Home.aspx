@@ -160,8 +160,10 @@
                                     Spending</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="btn btn-primary"><i class="material-icons">&#xE24D;</i> <span>Export to
-                                    CSV</span></a>
+                            <%--<a href="#" class="btn btn-primary"><i class="material-icons">&#xE24D;</i> <span>Export to
+                                    CSV</span></a>--%>
+                            <asp:LinkButton ID="ExportCsv" runat="server" CssClass="btn btn-primary" OnClientClick="return confirm('Do you want export all data?');"><i class="material-icons">&#xE24D;</i> <span>Export to
+                                    Excel</span></asp:LinkButton>
                         </li>
                     </ul>
                 </div>
@@ -303,15 +305,11 @@
                         <hr style="color: rgb(54, 109, 138);">
                         <h3>Danh Sách Thu Nhập</h3>
                         <div id="codeAlertIncome" runat="server" style="color: red;"></div>
-                        <asp:RadioButtonList ID="RadioSortIncome" runat="server" CssClass="radioButtonList" RepeatDirection="Horizontal">
-                            <asp:ListItem Text="Male" Value="M" Selected="True"></asp:ListItem>
-                                <asp:ListItem Text="Female" Value="F"></asp:ListItem>
-                        </asp:RadioButtonList>
                         <asp:GridView ID="GridView1" runat="server" RowStyle-CssClass="GvRowStyle" Width="100%" ForeColor="#566787" GridLines="None" AutoGenerateColumns="False" AllowPaging="True" Style="margin-bottom: 0px" CellSpacing="5"
-                             DataKeyNames="INCOME_ID" CssClass="myGrv" AllowSorting="True" CellPadding="5" HorizontalAlign="Center" ShowFooter="False">
+                             DataKeyNames="INCOME_ID" CssClass="myGrv" AllowSorting="True" CellPadding="5" HorizontalAlign="Center" ShowFooter="True">
                             <AlternatingRowStyle BackColor="#e6e6e6" />
                             <Columns>
-                                <asp:TemplateField HeaderText="Ngày Tháng Năm" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center">
+                                <asp:TemplateField HeaderText="Ngày Tháng Năm" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center" SortExpression="DATE_INCOME_SORT">
                                     <ItemTemplate>
                                         <asp:Label ID="fullName" runat="server"
                                             Text='<%# DataBinder.Eval(Container, "DataItem.[DATE_INCOME]") %>'>
@@ -324,7 +322,7 @@
                                     <HeaderStyle HorizontalAlign="Center" Width="250px"></HeaderStyle>
                                     <ItemStyle HorizontalAlign="Center" Width="250px"></ItemStyle>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Số Tiền" HeaderStyle-CssClass="text-center">
+                                <asp:TemplateField HeaderText="Số Tiền" HeaderStyle-CssClass="text-center" SortExpression="VALUE_INCOME">
                                     <ItemTemplate>
                                         <asp:Label ID="valueIncome" runat="server"
                                             Text='<%# DataBinder.Eval(Container, "DataItem.[VALUE_INCOME]", "{0:###,###}") + " VND" %> '>
@@ -410,10 +408,10 @@
                         <h3>Danh Sách Chi Tiêu</h3>
                         <div id="codeAlertSpending" runat="server" style="color: red;"></div>
                         <asp:GridView ID="GridView2" runat="server" RowStyle-CssClass="GvRowStyle" Width="100%" ForeColor="#566787" GridLines="None" AutoGenerateColumns="False" AllowPaging="True" Style="margin-bottom: 0px" CellSpacing="5"
-                             DataKeyNames="SPENDING_ID" CssClass="myGrv" AllowSorting="True" CellPadding="5" HorizontalAlign="Center" ShowFooter="False">
+                             DataKeyNames="SPENDING_ID" CssClass="myGrv" AllowSorting="True" CellPadding="5" HorizontalAlign="Center" ShowFooter="True">
                             <AlternatingRowStyle BackColor="#e6e6e6" />
                             <Columns>
-                                <asp:TemplateField HeaderText="Ngày Tháng Năm" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center">
+                                <asp:TemplateField HeaderText="Ngày Tháng Năm" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center" SortExpression="DATE_SPENDING_SORT">
                                     <ItemTemplate>
                                         <asp:Label ID="fullName" runat="server"
                                             Text='<%# DataBinder.Eval(Container, "DataItem.[DATE_SPENDING]") %>'>
@@ -426,7 +424,7 @@
                                     <HeaderStyle HorizontalAlign="Center" Width="250px"></HeaderStyle>
                                     <ItemStyle HorizontalAlign="Center" Width="250px"></ItemStyle>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Số Tiền" HeaderStyle-CssClass="text-center">
+                                <asp:TemplateField HeaderText="Số Tiền" HeaderStyle-CssClass="text-center" SortExpression="VALUE_SPENDING">
                                     <ItemTemplate>
                                         <asp:Label ID="valueSpending" runat="server"
                                             Text='<%# DataBinder.Eval(Container, "DataItem.[VALUE_SPENDING]", "{0:###,###}") + " VND" %>'>

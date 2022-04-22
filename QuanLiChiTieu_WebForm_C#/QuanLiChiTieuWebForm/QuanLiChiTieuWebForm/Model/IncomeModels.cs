@@ -52,6 +52,7 @@ namespace QuanLiChiTieuWebForm.Model
                 sb.Append(" ,CONVERT(varchar, [INCOME].[DATE_INCOME], 103) AS [DATE_INCOME] ");
                 sb.Append(" ,[TYPE_INCOME] ");
                 sb.Append(" ,[NOTE_INCOME] ");
+                sb.Append(" ,[DATE_INCOME] AS [DATE_INCOME_SORT] ");
                 sb.Append(" FROM [dbo].[INCOME] ");
                 sb.Append(" WHERE ");
                 sb.Append(" [USER_ID] = @UserId");
@@ -170,6 +171,49 @@ namespace QuanLiChiTieuWebForm.Model
                 throw ex;
             }
             return result != 0 ? true : false;
+        }
+
+        public static DataTable GetAllIncome(string userId)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
+            DataTable dtIncome = new DataTable();
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                con.Open();
+                sb.Append(" SELECT ");
+                sb.Append(" ROW_NUMBER() OVER(ORDER BY [INCOME].[DATE_INCOME]) [ROW_NUM] ");
+                sb.Append(" , [USER_INFO].[LOGIN_NAME] ");
+                sb.Append(" , [INCOME].[DATE_INCOME] ");
+                sb.Append(" , CASE [INCOME].[TYPE_INCOME] ");
+                sb.Append(" WHEN '1' THEN N'Tiền lương' ");
+                sb.Append(" WHEN '2' THEN N'Thu nhập khác' ");
+                sb.Append(" END AS [TYPE_INCOME] ");
+                sb.Append(" , [INCOME].[VALUE_INCOME] ");
+                sb.Append(" , [INCOME].[NOTE_INCOME] ");
+                sb.Append(" FROM [dbo].[INCOME] ");
+                sb.Append(" LEFT JOIN [dbo].[USER_INFO] ");
+                sb.Append(" ON [INCOME].[USER_ID] = [USER_INFO].[USER_ID] ");
+                sb.Append(" WHERE ");
+                sb.Append(" [INCOME].[USER_ID] = @UserId");
+                sb.Append(" ORDER BY [INCOME].[DATE_INCOME] ");
+                SqlDataAdapter da = new SqlDataAdapter(sb.ToString(), con);
+                da.SelectCommand.Parameters.Add("@UserId", userId);
+			    da.SelectCommand.CommandTimeout = 600;
+                da.Fill(dtIncome);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+				{
+					con.Close();
+				}
+            }
+            return dtIncome;
         }
 	}
 }
