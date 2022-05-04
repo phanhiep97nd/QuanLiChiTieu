@@ -100,8 +100,6 @@ namespace QuanLiChiTieuWebForm
             this.GridView2.Sorting += GridView2_Sorting;
             this.ExportCsv.Click += ExportCsv_Click;
 
-            //this.Load += new System.EventHandler(this.Page_Load);
-            //this.PreRender += new System.EventHandler(this.Page_PreRender);
         }
 
         private void ExportCsv_Click(object sender, EventArgs e)
@@ -110,12 +108,13 @@ namespace QuanLiChiTieuWebForm
             {
                 DataTable dtIncome = IncomeModels.GetAllIncome(userId);
                 DataTable dtSpending = SpendingModel.GetAllSpending(userId);
-                dtIncome.TableName = "Income";
-                dtSpending.TableName = "Spending";
+                dtIncome.TableName = "Thu Nhập";
+                dtSpending.TableName = "Chi Tiêu";
                 XLWorkbook wb = new XLWorkbook();
                 wb.Worksheets.Add(dtIncome);
                 wb.Worksheets.Add(dtSpending);
-                string fileName = "DATA_FINANCE_MNG" + "_" + Session["UserName"].ToString() + "_" + DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss");
+                string now = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+                string fileName = "DATA_FINANCE_MNG" + "_" + Session["UserName"].ToString() + "_" + now;
 
                 Response.Clear();
                 Response.Buffer = true;

@@ -58,8 +58,8 @@ namespace QuanLiChiTieuWebForm.Model
                 sb.Append(" [USER_ID] = @UserId");
                 sb.Append(" AND YEAR(DATE_INCOME) = @year");
                 SqlDataAdapter da = new SqlDataAdapter(sb.ToString(), con);
-                da.SelectCommand.Parameters.Add("@UserId", userId);
-                da.SelectCommand.Parameters.Add("@year", year);
+                da.SelectCommand.Parameters.AddWithValue("@UserId", userId);
+                da.SelectCommand.Parameters.AddWithValue("@year", year);
 			    da.SelectCommand.CommandTimeout = 600;
                 da.Fill(dtIncome);
             }
@@ -198,7 +198,7 @@ namespace QuanLiChiTieuWebForm.Model
                 sb.Append(" [INCOME].[USER_ID] = @UserId");
                 sb.Append(" ORDER BY [INCOME].[DATE_INCOME] ");
                 SqlDataAdapter da = new SqlDataAdapter(sb.ToString(), con);
-                da.SelectCommand.Parameters.Add("@UserId", userId);
+                da.SelectCommand.Parameters.AddWithValue("@UserId", userId);
 			    da.SelectCommand.CommandTimeout = 600;
                 da.Fill(dtIncome);
             }
