@@ -32,7 +32,7 @@ nav {
     margin: 10px;
 }
 
-.btn {
+.btn-right {
     color: #566787;
     float: right;
     font-size: 13px;
@@ -43,6 +43,11 @@ nav {
     border: none;
     outline: none !important;
     margin-left: 10px;
+}
+
+.btn-row{
+    float: right;
+    margin: 10px;
 }
 
 .header .btn:hover,
@@ -68,7 +73,7 @@ nav {
     background-color: #fafafa;
 }
 
-.home a {
+header a {
     float: right;
     color: rgb(11, 119, 235);
     font-size: 15px;
