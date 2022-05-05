@@ -99,7 +99,13 @@ namespace QuanLiChiTieuWebForm
             this.GridView1.Sorting += GridView1_Sorting;
             this.GridView2.Sorting += GridView2_Sorting;
             this.ExportCsv.Click += ExportCsv_Click;
+            this.LoanDebtBtn.Click += LoanDebtBtn_Click;
 
+        }
+
+        private void LoanDebtBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("LoanDebt.aspx");
         }
 
         private void ExportCsv_Click(object sender, EventArgs e)

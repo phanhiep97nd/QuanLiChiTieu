@@ -150,9 +150,9 @@
             </nav>
             <div class="collapse" id="navbarToggleExternalContent">
                 <div class="list-group">
-                    <button type="button" class="list-group-item list-group-item-info list-group-item-action"> > Home</button>
-                    <button type="button" class="list-group-item list-group-item-info list-group-item-action"> > Quản Lý Vay Nợ</button>
-                    <button type="button" class="list-group-item list-group-item-info list-group-item-action"> > Quản Lý Danh Sách Hiếu Hỷ</button>
+                    <button type="button" class="list-group-item list-group-item-info list-group-item-action" disabled> > Home</button>
+                    <asp:Button ID="LoanDebtBtn" runat="server" CssClass="list-group-item list-group-item-info list-group-item-action" Text=" > Quản Lý Vay Nợ"/><%--<button type="button" class="list-group-item list-group-item-info list-group-item-action"> > Quản Lý Vay Nợ</button>--%>
+                    <asp:Button ID="WeddingListBtn" runat="server" CssClass="list-group-item list-group-item-info list-group-item-action" Text=" > Quản Lý Danh Sách Hiếu Hỷ"/><%--<button type="button" class="list-group-item list-group-item-info list-group-item-action"> > Quản Lý Danh Sách Hiếu Hỷ</button>--%>
                 </div>        
             </div>
         </div>
