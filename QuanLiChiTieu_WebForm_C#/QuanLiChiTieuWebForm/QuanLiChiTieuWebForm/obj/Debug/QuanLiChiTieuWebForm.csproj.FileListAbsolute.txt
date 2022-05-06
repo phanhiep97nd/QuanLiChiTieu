@@ -383,4 +383,3 @@ E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\
 E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\bin\ClosedXML.xml
 E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\bin\DocumentFormat.OpenXml.xml
 E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\bin\ExcelNumberFormat.xml
-E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\obj\Debug\QuanLiChiTieuWebForm.csproj.AssemblyReference.cache
