@@ -10,9 +10,9 @@ using System.Web;
 
 namespace QuanLiChiTieuWebForm.Model
 {
-	public class IncomeModels
-	{
-		internal static bool ClickCreateIncome(IncomeEntity incomeInfo)
+    public class IncomeModels
+    {
+        internal static bool ClickCreateIncome(IncomeEntity incomeInfo)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
             SqlCommand com = new SqlCommand();
@@ -38,6 +38,35 @@ namespace QuanLiChiTieuWebForm.Model
             return result != 0 ? true : false;
         }
 
+        public static void InsertIncome(SqlConnection con, SqlTransaction trans, IncomeEntity incomeInfo)
+        {
+            SqlCommand com = new SqlCommand();
+            try
+            {
+                com.Connection = con;
+                com.Transaction = trans;
+                com.CommandText = "INSERT INTO [dbo].[INCOME] ([USER_ID],[VALUE_INCOME],[TYPE_INCOME],[DATE_INCOME],[NOTE_INCOME]) VALUES (@userId, @valueIncome, @typeIncome, @dateIncome, @noteIncome)";
+                com.Parameters.AddWithValue("@userId", incomeInfo.UserId);
+                com.Parameters.AddWithValue("@valueIncome", incomeInfo.ValueIncome);
+                com.Parameters.AddWithValue("@typeIncome", incomeInfo.TypeIncome);
+                com.Parameters.AddWithValue("@dateIncome", incomeInfo.DateIncome);
+                com.Parameters.AddWithValue("@noteIncome", "".Equals(incomeInfo.NoteIncome) ? "NA" : incomeInfo.NoteIncome);
+                com.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static int GetLastestIncomeId(SqlConnection con, SqlTransaction trans)
+        {
+            int id = 0;
+            SqlCommand com = new SqlCommand("SELECT MAX(INCOME_ID) FROM [dbo].[INCOME]", con, trans);
+            id = int.Parse(com.ExecuteScalar().ToString());
+            return id;
+        }
+
         internal static DataTable GetIncomeInfo(int userId, string year)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
@@ -60,7 +89,7 @@ namespace QuanLiChiTieuWebForm.Model
                 SqlDataAdapter da = new SqlDataAdapter(sb.ToString(), con);
                 da.SelectCommand.Parameters.AddWithValue("@UserId", userId);
                 da.SelectCommand.Parameters.AddWithValue("@year", year);
-			    da.SelectCommand.CommandTimeout = 600;
+                da.SelectCommand.CommandTimeout = 600;
                 da.Fill(dtIncome);
             }
             catch (Exception ex)
@@ -70,9 +99,9 @@ namespace QuanLiChiTieuWebForm.Model
             finally
             {
                 if (con.State == ConnectionState.Open)
-				{
-					con.Close();
-				}
+                {
+                    con.Close();
+                }
             }
             return dtIncome;
         }
@@ -199,7 +228,7 @@ namespace QuanLiChiTieuWebForm.Model
                 sb.Append(" ORDER BY [INCOME].[DATE_INCOME] ");
                 SqlDataAdapter da = new SqlDataAdapter(sb.ToString(), con);
                 da.SelectCommand.Parameters.AddWithValue("@UserId", userId);
-			    da.SelectCommand.CommandTimeout = 600;
+                da.SelectCommand.CommandTimeout = 600;
                 da.Fill(dtIncome);
             }
             catch (Exception ex)
@@ -209,11 +238,11 @@ namespace QuanLiChiTieuWebForm.Model
             finally
             {
                 if (con.State == ConnectionState.Open)
-				{
-					con.Close();
-				}
+                {
+                    con.Close();
+                }
             }
             return dtIncome;
         }
-	}
+    }
 }

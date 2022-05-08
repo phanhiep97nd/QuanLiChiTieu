@@ -1,4 +1,4 @@
-USE [quanlichitieuphanhiep]
+USE [phanhiep]
 GO
 
 --ALTER TABLE [dbo].[DEBT] DROP CONSTRAINT [FK__INCOME__USER_ID__48CFD27E]

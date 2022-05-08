@@ -218,9 +218,14 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Model\DebtEntity.cs" />
+    <Compile Include="Model\DebtModel.cs" />
     <Compile Include="Model\IncomeEntity.cs" />
     <Compile Include="Model\IncomeModels.cs" />
+    <Compile Include="Model\LoanModel.cs" />
+    <Compile Include="Model\LoanEntity.cs" />
     <Compile Include="Model\LoginModel.cs" />
+    <Compile Include="Model\SearchCondition.cs" />
     <Compile Include="Model\SignInModel.cs" />
     <Compile Include="Model\SpendingEntity.cs" />
     <Compile Include="Model\SpendingModel.cs" />

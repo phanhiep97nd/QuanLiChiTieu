@@ -372,7 +372,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Ghi Chú" HeaderStyle-CssClass="text-center">
                                     <ItemTemplate>
-                                        <asp:Label ID="address" runat="server"
+                                        <asp:Label ID="address" runat="server"  Style="word-wrap: normal; word-break: break-all;"
                                             Text='<%# DataBinder.Eval(Container, "DataItem.[NOTE_INCOME]") %>'>
                                         </asp:Label>
                                     </ItemTemplate>
@@ -481,7 +481,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Ghi Chú" HeaderStyle-CssClass="text-center">
                                     <ItemTemplate>
-                                        <asp:Label ID="address" runat="server"
+                                        <asp:Label ID="address" runat="server"  Style="word-wrap: normal; word-break: break-all;"
                                             Text='<%# DataBinder.Eval(Container, "DataItem.[NOTE_SPENDING]") %>'>
                                         </asp:Label>
                                     </ItemTemplate>

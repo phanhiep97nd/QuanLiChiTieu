@@ -1,0 +1,33 @@
+USE [phanhiep]
+GO
+
+ALTER TABLE [dbo].[INCOME] DROP CONSTRAINT [FK__INCOME__USER_ID__5BE2A6F2]
+GO
+
+/****** Object:  Table [dbo].[INCOME]    Script Date: 5/7/2022 11:41:07 PM ******/
+DROP TABLE [dbo].[INCOME]
+GO
+
+/****** Object:  Table [dbo].[INCOME]    Script Date: 5/7/2022 11:41:07 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[INCOME](
+	[USER_ID] [int] NOT NULL,
+	[INCOME_ID] [int] IDENTITY(1,1) NOT NULL,
+	[VALUE_INCOME] [bigint] NOT NULL,
+	[TYPE_INCOME] [nvarchar](1) NOT NULL,
+	[DATE_INCOME] [datetime] NOT NULL,
+	[NOTE_INCOME] [nvarchar](MAX) NOT NULL
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[INCOME]  WITH CHECK ADD FOREIGN KEY([USER_ID])
+REFERENCES [dbo].[USER_INFO] ([USER_ID])
+GO
+
+

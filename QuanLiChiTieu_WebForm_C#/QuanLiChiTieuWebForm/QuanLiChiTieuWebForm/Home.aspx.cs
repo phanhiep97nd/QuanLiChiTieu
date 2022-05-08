@@ -52,8 +52,15 @@ namespace QuanLiChiTieuWebForm
                 ViewState["sortdrIncome"] = " Asc";
                 ViewState["SortExpressionSpending"] = "DATE_SPENDING_SORT";
                 ViewState["sortdrSpending"] = " Asc";
-                setOverviewData(DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString("00"), false);
-                //setDispChart(DateTime.Now.Year.ToString());
+                try
+                {
+                    setOverviewData(DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString("00"), false);
+                    //setDispChart(DateTime.Now.Year.ToString());
+                }
+                catch(Exception ex)
+                {
+                    Response.Redirect("ErrorPage.aspx?message=" + ex.GetType().Name + ex.Message);
+                }
             }
             else
             {

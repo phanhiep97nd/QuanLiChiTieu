@@ -38,6 +38,35 @@ namespace QuanLiChiTieu.Models
             return result != 0 ? true : false;
         }
 
+        public static void InsertSpending(SqlConnection con, SqlTransaction trans, SpendingEntity spendingInfo)
+        {
+            SqlCommand com = new SqlCommand();
+            try
+            {
+                com.Connection = con;
+                com.Transaction = trans;
+                com.CommandText = "INSERT INTO [dbo].[SPENDING] ([USER_ID],[VALUE_SPENDING],[TYPE_SPENDING],[DATE_SPENDING],[NOTE_SPENDING]) VALUES (@userId, @valueSpending, @typeSpending, @dateSpending, @noteSpending)";
+                com.Parameters.AddWithValue("@userId", spendingInfo.UserId);
+                com.Parameters.AddWithValue("@valueSpending", spendingInfo.ValueSpending);
+                com.Parameters.AddWithValue("@typeSpending", spendingInfo.TypeSpending);
+                com.Parameters.AddWithValue("@dateSpending", spendingInfo.DateSpending);
+                com.Parameters.AddWithValue("@noteSpending", "".Equals(spendingInfo.NoteSpending) ? "NA" : spendingInfo.NoteSpending);
+                com.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static int GetLastestSpendingId(SqlConnection con, SqlTransaction trans)
+        {
+            int id = 0;
+            SqlCommand com = new SqlCommand("SELECT MAX(SPENDING_ID) FROM [dbo].[SPENDING]", con, trans);
+            id = int.Parse(com.ExecuteScalar().ToString());
+            return id;
+        }
+
         internal static DataTable GetSpendingInfo(int userId, string year)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
@@ -60,7 +89,7 @@ namespace QuanLiChiTieu.Models
                 SqlDataAdapter da = new SqlDataAdapter(sb.ToString(), con);
                 da.SelectCommand.Parameters.AddWithValue("@UserId", userId);
                 da.SelectCommand.Parameters.AddWithValue("@year", year);
-			    da.SelectCommand.CommandTimeout = 600;
+                da.SelectCommand.CommandTimeout = 600;
                 da.Fill(dtSpending);
             }
             catch (Exception ex)
@@ -70,9 +99,9 @@ namespace QuanLiChiTieu.Models
             finally
             {
                 if (con.State == ConnectionState.Open)
-				{
-					con.Close();
-				}
+                {
+                    con.Close();
+                }
             }
             return dtSpending;
         }
@@ -206,7 +235,7 @@ namespace QuanLiChiTieu.Models
                 sb.Append(" ORDER BY [SPENDING].[DATE_SPENDING] ");
                 SqlDataAdapter da = new SqlDataAdapter(sb.ToString(), con);
                 da.SelectCommand.Parameters.AddWithValue("@UserId", userId);
-			    da.SelectCommand.CommandTimeout = 600;
+                da.SelectCommand.CommandTimeout = 600;
                 da.Fill(dtIncome);
             }
             catch (Exception ex)
@@ -216,9 +245,9 @@ namespace QuanLiChiTieu.Models
             finally
             {
                 if (con.State == ConnectionState.Open)
-				{
-					con.Close();
-				}
+                {
+                    con.Close();
+                }
             }
             return dtIncome;
         }

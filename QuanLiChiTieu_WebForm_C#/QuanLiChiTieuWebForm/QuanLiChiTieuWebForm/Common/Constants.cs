@@ -29,5 +29,7 @@ namespace QuanLiChiTieuWebForm.Common
         public const string HTML_SUCCESS_EDIT_SPENDING = "<div class='alert alert-success' role='alert'><strong>Success!</strong> Edit Spending successfully!</div>";
         public const string HTML_SUCCESS_DELETE_SPENDING = "<div class='alert alert-warning' role='alert'><strong>Success!</strong> Delete Spending successfully!</div>";
         public const string HTML_SUCCESS_EXPORT = "<div class='alert alert-success' role='alert'><strong>Success!</strong> Export Excel successfully!</div>";
+        public const string HTML_SUCCESS_IMPORT_LOAN = "<div class='alert alert-success' role='alert'><strong>Success!</strong> Create Loan successfully!</div>";
+        public const string HTML_SUCCESS_IMPORT_DEBT = "<div class='alert alert-success' role='alert'><strong>Success!</strong> Create Debt successfully!</div>";
     }
 }
