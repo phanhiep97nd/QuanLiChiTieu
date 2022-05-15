@@ -126,6 +126,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="EditLoanDebt.aspx" />
     <Content Include="ErrorPage.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -187,6 +188,13 @@
     <Compile Include="Common\Common.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\Validate.cs" />
+    <Compile Include="EditLoanDebt.aspx.cs">
+      <DependentUpon>EditLoanDebt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditLoanDebt.aspx.designer.cs">
+      <DependentUpon>EditLoanDebt.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ErrorPage.aspx.cs">
       <DependentUpon>ErrorPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

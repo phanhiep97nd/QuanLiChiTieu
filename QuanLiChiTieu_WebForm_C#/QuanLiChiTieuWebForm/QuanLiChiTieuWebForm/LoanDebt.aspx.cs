@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Script.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -51,6 +52,7 @@ namespace QuanLiChiTieuWebForm
             }
             else
             {
+                codeAlert.InnerHtml = string.Empty;
                 userId = (string)ViewState["userId"];
                 searchCondition = (SearchCondition)ViewState["searchCondition"];
                 dtLoan = (DataTable)ViewState["dtLoan"];
@@ -62,7 +64,7 @@ namespace QuanLiChiTieuWebForm
 
         private void Page_PreRender(object sender, System.EventArgs e)
         {
-            codeAlert.InnerHtml = string.Empty;
+            //codeAlert.InnerHtml = string.Empty;
             ViewState["userId"] = userId;
             ViewState["searchCondition"] = searchCondition;
             ViewState["dtLoan"] = dtLoan;
@@ -449,10 +451,8 @@ namespace QuanLiChiTieuWebForm
                     sb.Append("</div>");
                 }
                 sb.Append("<hr style='color: rgb(54, 109, 138);'>");
-                sb.Append(string.Format("<button type='button' class='btn btn-outline-danger btn-row' onclick='ShowCurrentTime({0});return false;'>Delete</button>", row["LOAN_ID"].ToString()));
-                //sb.Append("<asp:Button runat='server' ID='DeleteLoanBtn' CssClass='' Text='Delete' OnClick=\"DeleteLoanBtn_Click('a')\" />");
-                sb.Append("<asp:Button ID='DeleteLoanBtn' runat='server' CssClass='btn btn-outline-success' Text='Search' />");
-                sb.Append("<button type='button' class='btn btn-outline-primary btn-row'>Edit</button>");
+                sb.Append(string.Format("<button type='button' class='btn btn-outline-danger btn-row' onclick='DeleteLoan({0});return false;'>Delete</button>", row["LOAN_ID"].ToString()));
+                sb.Append(string.Format("<button type='button' class='btn btn-outline-primary btn-row' onclick=\"OpenEditWindow('loan', {0})\">Edit</button>", row["LOAN_ID"].ToString()));
                 sb.Append("</div>");
                 sb.Append("</div>");
                 element.Append(sb.ToString());
@@ -527,8 +527,8 @@ namespace QuanLiChiTieuWebForm
                     sb.Append("</div>");
                 }
                 sb.Append("<hr style='color: rgb(54, 109, 138);'>");
-                sb.Append("<button type='button' class='btn btn-outline-danger btn-row'>Delete</button>");
-                sb.Append("<button type='button' class='btn btn-outline-primary btn-row'>Edit</button>");
+                sb.Append(string.Format("<button type='button' class='btn btn-outline-danger btn-row' onclick='DeleteDebt({0});return false;'>Delete</button>", row["DEBT_ID"].ToString()));
+                sb.Append(string.Format("<button type='button' class='btn btn-outline-primary btn-row' onclick=\"OpenEditWindow('debt', {0})\">Edit</button>", row["DEBT_ID"].ToString()));
                 sb.Append("</div>");
                 sb.Append("</div>");
                 element.Append(sb.ToString());
@@ -580,11 +580,39 @@ namespace QuanLiChiTieuWebForm
             }
         }
 
-        [System.Web.Services.WebMethod()]
-        [System.Web.Script.Services.ScriptMethod()]
-        public static void DeleteLoanBtn_Click(string a)
+        protected void btnDeleteLoan_Click(object sender, EventArgs e)
         {
-            Console.WriteLine(a);
+            string id = this.IdDelete.Value;
+            bool check = LoanModel.DeleteLoan(int.Parse(id));
+            if (check)
+            {
+                setDispDetail();
+                this.codeAlert.InnerHtml = Constants.HTML_SUCCESS_DELETE_LOAN;
+                Response.Write(Constants.SCRIPT_ALERT_CLOSE);
+            }
+            else
+            {
+                this.codeAlert.InnerHtml = Constants.HTML_SUCCESS_DELETE_LOAN;
+                Response.Write(Constants.SCRIPT_ALERT_CLOSE);
+            }
         }
+
+        protected void btnDeleteDebt_Click(object sender, EventArgs e)
+        {
+            string id = this.IdDelete.Value;
+            bool check = DebtModel.DeleteDebt(int.Parse(id));
+            if (check)
+            {
+                setDispDetail();
+                this.codeAlert.InnerHtml = Constants.HTML_SUCCESS_DELETE_DEBT;
+                Response.Write(Constants.SCRIPT_ALERT_CLOSE);
+            }
+            else
+            {
+                this.codeAlert.InnerHtml = Constants.HTML_SUCCESS_DELETE_DEBT;
+                Response.Write(Constants.SCRIPT_ALERT_CLOSE);
+            }
+        }
+
     }
 }

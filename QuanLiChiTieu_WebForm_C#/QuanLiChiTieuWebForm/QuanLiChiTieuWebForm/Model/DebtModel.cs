@@ -65,7 +65,7 @@ namespace QuanLiChiTieuWebForm.Model
                 {
                     sb.Append(" AND MONTH(DATE_DEBT) = @month");
                 }
-                if(searchCondition.StatusSearch != "1")
+                if (searchCondition.StatusSearch != "1")
                 {
                     sb.Append(" AND [STATUS_DEBT] = @status");
                 }
@@ -77,9 +77,9 @@ namespace QuanLiChiTieuWebForm.Model
                 {
                     da.SelectCommand.Parameters.AddWithValue("@month", searchCondition.MonthSearch);
                 }
-                if(searchCondition.StatusSearch != "1")
+                if (searchCondition.StatusSearch != "1")
                 {
-                    da.SelectCommand.Parameters.AddWithValue("@status", searchCondition.StatusSearch == "2"? "0" : "1");
+                    da.SelectCommand.Parameters.AddWithValue("@status", searchCondition.StatusSearch == "2" ? "0" : "1");
                 }
                 da.SelectCommand.Parameters.AddWithValue("@human", '%' + searchCondition.NameSearch + '%');
                 da.SelectCommand.CommandTimeout = 600;
@@ -98,6 +98,31 @@ namespace QuanLiChiTieuWebForm.Model
             }
 
             return debtDt;
+        }
+
+        public static bool DeleteDebt(int idDebt)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
+            SqlCommand com = new SqlCommand();
+            int result = 0;
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                con.Open();
+                com.Connection = con;
+                sb.Append("DELETE FROM [dbo].[DEBT]");
+                sb.Append(" WHERE ");
+                sb.Append("[DEBT_ID] = @id");
+                com.CommandText = sb.ToString();
+                com.Parameters.AddWithValue("@id", idDebt);
+                result = com.ExecuteNonQuery();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result != 0 ? true : false;
         }
     }
 }

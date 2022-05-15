@@ -99,5 +99,30 @@ namespace QuanLiChiTieuWebForm.Model
 
             return loanDt;
         }
+
+        public static bool DeleteLoan(int idLoan)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
+            SqlCommand com = new SqlCommand();
+            int result = 0;
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                con.Open();
+                com.Connection = con;
+                sb.Append("DELETE FROM [dbo].[LOAN]");
+                sb.Append(" WHERE ");
+                sb.Append("[LOAN_ID] = @id");
+                com.CommandText = sb.ToString();
+                com.Parameters.AddWithValue("@id", idLoan);
+                result = com.ExecuteNonQuery();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result != 0 ? true : false;
+        }
     }
 }

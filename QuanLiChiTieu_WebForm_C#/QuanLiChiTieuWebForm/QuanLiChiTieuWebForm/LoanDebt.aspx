@@ -127,24 +127,44 @@
             });
         });
 
-        function ShowCurrentTime(id) {
-            console.log(id);
-            PageMethods.DeleteLoanBtn_Click('aaa');
-        }
-        function Success(result) {
-            alert(result);
+        function DeleteLoan(id) {
+            if (confirm("Bạn có muốn xóa bản ghi cho vay?")) {
+                document.getElementById("IdDelete").value = id;
+                document.getElementById("btnDeleteLoan").click();
+            }
         }
 
-        function Failure(error) {
-            alert(error);
+        function DeleteDebt(id) {
+            if (confirm("Bạn có muốn xóa bản ghi ds nợ?")) {
+                document.getElementById("IdDelete").value = id;
+                document.getElementById("btnDeleteDebt").click();
+            }
+        }
+
+        var popupWindow = null;
+        function OpenEditWindow(typeEdit, id) {
+            //window.showModalDialog("EditLoanDebt.aspx?typeEdit=" + typeEdit + "&id=" + id, "", "center:yes;resizable:no;dialogHeight:480px;dialogWidth:750px;");
+            popupWindow = window.open("EditLoanDebt.aspx?typeEdit=" + typeEdit + "&id=" + id, "_blank", 'directories=no,scrollbars=no,status=no,unadorned=no,location=no,toolbar=no,menubar=no,resizable=yes,help=no,height=737,width=1280');
+        }
+
+        function parent_disable() {
+            if (popupWindow && !popupWindow.closed) {
+                popupWindow.focus();
+                document.getElementById("overlay").innerHTML = "<div style='position:absolute;left:0;top:0;width:100%;height:" + document.body.offsetHeight + "px;opacity:0.3;z-index:999;background:#000;'></div>";
+            }
+        }
+        window.onunload = refreshParent;
+        function refreshParent() {
+            window.opener.location.reload();
         }
     </script>
 </head>
 
-<body">
-    <div id="codeAlert" runat="server" style="color: red;"></div>
+<body onFocus="parent_disable();" onclick="parent_disable();">
+    <%--<div style="position:absolute;width:100%;height:stretch;opacity:0.3;z-index:999;background:#000;"></div>--%>
+    <button onclick="OpenEditWindow('loan', '2')">Test</button>
     <form id="form1" runat="server" method="post">
-        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true" />
+        <div id="codeAlert" runat="server" style="color: red;"></div>
         <header>
             <div class="home">
                 <a href="https://phanhiep97nd.github.io/hiepphan/Hieplayout/Hiep-Profile.html" target="_blank">POWER BY Phan Văn Hiệp</a>
@@ -668,7 +688,11 @@
                 </div>
             </div>
         </div>
+        <asp:Button runat="server" ID="btnDeleteLoan" ClientIDMode="Static" Text="" style="display:none;" OnClick="btnDeleteLoan_Click" />
+        <asp:Button runat="server" ID="btnDeleteDebt" ClientIDMode="Static" Text="" style="display:none;" OnClick="btnDeleteDebt_Click" />
+        <input id="IdDelete"  type="hidden" runat="server" />
     </form>
+    <div id="overlay"></div>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
