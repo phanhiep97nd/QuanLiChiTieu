@@ -51,6 +51,15 @@ namespace QuanLiChiTieuWebForm
         protected global::System.Web.UI.WebControls.Button HomeBtn;
 
         /// <summary>
+        /// TypeEditLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label TypeEditLabel;
+
+        /// <summary>
         /// DateEdit control.
         /// </summary>
         /// <remarks>
@@ -87,39 +96,120 @@ namespace QuanLiChiTieuWebForm
         protected global::System.Web.UI.WebControls.TextBox NoteEdit;
 
         /// <summary>
-        /// OFileLoan control.
+        /// NotiDelImg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload OFileLoan;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NotiDelImg;
 
         /// <summary>
-        /// SubmitLoan control.
+        /// PictureEdit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SubmitLoan;
+        protected global::System.Web.UI.WebControls.Image PictureEdit;
 
         /// <summary>
-        /// TypeEdit control.
+        /// BtnDelImg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden TypeEdit;
+        protected global::System.Web.UI.WebControls.Button BtnDelImg;
 
         /// <summary>
-        /// IdEdit control.
+        /// OFileEdit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden IdEdit;
+        protected global::System.Web.UI.WebControls.FileUpload OFileEdit;
+
+        /// <summary>
+        /// StatusEditCheckBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox StatusEditCheckBox;
+
+        /// <summary>
+        /// FinishRegion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FinishRegion;
+
+        /// <summary>
+        /// DateEditFinish control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox DateEditFinish;
+
+        /// <summary>
+        /// NoteEditFinish control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox NoteEditFinish;
+
+        /// <summary>
+        /// NotiDelImgFinish control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NotiDelImgFinish;
+
+        /// <summary>
+        /// PictureEditFinish control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image PictureEditFinish;
+
+        /// <summary>
+        /// BtnDelImgFinish control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnDelImgFinish;
+
+        /// <summary>
+        /// OFileEditFinish control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload OFileEditFinish;
+
+        /// <summary>
+        /// SubmitEditBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SubmitEditBtn;
     }
 }

@@ -1,4 +1,5 @@
-﻿using QuanLiChiTieu.Models;
+﻿using ClosedXML.Excel;
+using QuanLiChiTieu.Models;
 using QuanLiChiTieuWebForm.Common;
 using QuanLiChiTieuWebForm.Model;
 using System;
@@ -97,6 +98,44 @@ namespace QuanLiChiTieuWebForm
             this.LinkSortHumanDebt.Click += LinkSortHumanDebt_Click;
             this.LinkSortValueDebt.Click += LinkSortValueDebt_Click;
             this.LinkSortStatusDebt.Click += LinkSortStatusDebt_Click;
+            this.ExportCsv.Click += ExportCsv_Click;
+        }
+
+        private void ExportCsv_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable dtLoan = LoanModel.GetAllLoan(userId);
+                DataTable dtDebt = DebtModel.GetAllDebt(userId);
+                dtLoan.TableName = "Danh sach vay";
+                dtDebt.TableName = "Danh sach no";
+                XLWorkbook wb = new XLWorkbook();
+                wb.Worksheets.Add(dtLoan);
+                wb.Worksheets.Add(dtDebt);
+                string now = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+                string fileName = "DATA_LOAN-DEBT_MNG" + "_" + Session["UserName"].ToString() + "_" + now;
+
+                Response.Clear();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", "attachment;filename=" + fileName + ".xlsx");
+                Response.Charset = "";
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+                MemoryStream MyMemoryStream = new MemoryStream();
+                wb.SaveAs(MyMemoryStream);
+                MyMemoryStream.WriteTo(Response.OutputStream);
+                Response.Flush();
+                codeAlert.InnerHtml = Constants.HTML_SUCCESS_EXPORT;
+                //Response.Write(Constants.SCRIPT_ALERT_CLOSE);
+            }
+            catch(Exception ex)
+            {
+                Response.Redirect("ErrorPage.aspx?message=" + ex.GetType().Name + ex.Message);
+            }
+            finally
+            {
+                Response.End();
+            }
         }
 
         private void LinkSortStatusDebt_Click(object sender, EventArgs e)
