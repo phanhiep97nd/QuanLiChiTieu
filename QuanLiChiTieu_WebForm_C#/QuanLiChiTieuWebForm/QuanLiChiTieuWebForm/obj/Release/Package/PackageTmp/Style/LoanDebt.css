@@ -96,3 +96,26 @@ header a {
 .card-debt-done {
     background-color: #ffd7d7;
 }
+
+.myGrv td {
+    padding: 10px;
+}
+
+.myGrv th {
+    padding: 10px;
+}
+
+.PagingCss span {
+    color: black;
+}
+
+.PagingCss a {
+    text-decoration: underline;
+}
+
+.GvRowStyle:hover {
+    background-color: #d9d9d9;
+    border-top: 3px solid #d9d9d9;
+    border-bottom: 3px solid #d9d9d9;
+    color: #1ac6ff;
+}

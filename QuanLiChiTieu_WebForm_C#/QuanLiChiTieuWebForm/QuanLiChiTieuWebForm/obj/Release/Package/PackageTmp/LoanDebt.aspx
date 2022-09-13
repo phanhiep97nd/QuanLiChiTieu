@@ -71,6 +71,7 @@
             var HumanDebt = document.getElementById("HumanDebt");
             valueDebt.classList.remove("is-invalid");
             dateDebt.classList.remove("is-invalid");
+            HumanDebt.classList.remove("is-invalid");
             var errorFlg = false;
             if (valueDebt.value == "") {
                 valueDebt.classList.add("is-invalid");
@@ -98,6 +99,7 @@
             var HumanLoan = document.getElementById("HumanLoan");
             ValueLoan.classList.remove("is-invalid");
             dateLoan.classList.remove("is-invalid");
+            HumanLoan.classList.remove("is-invalid");
             var form = document.forms.namedItem("form");
             var errorFlg = false;
             if (ValueLoan.value == "") {
@@ -188,7 +190,7 @@
                 <div class="list-group">
                     <asp:Button ID="HomeBtn" runat="server" CssClass="list-group-item list-group-item-info list-group-item-action" Text=" > Home" />
                     <button type="button" class="list-group-item list-group-item-info list-group-item-action" disabled>> Quản Lý Vay Nợ</button>
-                    <button type="button" class="list-group-item list-group-item-info list-group-item-action">> Quản Lý Danh Sách Hiếu Hỷ</button>
+                    <asp:Button ID="WeddingListBtn" runat="server" CssClass="list-group-item list-group-item-info list-group-item-action" Text=" > Quản Lý Danh Sách Hiếu Hỷ"/>
                 </div>
             </div>
         </div>

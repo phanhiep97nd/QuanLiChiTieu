@@ -99,6 +99,12 @@ namespace QuanLiChiTieuWebForm
             this.LinkSortValueDebt.Click += LinkSortValueDebt_Click;
             this.LinkSortStatusDebt.Click += LinkSortStatusDebt_Click;
             this.ExportCsv.Click += ExportCsv_Click;
+            this.WeddingListBtn.Click += WeddingListBtn_Click;
+        }
+
+        private void WeddingListBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("WeddingMonney.aspx");
         }
 
         private void ExportCsv_Click(object sender, EventArgs e)

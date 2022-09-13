@@ -382,3 +382,4 @@ D:\QuanLiChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\Qua
 D:\QuanLiChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\obj\Debug\QuanLiChiTieuWebForm.csproj.CopyComplete
 D:\QuanLiChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\obj\Debug\QuanLiChiTieuWebForm.dll
 D:\QuanLiChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\obj\Debug\QuanLiChiTieuWebForm.pdb
+D:\QuanLiChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\obj\Debug\QuanLiChiTieuWebForm.csproj.AssemblyReference.cache

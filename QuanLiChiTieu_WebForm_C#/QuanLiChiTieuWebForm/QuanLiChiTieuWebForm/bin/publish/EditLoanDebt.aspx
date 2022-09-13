@@ -103,9 +103,9 @@
                 </nav>
                 <div class="collapse" id="navbarToggleExternalContent">
                     <div class="list-group">
-                        <asp:Button ID="HomeBtn" runat="server" CssClass="list-group-item list-group-item-info list-group-item-action" Text=" > Home" />
-                        <button type="button" class="list-group-item list-group-item-info list-group-item-action">Quản Lý Vay Nợ</button>
-                        <button type="button" class="list-group-item list-group-item-info list-group-item-action">> Quản Lý Danh Sách Hiếu Hỷ</button>
+                        <asp:Button ID="HomeBtn" runat="server" CssClass="list-group-item list-group-item-info list-group-item-action" Text=" > Home" disabled/>
+                        <button type="button" class="list-group-item list-group-item-info list-group-item-action" disabled>Quản Lý Vay Nợ</button>
+                        <button type="button" class="list-group-item list-group-item-info list-group-item-action" disabled>> Quản Lý Danh Sách Hiếu Hỷ</button>
                     </div>
                 </div>
             </div>

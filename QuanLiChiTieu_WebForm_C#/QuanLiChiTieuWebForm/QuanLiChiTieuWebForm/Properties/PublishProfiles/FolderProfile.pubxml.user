@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\QuanLiChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\bin\publish</_PublishTargetUrl>
-    <History>True|2022-05-23T17:03:11.6846747Z;True|2022-05-23T23:50:43.3696599+07:00;</History>
+    <History>True|2022-07-02T02:12:08.8516843Z;True|2022-06-19T12:18:40.4895117+07:00;True|2022-06-18T13:58:53.9415286+07:00;True|2022-06-18T13:58:41.3756824+07:00;True|2022-06-18T13:54:44.0469668+07:00;True|2022-06-18T13:50:28.0394345+07:00;True|2022-06-12T17:11:12.1545046+07:00;True|2022-05-24T00:03:11.6846747+07:00;True|2022-05-23T23:50:43.3696599+07:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -39,7 +39,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/04/2022 22:39:54</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
-      <publishTime>05/04/2022 22:39:55</publishTime>
+      <publishTime>07/09/2020 04:52:58</publishTime>
     </File>
     <File Include="bin/Microsoft.ScriptManager.MSAjax.dll">
       <publishTime>05/04/2022 22:39:54</publishTime>
@@ -54,46 +54,46 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/04/2022 22:39:55</publishTime>
     </File>
     <File Include="bin/QuanLiChiTieuWebForm.dll">
-      <publishTime>05/24/2022 00:03:09</publishTime>
+      <publishTime>07/02/2022 09:12:07</publishTime>
     </File>
     <File Include="bin/QuanLiChiTieuWebForm.pdb">
-      <publishTime>05/24/2022 00:03:09</publishTime>
+      <publishTime>07/02/2022 09:12:07</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
-      <publishTime>05/04/2022 22:39:55</publishTime>
+      <publishTime>11/01/2018 20:23:06</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe.config">
-      <publishTime>05/04/2022 22:39:55</publishTime>
+      <publishTime>11/02/2018 03:08:14</publishTime>
     </File>
     <File Include="bin/roslyn/csc.rsp">
       <publishTime>05/04/2022 22:39:55</publishTime>
     </File>
     <File Include="bin/roslyn/csi.exe">
-      <publishTime>05/04/2022 22:39:55</publishTime>
+      <publishTime>11/01/2018 20:23:06</publishTime>
     </File>
     <File Include="bin/roslyn/csi.exe.config">
-      <publishTime>05/04/2022 22:39:55</publishTime>
+      <publishTime>11/02/2018 03:08:32</publishTime>
     </File>
     <File Include="bin/roslyn/csi.rsp">
       <publishTime>05/04/2022 22:39:55</publishTime>
     </File>
     <File Include="bin/roslyn/Microsoft.Build.Tasks.CodeAnalysis.dll">
-      <publishTime>05/04/2022 22:39:55</publishTime>
+      <publishTime>11/01/2018 20:23:08</publishTime>
     </File>
     <File Include="bin/roslyn/Microsoft.CodeAnalysis.CSharp.dll">
-      <publishTime>05/04/2022 22:39:55</publishTime>
+      <publishTime>11/01/2018 20:23:08</publishTime>
     </File>
     <File Include="bin/roslyn/Microsoft.CodeAnalysis.CSharp.Scripting.dll">
-      <publishTime>05/04/2022 22:39:55</publishTime>
+      <publishTime>11/01/2018 20:23:08</publishTime>
     </File>
     <File Include="bin/roslyn/Microsoft.CodeAnalysis.dll">
-      <publishTime>05/04/2022 22:39:55</publishTime>
+      <publishTime>11/01/2018 20:23:08</publishTime>
     </File>
     <File Include="bin/roslyn/Microsoft.CodeAnalysis.Scripting.dll">
-      <publishTime>05/04/2022 22:39:55</publishTime>
+      <publishTime>11/01/2018 20:23:08</publishTime>
     </File>
     <File Include="bin/roslyn/Microsoft.CodeAnalysis.VisualBasic.dll">
-      <publishTime>05/04/2022 22:39:55</publishTime>
+      <publishTime>11/01/2018 20:23:08</publishTime>
     </File>
     <File Include="bin/roslyn/Microsoft.CSharp.Core.targets">
       <publishTime>05/04/2022 22:39:55</publishTime>
@@ -192,19 +192,19 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/04/2022 22:39:55</publishTime>
     </File>
     <File Include="bin/roslyn/vbc.exe">
-      <publishTime>05/04/2022 22:39:55</publishTime>
+      <publishTime>11/01/2018 20:23:08</publishTime>
     </File>
     <File Include="bin/roslyn/vbc.exe.config">
-      <publishTime>05/04/2022 22:39:55</publishTime>
+      <publishTime>11/02/2018 03:08:14</publishTime>
     </File>
     <File Include="bin/roslyn/vbc.rsp">
       <publishTime>05/04/2022 22:39:55</publishTime>
     </File>
     <File Include="bin/roslyn/VBCSCompiler.exe">
-      <publishTime>05/04/2022 22:39:55</publishTime>
+      <publishTime>11/01/2018 20:23:08</publishTime>
     </File>
     <File Include="bin/roslyn/VBCSCompiler.exe.config">
-      <publishTime>05/04/2022 22:39:55</publishTime>
+      <publishTime>11/02/2018 03:08:18</publishTime>
     </File>
     <File Include="bin/System.IO.FileSystem.Primitives.dll">
       <publishTime>05/04/2022 22:39:55</publishTime>
@@ -249,7 +249,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/04/2022 22:39:53</publishTime>
     </File>
     <File Include="EditLoanDebt.aspx">
-      <publishTime>05/23/2022 23:09:35</publishTime>
+      <publishTime>05/28/2022 22:00:50</publishTime>
     </File>
     <File Include="ErrorPage.aspx">
       <publishTime>05/04/2022 22:39:53</publishTime>
@@ -282,7 +282,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/04/2022 22:39:53</publishTime>
     </File>
     <File Include="LoanDebt.aspx">
-      <publishTime>05/23/2022 23:44:34</publishTime>
+      <publishTime>05/29/2022 19:14:36</publishTime>
     </File>
     <File Include="Login.aspx">
       <publishTime>05/04/2022 22:39:53</publishTime>
@@ -387,7 +387,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/04/2022 22:39:53</publishTime>
     </File>
     <File Include="Style/LoanDebt.css">
-      <publishTime>05/06/2022 22:09:17</publishTime>
+      <publishTime>05/29/2022 23:18:31</publishTime>
     </File>
     <File Include="Style/Login.css">
       <publishTime>05/04/2022 22:39:53</publishTime>
@@ -399,7 +399,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/04/2022 22:39:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/24/2022 00:03:10</publishTime>
+      <publishTime>07/02/2022 09:12:08</publishTime>
+    </File>
+    <File Include="WeddingMonney.aspx">
+      <publishTime>06/02/2022 23:13:59</publishTime>
     </File>
   </ItemGroup>
 </Project>

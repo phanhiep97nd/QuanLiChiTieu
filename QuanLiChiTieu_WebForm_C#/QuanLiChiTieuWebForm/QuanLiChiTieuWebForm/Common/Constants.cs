@@ -35,5 +35,7 @@ namespace QuanLiChiTieuWebForm.Common
         public const string HTML_SUCCESS_IMPORT_DEBT = "<div class='alert alert-success' role='alert'><strong>Success!</strong> Create Debt successfully!</div>";
         public const string HTML_SUCCESS_DELETE_LOAN = "<div class='alert alert-warning' role='alert'><strong>Success!</strong> Delete Loan successfully!</div>";
         public const string HTML_SUCCESS_DELETE_DEBT = "<div class='alert alert-warning' role='alert'><strong>Success!</strong> Delete Debt successfully!</div>";
+        public const string HTML_SUCCESS_IMPORT_GIVE = "<div class='alert alert-success' role='alert'><strong>Success!</strong> Create DS Đi Tiền successfully!</div>";
+        public const string HTML_SUCCESS_IMPORT_TAKE = "<div class='alert alert-success' role='alert'><strong>Success!</strong> Create DS Nhận Tiền successfully!</div>";
     }
 }
