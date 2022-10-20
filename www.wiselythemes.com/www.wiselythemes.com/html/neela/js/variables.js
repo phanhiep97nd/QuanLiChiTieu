@@ -3,7 +3,7 @@
  */
  
 //RTL support
-var rtl = false;                                //Set to true if your website is RTL. Otherwise, keep it false.
+var rtl = true;                                //Set to true if your website is RTL. Otherwise, keep it false.
 
 //ONE-PAGE NAVIGATION HIGHLIGHT
 var onepage_nav = true;                         //If true, each menu item will highlight when scrolling to each respective section.
