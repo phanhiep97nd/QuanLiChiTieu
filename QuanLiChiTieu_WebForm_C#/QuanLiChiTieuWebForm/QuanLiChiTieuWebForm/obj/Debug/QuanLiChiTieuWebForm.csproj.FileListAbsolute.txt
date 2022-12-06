@@ -383,3 +383,13 @@ D:\QuanLiChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\Qua
 D:\QuanLiChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\obj\Debug\QuanLiChiTieuWebForm.dll
 D:\QuanLiChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\obj\Debug\QuanLiChiTieuWebForm.pdb
 D:\QuanLiChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\obj\Debug\QuanLiChiTieuWebForm.csproj.AssemblyReference.cache
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\bin\ClosedXML.dll
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\bin\DocumentFormat.OpenXml.dll
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\bin\ExcelNumberFormat.dll
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\bin\System.IO.FileSystem.Primitives.dll
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\bin\System.IO.Packaging.dll
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\bin\ClosedXML.pdb
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\bin\ClosedXML.xml
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\bin\DocumentFormat.OpenXml.xml
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\bin\ExcelNumberFormat.xml
+E:\Cá nhân\QuanLyChiTieu\QuanLiChiTieu\QuanLiChiTieu_WebForm_C#\QuanLiChiTieuWebForm\QuanLiChiTieuWebForm\obj\Debug\QuanLiChiTieuWebForm.csproj.AssemblyReference.cache
